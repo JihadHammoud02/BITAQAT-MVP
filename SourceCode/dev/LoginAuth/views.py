@@ -1,9 +1,11 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from SignUpAuth.models import Organizers
 from SignUpAuth.models import Attandee
+from django.urls import reverse
 # Create your views here.
 
 
@@ -38,14 +40,17 @@ def Check_User_account(request):
             if account_type == "Event Organizer":
                 if check_organizers_db(user.pk):
                     login(request, user)
-                    return HttpResponse("Logged in succesfully")
+                    return HttpResponseRedirect(
+                        reverse("EventOrganizer:get_homepage"))
+
                 else:
                     return render(request, 'LoginAuth\LoginForm.html', {'error_msg2': True})
             else:
                 if account_type == "Event Attandee":
                     if check_attandee_db(user.pk):
                         login(request, user)
-                        return HttpResponse("Logged in succesfully")
+                        return HttpResponseRedirect(
+                            reverse("EventOrganizer:get_homepage"))
                     else:
                         return render(request, 'LoginAuth\LoginForm.html', {'error_msg3': True})
                 else:

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'LoginAuth',
     'SignUpAuth',
+    'EventOrganizer'
 
 ]
 
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'VespiriMVP.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['SignUpAuth/templates/SignUpAuth', 'LoginAuth/templates/LoginAuth'],
+        'DIRS': ['SignUpAuth/templates/SignUpAuth', 'LoginAuth/templates/LoginAuth', 'EventOrganizer/templates/EventOrganizer'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,6 +127,7 @@ STATICFILES_DIRS = [
     # Joining the BASE_DIR with the string "SignUpAuth\static"
     os.path.join(BASE_DIR, "SignUpAuth\static"),
     os.path.join(BASE_DIR, "LoginAuth\static"),
+    os.path.join(BASE_DIR, "EventOrganizer\static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/images/'

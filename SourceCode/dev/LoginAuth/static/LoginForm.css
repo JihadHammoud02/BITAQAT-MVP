@@ -18,7 +18,7 @@ body{
   max-width: 100%;
 }
 .login-form .form-control{
-  font-size: 14px;
+  font-size: 19px;
   min-height: 48px;
   font-weight: 500;
 }
@@ -47,7 +47,7 @@ body{
 }
 
 .form-check-label{
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .img-placer{

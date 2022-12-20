@@ -9,7 +9,7 @@ body{
 .login-container{
   height: 100vh;
   width: 100%;
-
+  position: absolute;
 }
 .login-form{
   margin: auto;
@@ -18,7 +18,7 @@ body{
   max-width: 100%;
 }
 .login-form .form-control{
-  font-size: 19px;
+  font-size: 15px;
   min-height: 48px;
   font-weight: 500;
 }
@@ -30,7 +30,7 @@ body{
   color:#723dbe;
 }
 .forgot-link{
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .form-control:focus{
@@ -42,12 +42,11 @@ body{
 .btn-color{
     margin-top: 10px;
     color: rgb(159, 34, 34);
-    background-color: #54229d !important;
-    color: white !important;
+    background-color: #14042b;
 }
 
 .form-check-label{
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .img-placer{

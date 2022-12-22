@@ -16,3 +16,9 @@ from django.contrib.auth.decorators import login_required
 # """
 def get_homepage(request):
     return render(request, 'EventAttendees\homepage.html', {"user_name": request.user.username})
+
+
+
+@login_required(login_url='/login/  ')
+def get_profile(request):
+    return render(request,'EventAttendees\profile.html')

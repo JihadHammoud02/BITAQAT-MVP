@@ -30,7 +30,7 @@
 
 <body class="bg-move">
     <div class="div-props">
-        <nav class="navbar navbar-expand-md navbar-dark bg-move  shadow ">
+        <nav class="navbar navbar-expand-md navbar-light bg-move  shadow ">
             <a class="navbar-brand " href="#">
                 <h1 class="title-font-text">Vesperi</h1>
             </a>
@@ -61,88 +61,109 @@
     </div>
 
 
-    <div class="container-fluid my-4 ">
-        <h1 class="title-page"> Create Event</h1>
-    </div>
-    <div class="input my-5">
+    <div class="big-main d-flex justify-content-center align-items-center">
+        <div class="main2 justify-content-center ">
+            <div class="container-fluid my-4 ">
+                <h1 class="title-page"> Create Event</h1>
+            </div>
+            <center>
+                <div class="input my-5">
+                    <div class="container-fluid div-height ">
+                        <p class="title-upl">Upload Event banner</p>
+                    </div>
+                </div>
+                <div class="input my-5   d-flex justify-content-center">
+                    <img id="event-banner" src="{% static 'images/im.png' %}" class="uploaded-img">
+                </div>
+                <div class="container-fluid d-flex justify-content-center">
+                    <input type='file' class="title input-form upload-btn" id='eventimg' accept=".jpg, .jpeg, .png"
+                        onchange="loadFile(event)"></input>
+                </div>
+            </center>
 
-        <div class="container-fluid div-height ">
-            <p class="title">Upload Event banner</p>
-        </div>
-    </div>
-    <div class="input my-5   d-flex justify-content-center">
-        <img id="event-banner" src="{% static 'images/im.png' %}" class="uploaded-img">
-    </div>
-    <div class="container-fluid d-flex justify-content-center">
-        <input type='file' class="title input-form upload-btn" id='eventimg' accept=".jpg, .jpeg, .png"
-            onchange="loadFile(event)"></input>
-    </div>
-    <div class="input my-5">
+            <div class="input my-5">
 
-        <div class="container-fluid div-height ">
-            <p class="title">Event name</p>
-        </div>
-        <div class="container-fluid ">
-            <input type="text" name="eventname" class="title input-form" id="name" aria-describedby="emailHelp"
-                placeholder="  Enter event name">
-        </div>
-    </div>
-    <div class="input my-5">
+                <div class="container-fluid div-height ">
+                    <p class="titles">Event name</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <input type="text" name="eventname" class="title input-form" id="name"
+                            aria-describedby="emailHelp" placeholder="  Enter event name">
+                    </div>
+                </center>
+            </div>
+            <div class="input my-5">
 
-        <div class="container-fluid div-height ">
-            <p class="title">Date and time</p>
-        </div>
-        <div class="container-fluid ">
-            <input type="datetime-local" name="eventdate" class="title input-form" id="date&time"
-                placeholder="  Enter event date and time">
-        </div>
-    </div>
-    <div class="input my-5">
+                <div class="container-fluid div-height ">
+                    <p class="titles">Date and time</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <input type="datetime-local" name="eventdate" class="title input-form" id="date&time"
+                            placeholder="  Enter event date and time">
+                    </div>
+                </center>
+            </div>
+            <div class="input my-5">
 
-        <div class="container-fluid div-height ">
-            <p class="title">Number of tickets</p>
-        </div>
-        <div class="container-fluid ">
-            <input type="number" name="maxnumber" min="0.00" class="title input-form" id="maxticket"
-                placeholder="  Enter number of tickets ">
-        </div>
-    </div>
-    <div class="input my-5">
+                <div class="container-fluid div-height ">
+                    <p class="titles">Number of tickets</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <input type="number" name="maxnumber" min="0.00" class="title input-form" id="maxticket"
+                            placeholder="  Enter number of tickets ">
+                    </div>
+                </center>
+            </div>
+            <div class="input my-5">
 
-        <div class="container-fluid div-height ">
-            <p class="title">Price per ticket in USD</p>
-        </div>
-        <div class="container-fluid ">
-            <input type="number" min="0.00" max="10000.00" step="0.01" id="price/ticket" class="title input-form"
-                placeholder="  Ex: 250$" />
-        </div>
-    </div>
-    <div class="input my-5">
+                <div class="container-fluid div-height ">
+                    <p class="titles">Price per ticket in USD</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <input type="number" min="0.00" max="10000.00" step="0.01" id="price/ticket"
+                            class="title input-form" placeholder="  Ex: 250$" />
+                    </div>
+                </center>
+            </div>
+            <div class="input my-5">
 
-        <div class="container-fluid div-height ">
-            <p class="title">Event place</p>
-        </div>
-        <div class="container-fluid ">
-            <input type="text" name="city" class="title input-form" id="inputCity" placeholder="  Enter city">
-        </div>
-    </div>
-    <div class="input my-5">
+                <div class="container-fluid div-height ">
+                    <p class="titles">Event place</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <input type="text" name="city" class="title input-form" id="inputCity"
+                            placeholder="  Enter city">
+                    </div>
+                </center>
+            </div>
 
-        <div class="container-fluid div-height ">
-            <p class="title">Event Description</p>
-        </div>
-        <div class="container-fluid ">
-            <textarea placeholder="Ex: Join us for a fun-filled evening of music, dancing, and mingling at our annual summer party! 
+            <div class="input my-5">
+
+                <div class="container-fluid div-height ">
+                    <p class="titles">Event Description</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <textarea placeholder="Ex: Join us for a fun-filled evening of music, dancing, and mingling at our annual summer party! 
                 " class="title input-form"></textarea>
+                    </div>
+                </center>
+            </div>
+            <center>
+                <div class="input my-5">
+                    <div class="container-fluid ">
+                        <button type="submit"
+                            class="title input-form btn rounded-pill btn-lg btn-color ">submit</button>
+                    </div>
+                </div>
+            </center>
         </div>
     </div>
-    <div class="input my-5">
-        <div class="container-fluid ">
-            ,<button type="submit" class="title input-form btn rounded-pill btn-lg btn-color ">submit</button>
-        </div>
-    </div>
-
-
 
 
 </body>

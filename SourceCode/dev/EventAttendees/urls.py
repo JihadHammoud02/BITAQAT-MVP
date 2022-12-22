@@ -18,5 +18,6 @@ from django.urls import path
 from EventAttendees import views
 app_name = 'EventAttendees'
 urlpatterns = [
-    path('', views.get_homepage, name="get_homepage")
+    path('', views.get_homepage, name="get_homepage"),
+    path('profile/', views.get_profile, name="get_profile")
 ]

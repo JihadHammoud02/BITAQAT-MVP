@@ -1,9 +1,13 @@
-.bg-move {
-background-color: rgb(67, 33, 83) !important;
 
-}
+
+body {
+    background-image: url('images/bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
 a:hover {
-color: #FFDE91 !important;
+color:#de4884 !important;
 }
 
 
@@ -12,6 +16,7 @@ color: #FFDE91 !important;
 .font-text{
 font-family: 'Poppins';
 font-size: 20px;
+color:#de4884 !important;
 }
 
 
@@ -20,7 +25,7 @@ font-size: 20px;
 .title-font-text{
 font-family: 'Anton', sans-serif;
 font-size: 40px !important;
-color: #FFDE91 !important;
+color:#de4884 !important;
 }
 
 
@@ -30,7 +35,7 @@ width: 100%;
 height: 40px;
 max-width: 100%;
 background-color: transparent;
-color: #FFDE91;
+color:black;
 border-color: rgb(162, 157, 157);
 border-radius: 3px;
 
@@ -42,7 +47,7 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 0px;
-color: #FFDE91 !important;
+color: black !important;
 position: sticky;
 width: 544px;
 height: 48px;
@@ -58,7 +63,7 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 0px;
-color: #FFDE91 !important;
+color: #de4884 !important;
 position: sticky;
 width: 544px;
 height: 48px;
@@ -77,11 +82,11 @@ height: 24px;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
-color: #FFDE91 !important;
+color:#de4884 !important;
 position: sticky;
 left: 100%;
 
-font-family: 'Poppins', sans-serif;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
 }
 
 
@@ -91,12 +96,14 @@ height: 30px;
 }
 
 
+
+
 textarea {
 width: 100%;
 height: 150px !important;
 padding: 12px 20px;
 box-sizing: border-box;
-border: 2px solid#FFDE91 ;
+border: 2px solid#dd1162 ;
 border-radius: 4px;
 background-color: transparent;
 font-size: 16px;
@@ -106,7 +113,6 @@ max-width: fit-content;
 
 
 .btn-color{
-background-color: #FFDE91 !important;
 color: rgb(44, 19, 56) !important
 }
 
@@ -116,7 +122,7 @@ background-color:  rgb(71, 31, 89) !important;
 width: 90%;
 max-width: 900px;
 height: 150%;
-border: 1px solid #FFDE91 ;
+border: 1px solid#de4884 ;
 border-radius: 10px;
 margin-top: 15%;
 margin-bottom: 15%;
@@ -125,7 +131,7 @@ padding-bottom: 10%;
 }
 
 .profile-titles{
-color: #FFDE91 !important;
+color:#de4884 !important;
 font-family: 'Poppins', sans-serif;
 font-size: 30px;
 }
@@ -134,7 +140,7 @@ font-size: 30px;
 .profile-ele{
 margin-right: 50px;
 padding: 0px;
-color: #FFDE91 !important;
+color:#de4884 !important;
 width: 544px;
 height: 48px;
 font-family: 'Poppins', sans-serif;
@@ -159,7 +165,7 @@ border-radius: 50%;
         font-size:small;
     }
     .profile-titles{
-        color: #FFDE91 !important;
+        color:#de4884 !important;
         font-family: 'Poppins', sans-serif;
         font-size: 20px;
         }
@@ -173,7 +179,7 @@ pointer-events: none;
 
 
 .input-profile{
-color: #FFDE91 !important;
+color:#de4884 !important;
 font-family: 'Poppins', sans-serif;
 }
 
@@ -183,4 +189,18 @@ font-family: 'Poppins', sans-serif;
                 margin-top: -186px;
             }
     
+    }
+
+
+.navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: red;
+    border: 1px solid transparent;
+        border-top-color: red;
+        border-right-color: red;
+        border-bottom-color: red;;
+        border-left-color: red;
+    border-radius: .25rem;
     }

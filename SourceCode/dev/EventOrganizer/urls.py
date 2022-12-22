@@ -20,5 +20,6 @@ from EventOrganizer import views
 app_name = 'EventOrganizer'
 urlpatterns = [
     path('homepage/', views.get_homepage, name="get_homepage"),
-    path('create_event/', views.get_create_event, name="get_create_event")
+    path('create_event/', views.get_create_event, name="get_create_event"),
+    path('profile/', views.get_profile, name="get_profile")
 ]

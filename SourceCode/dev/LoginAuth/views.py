@@ -50,7 +50,7 @@ def Check_User_account(request):
                     if check_attandee_db(user.pk):
                         login(request, user)
                         return HttpResponseRedirect(
-                            reverse("EventOrganizer:get_homepage"))
+                            reverse("EventAttendees:get_homepage"))
                     else:
                         return render(request, 'LoginAuth\LoginForm.html', {'error_msg3': True})
                 else:

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%5r$3b@9nh#&6)c1)3m!6ax!qp$ccb6=80ve8nmc$8^0zjlzef
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.103','127.0.0.1']
 
 
 # Application definition
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'LoginAuth',
     'SignUpAuth',
-    'EventOrganizer'
+    'EventOrganizer',
+    'EventAttendees'
 
 ]
 
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'VespiriMVP.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['SignUpAuth/templates/SignUpAuth', 'LoginAuth/templates/LoginAuth', 'EventOrganizer/templates/EventOrganizer'],
+        'DIRS': ['SignUpAuth/templates/SignUpAuth', 'LoginAuth/templates/LoginAuth', 'EventOrganizer/templates/EventOrganizer','EventAttendees/templates/EventAttendees'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,6 +129,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "SignUpAuth\static"),
     os.path.join(BASE_DIR, "LoginAuth\static"),
     os.path.join(BASE_DIR, "EventOrganizer\static"),
+    os.path.join(BASE_DIR, "EventAttendees\static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/images/'

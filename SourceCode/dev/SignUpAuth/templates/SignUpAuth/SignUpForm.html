@@ -349,27 +349,26 @@
             }
 
         }
-        let counter = 0;
+
 
 
         function show_organisers_more_inputs() {
-            if (counter == 0) {
 
-                let added_inputs_location = document.getElementById("inputCity")
-                let html = `
+
+            let added_inputs_location = document.getElementById("inputCity")
+            let html = `
                 <div class="form-group my-3">
                     <input type="text" name="organisation" class="form-control rounded-pill form-control-lg" id="Coname" placeholder="Enter Company name">
                 </div>
             `
-                added_inputs_location.insertAdjacentHTML('afterend', html)
-                counter = 1;
-            }
+            added_inputs_location.insertAdjacentHTML('afterend', html)
+
+
             return null
         }
         function remove_ele() {
             let ele = document.getElementById("Coname")
             ele.remove()
-            counter = 0;
         }
 
     </script>

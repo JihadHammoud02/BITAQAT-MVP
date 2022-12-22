@@ -1,4 +1,7 @@
 from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -12,11 +15,4 @@ from django.contrib.auth.decorators import login_required
 # :return: The request, the template, and the user's username.
 # """
 def get_homepage(request):
-    return render(request, 'EventOrganizer\homepage.html', {"user_name": request.user.username})
-
-@login_required(login_url='/login/  ')
-def get_create_event(request):
-    return render(request, 'EventOrganizer\eventcreation.html')
-@login_required(login_url='/login/  ')
-def get_profile(request):
-    return render(request,'EventOrganizer\profile.html')
+    return render(request, 'EventAttendees\homepage.html', {"user_name": request.user.username})

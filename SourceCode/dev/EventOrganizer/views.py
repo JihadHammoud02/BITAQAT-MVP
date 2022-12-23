@@ -1,22 +1,32 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from EventOrganizer.models import EventsCreated
 # Create your views here.
 
 
 @login_required(login_url='/login/  ')
-# """
-# It renders the homepage.html template and passes the username of the logged in user to the template
-# :param request: The request object is the first parameter to every view function. It contains
-# information about the request that was made to the server, such as the HTTP method, the path, the
-# headers, and the body
-# :return: The request, the template, and the user's username.
-# """
-def get_homepage(request):
+def Get_homepage(request):
     return render(request, 'EventOrganizer\homepage.html', {"user_name": request.user.username})
 
+
+
+
+
+
 @login_required(login_url='/login/  ')
-def get_create_event(request):
-    return render(request, 'EventOrganizer\eventcreation.html')
-@login_required(login_url='/login/  ')
-def get_profile(request):
+def Get_profile_page(request):
     return render(request,'EventOrganizer\profile.html')
+
+
+
+@login_required(login_url='/login/  ')
+def Create_and_List_events(request):
+    event_name=request.POST.get('eventname')
+    event_date=request.POST.get('eventdate')
+    event_max_capacity=request.POST.get('maxnumber')
+    event_ticket_price=request.POST.get('price')
+    event_place=request.POST.get('city')
+    event_description=request.POST.get('desc')
+    event_created=EventsCreated(event_name,event_date,event_max_capacity,event_ticket_price,event_place,event_description,0)
+    event_created.save()
+    return render(request, 'EventOrganizer\eventcreation.html')

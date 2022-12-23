@@ -3,7 +3,7 @@
 
 <head>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'LoginForm.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Login.css' %}">
     <meta charset="utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
 
     <div class="login-container d-flex align-items-center justify-content-center ">
         <form class="login-form text-center" onsubmit="return verify_password()"
-            action="{% url 'LoginAuth:Check_User_account' %}" method="post">
+            action="{% url 'LoginAuth:LoginUsers' %}" method="post">
             {% csrf_token %}
             <h1 class="mb-5 font-weight-light text-uppercase">Login</h1>
 

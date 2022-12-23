@@ -42,17 +42,17 @@
             <div class="collapse navbar-collapse  " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item  mx-4">
-                        <a class="nav-link nav-item-sp font-text" href="/EventOrganizer/homepage">Home </a>
+                        <a class="nav-link nav-item-sp font-text" href="/Org/homepage">Home </a>
                     </li>
                     <li class="nav-item font-text active mx-4">
-                        <a class="nav-link nav-item-sp  font-text" href="/EventOrganizer/create_event">Create Event<span
+                        <a class="nav-link nav-item-sp  font-text" href="/Org/create">Create Event<span
                                 class="sr-only"></span></a>
                     </li>
                     <li class="nav-item font-text  mx-4">
                         <a class="nav-link nav-item-sp  font-text " href="#">Marketplace</a>
                     </li>
                     <li class="nav-item font-text mx-4 ">
-                        <a class="nav-link nav-item-sp  font-text " href="/EventOrganizer/profile">Profile</a>
+                        <a class="nav-link nav-item-sp  font-text " href="/Org/profile">Profile</a>
                     </li>
                     <li class="nav-item font-text mx-4 ">
                         <a class="nav-link nav-item-sp  font-text" href="#">Logout</a>
@@ -62,7 +62,8 @@
 
 
     <div class="big-main d-flex justify-content-center align-items-center">
-        <div class="main2 justify-content-center ">
+        <form class="main2 justify-content-center " action="{% url 'EventOrganizer:Create_and_List_events' %}"
+            method="post">
             <div class="container-fluid my-4 ">
                 <h1 class="title-page"> Create Event</h1>
             </div>
@@ -124,7 +125,7 @@
                 </div>
                 <center>
                     <div class="container-fluid ">
-                        <input type="number" min="0.00" max="10000.00" step="0.01" id="price/ticket"
+                        <input type="number" name="price" min="0.00" max="10000.00" step="0.01" id="price/ticket"
                             class="title input-form" placeholder="  Ex: 250$" />
                     </div>
                 </center>
@@ -150,7 +151,7 @@
                 <center>
                     <div class="container-fluid ">
                         <textarea placeholder="Ex: Join us for a fun-filled evening of music, dancing, and mingling at our annual summer party! 
-                " class="title input-form"></textarea>
+                " class="title input-form" name="desc"></textarea>
                     </div>
                 </center>
             </div>
@@ -162,7 +163,7 @@
                     </div>
                 </div>
             </center>
-        </div>
+        </form>
     </div>
 
 

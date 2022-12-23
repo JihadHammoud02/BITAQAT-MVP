@@ -1,12 +1,10 @@
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from SignUpAuth.models import Organizers
-from SignUpAuth.models import Attandee
+from SignUpAuth.models import Attandees
 from django.urls import reverse
-# Create your views here.
+
 
 
 def check_organizers_db(key):
@@ -20,7 +18,7 @@ def check_organizers_db(key):
 
 
 def check_attandee_db(key):
-    all_attandee = Attandee.objects.all()
+    all_attandee = Attandees.objects.all()
     found = False
     for user in all_attandee:
         if user.pk == key:
@@ -29,7 +27,7 @@ def check_attandee_db(key):
     return found
 
 
-def Check_User_account(request):
+def LoginUsers(request):
     if request.method == "POST":
         username_client = request.POST.get('username')
         password_client = request.POST.get('pswrd')
@@ -41,22 +39,22 @@ def Check_User_account(request):
                 if check_organizers_db(user.pk):
                     login(request, user)
                     return HttpResponseRedirect(
-                        reverse("EventOrganizer:get_homepage"))
+                        reverse("EventOrganizer:Get_homepage"))
 
                 else:
-                    return render(request, 'LoginAuth\LoginForm.html', {'error_msg2': True})
+                    return render(request, 'LoginAuth\Login.html', {'error_msg2': True})
             else:
                 if account_type == "Event Attandee":
                     if check_attandee_db(user.pk):
                         login(request, user)
                         return HttpResponseRedirect(
-                            reverse("EventAttendees:get_homepage"))
+                            reverse("EventAttendees:Get_homepage"))
                     else:
-                        return render(request, 'LoginAuth\LoginForm.html', {'error_msg3': True})
+                        return render(request, 'LoginAuth\Login.html', {'error_msg3': True})
                 else:
-                    return render(request, 'LoginAuth\LoginForm.html', {'error_msg4': True})
+                    return render(request, 'LoginAuth\Login.html', {'error_msg4': True})
 
         else:
-            return render(request, 'LoginAuth\LoginForm.html', {'error_msg': True})
+            return render(request, 'LoginAuth\Login.html', {'error_msg': True})
     else:
-        return render(request, 'LoginAuth\LoginForm.html')
+        return render(request, 'LoginAuth\Login.html')

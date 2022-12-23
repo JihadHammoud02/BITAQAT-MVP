@@ -14,11 +14,11 @@ from django.contrib.auth.decorators import login_required
 # headers, and the body
 # :return: The request, the template, and the user's username.
 # """
-def get_homepage(request):
+def Get_homepage(request):
     return render(request, 'EventAttendees\homepage.html', {"user_name": request.user.username})
 
 
 
 @login_required(login_url='/login/  ')
-def get_profile(request):
+def Get_profile_page(request):
     return render(request,'EventAttendees\profile.html')

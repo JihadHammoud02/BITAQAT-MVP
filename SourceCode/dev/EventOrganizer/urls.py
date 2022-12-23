@@ -19,7 +19,7 @@ from EventOrganizer import views
 # A way to namespace your urls.
 app_name = 'EventOrganizer'
 urlpatterns = [
-    path('homepage/', views.get_homepage, name="get_homepage"),
-    path('create_event/', views.get_create_event, name="get_create_event"),
-    path('profile/', views.get_profile, name="get_profile")
+    path('homepage/', views.Get_homepage, name="Get_homepage"),
+    path('create/', views.Create_and_List_events, name="Create_and_List_events"),
+    path('profile/', views.Get_profile_page, name="Get_profile_page")
 ]

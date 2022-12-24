@@ -64,6 +64,7 @@
     <div class="big-main d-flex justify-content-center align-items-center">
         <form class="main2 justify-content-center " action="{% url 'EventOrganizer:Create_and_List_events' %}"
             method="post">
+            {% csrf_token %}
             <div class="container-fluid my-4 ">
                 <h1 class="title-page"> Create Event</h1>
             </div>
@@ -77,8 +78,8 @@
                     <img id="event-banner" src="{% static 'images/im.png' %}" class="uploaded-img">
                 </div>
                 <div class="container-fluid d-flex justify-content-center">
-                    <input type='file' class="title input-form upload-btn" id='eventimg' accept=".jpg, .jpeg, .png"
-                        onchange="loadFile(event)"></input>
+                    <input type='file' class="title input-form upload-btn" id='eventimg' name="eventimg"
+                        accept=".jpg, .jpeg, .png" onchange="loadFile(event)"></input>
                 </div>
             </center>
 

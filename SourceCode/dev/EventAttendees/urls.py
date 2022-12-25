@@ -15,9 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from EventAttendees import views
 app_name = 'EventAttendees'
 urlpatterns = [
     path('', views.Get_homepage, name="Get_homepage"),
-    path('profile/', views.Get_profile_page, name="Get_profile_page")
+    path('profile/', views.Get_profile_page, name="Get_profile_page"),
+     path('Marketplace/', views.Get_Marketplace_Page, name="Get_Marketplace_Page"),
+      path('event/<str:event_id>/', views.Get_specific_event_page, name="Get_specific_event_page"),
+
 ]
+
+
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

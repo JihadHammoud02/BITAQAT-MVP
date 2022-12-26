@@ -95,7 +95,9 @@
                 </table>
             </center>
             <center>
-                <a href="{% url 'EventAttendees:mint_nft' event_id=36 %} " class="btn btn-color buy-btn">Buy</a>
+                <p>{{all_events.id}}</p>
+                <a href="{% url 'EventAttendees:mint_nft' event_id=all_events.id %} "
+                    class="btn btn-color buy-btn">Buy</a>
             </center>
         </div>
 

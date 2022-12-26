@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from EventOrganizer.models import EventsCreated
 from SignUpAuth.models import Organizers
+from EventOrganizer.models import ticketsMinted
 # Create your views here.
 
 
@@ -37,6 +38,7 @@ def Create_and_List_events(request):
         event_banner_client=request.FILES['eventimg']
         event_created=EventsCreated(event_organizer=request.user,event_name=event_name_client,event_date_time=event_date_client,event_maximum_capacity=event_max_capacity_client,event_ticket_price=event_ticket_price_client,event_place=event_place_client,event_description=event_description_client,number_of_current_guests=0,event_banner=event_banner_client)
         event_created.save()
+
         return render(request, 'EventOrganizer\eventcreation.html')
     return render(request, 'EventOrganizer\eventcreation.html')
 

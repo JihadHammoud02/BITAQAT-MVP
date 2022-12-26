@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'SignUpAuth',
     'EventOrganizer',
     'EventAttendees',
-    'django_cron'
 
 ]
 

@@ -3,6 +3,16 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from SignUpAuth.models import Organizers
 from SignUpAuth.models import Attandees
+from eth_account import Account
+import secrets
+
+
+def create_wallet():
+    priv = secrets.token_hex(32)
+    private_key = "0x" + priv
+    acct = Account.from_key(private_key)
+    
+    return(private_key, acct.address)
 
 def Create_Accounts(request):
     try:
@@ -24,7 +34,7 @@ def Create_Accounts(request):
             else:
                 if account_type == "Event Attandee":
                     account = Attandees(
-                        user.pk, nationnality_client, city_client)
+                        user.pk, nationnality_client, city=city_client,public_crypto_address=create_wallet()[1],private_crypto_address=create_wallet()[0])
                 account.save()
 
             return render(request, "LoginAuth\Login.html")

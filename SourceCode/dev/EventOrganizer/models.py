@@ -15,3 +15,11 @@ class EventsCreated(models.Model):
    event_description=models.TextField()
    event_banner=models.ImageField(upload_to='', default=None,null=True, blank=True)
    number_of_current_guests=models.PositiveIntegerField()
+
+
+
+class ticketsMinted(models.Model):
+   event_id=models.ForeignKey(EventsCreated,on_delete=models.CASCADE)
+   event_name=EventsCreated.event_name
+   NFT_owner_address=models.CharField(max_length=600,default=None)
+   NFT_owner_account=models.CharField(max_length=600,default=None)

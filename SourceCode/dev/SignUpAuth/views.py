@@ -5,7 +5,6 @@ from SignUpAuth.models import Organizers
 from SignUpAuth.models import Attandees
 
 def Create_Accounts(request):
-
     try:
         if request.method == "POST":
             email_client = request.POST.get('emailadd')

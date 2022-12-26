@@ -24,6 +24,7 @@ urlpatterns = [
     path('profile/', views.Get_profile_page, name="Get_profile_page"),
      path('Marketplace/', views.Get_Marketplace_Page, name="Get_Marketplace_Page"),
       path('event/<str:event_id>/', views.Get_specific_event_page, name="Get_specific_event_page"),
+      path('mintingt/<str:event_id>/',views.mint_nft,name='mint_nft')
 
 ]
 

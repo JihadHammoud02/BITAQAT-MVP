@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from EventOrganizer.models import EventsCreated
+from SignUpAuth.models import Organizers
 # Create your views here.
 
 
@@ -15,7 +16,12 @@ def Get_homepage(request):
 
 @login_required(login_url='/login/  ')
 def Get_profile_page(request):
-    return render(request,'EventOrganizer\profile.html')
+    user_info={}
+    user_db=Organizers.objects.get(pk=request.user.pk)
+    user_info['username']=request.user.username
+    user_info['email']=request.user.email
+    user_info['Coname']=user_db.company_name
+    return render(request,'EventOrganizer\profile.html',{"data":user_info})
 
 
 
@@ -33,3 +39,23 @@ def Create_and_List_events(request):
         event_created.save()
         return render(request, 'EventOrganizer\eventcreation.html')
     return render(request, 'EventOrganizer\eventcreation.html')
+
+
+@login_required(login_url='/login/  ')
+def Get_Marketplace_Page(request):
+    list_of_all_events=EventsCreated.objects.all()
+    all_events=[]
+    event={}
+    for eve in list_of_all_events:
+        event['id']=eve.pk
+        event['name']=eve.event_name
+        event['date/time']=eve.event_date_time
+        event['desc']=eve.event_description
+        event['banner']=eve.event_banner
+        event['price']=eve.event_ticket_price
+        event['maxcap']=eve.event_maximum_capacity
+        event['available_places']=eve.event_maximum_capacity-eve.number_of_current_guests
+        event['organizer']=eve.event_organizer
+        all_events.append(event)
+        event={}
+    return render(request,'EventOrganizer\Marketplace.html',{'all_events':all_events})

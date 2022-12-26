@@ -21,5 +21,7 @@ app_name = 'EventOrganizer'
 urlpatterns = [
     path('homepage/', views.Get_homepage, name="Get_homepage"),
     path('create/', views.Create_and_List_events, name="Create_and_List_events"),
-    path('profile/', views.Get_profile_page, name="Get_profile_page")
+    path('profile/', views.Get_profile_page, name="Get_profile_page"),
+     path('Marketplace/', views.Get_Marketplace_Page, name="Get_Marketplace_Page"),
+    
 ]

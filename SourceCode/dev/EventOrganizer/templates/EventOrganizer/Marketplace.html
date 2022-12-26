@@ -12,6 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap"
         rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'marketplace.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'mainpage.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,14 +43,14 @@
 
             <div class="collapse navbar-collapse  " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active mx-4">
+                    <li class="nav-item  mx-4">
                         <a class="nav-link nav-item-sp font-text" href="/Org/homepage">Home </a>
                     </li>
                     <li class="nav-item font-text  mx-4">
                         <a class="nav-link nav-item-sp  font-text" href="/Org/create">Create Event<span
                                 class="sr-only"></span></a>
                     </li>
-                    <li class="nav-item font-text  mx-4">
+                    <li class="nav-item font-text active  mx-4">
                         <a class="nav-link nav-item-sp  font-text " href="/Org/Marketplace">Marketplace</a>
                     </li>
                     <li class="nav-item font-text mx-4 ">
@@ -60,38 +61,53 @@
                     </li>
         </nav>
     </div>
-    <div class="main d-flex  justify-content-center">
-        <div class=" main-container-homepage ">
-            <div class="container d-flex align-items-center justify-content-center">
-                <h1 class="main-container-homepage-ele">Join us.</h1>
+
+
+    <div class="body-container border">
+
+
+        {% for event in all_events %}
+        <div class="row no-gutters shadow my-3">
+            <div class="col-sm-2 banner-ele">
+                <img class="card-img event-img" src="../../../media/{{event.banner}}" alt="Suresh Dasari Card">
             </div>
-
-            <div class="container d-flex align-items-center justify-content-center">
-                <p class="main-container-homepage-ele2">Buy aggregated NFTs from 5 blockchains. Lock your $RARI — unlock
-                    0% fees.</p>
-            </div>
-
-
-            <div class="container d-flex align-items-center justify-content-center">
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" role="listbox">
-                    <div class="carousel-inner main-container-img">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100 main-container-img" src="{% static 'images/em.jpg' %}">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100 main-container-img" src="{% static 'images/jayz.jpg' %}">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100 main-container-img" src="{% static 'images/ye.jpg' %}">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100 main-container-img" src="{% static 'images/trav.jpg' %}">
-                        </div>
+            <div class="col-sm-7 ">
+                <div class="card-body  ">
+                    <div class="banner-ele">
+                        <h5 class="card-title card-title-font ">{{event.name}}</h5>
+                    </div>
+                    <div class="banner-ele">
+                        <p class="card-text description-txt">{{event.desc}}</p>
+                    </div>
+                    <div class="banner-ele my-3">
+                        <h4 class="price-tag">{{event.price}}$</h4>
+                    </div>
+                    <div class="banner-ele my-3">
+                        <a href="{% url 'EventAttendees:Get_specific_event_page' event_id=event.id %}   "
+                            class="btn btn-color">More info</a>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
+
     </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -6,7 +6,6 @@ from SignUpAuth.models import Attandees
 from django.urls import reverse
 
 
-
 def check_organizers_db(key):
     all_organizers = Organizers.objects.all()
     found = False
@@ -58,3 +57,5 @@ def LoginUsers(request):
             return render(request, 'LoginAuth\Login.html', {'error_msg': True})
     else:
         return render(request, 'LoginAuth\Login.html')
+
+

@@ -41,9 +41,12 @@ INSTALLED_APPS = [
     'LoginAuth',
     'SignUpAuth',
     'EventOrganizer',
-    'EventAttendees'
+    'EventAttendees',
+    'django_cron'
 
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -18,4 +18,5 @@ class Attandees(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
                                 primary_key=True,)
     nationnality = models.CharField(max_length=200)
+    crypto_wallet_address=models.CharField(max_length=600)
     city = models.CharField(max_length=200)

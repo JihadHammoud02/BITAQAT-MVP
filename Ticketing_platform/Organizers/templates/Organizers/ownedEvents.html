@@ -43,7 +43,7 @@
 
             <div class="collapse navbar-collapse  " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active mx-4">
+                    <li class="nav-item  mx-4">
                         <a class="nav-link nav-item-sp font-text" href="/org/homepage">Home </a>
                     </li>
                     <li class="nav-item font-text  mx-4">
@@ -53,7 +53,7 @@
                     <li class="nav-item font-text  mx-4">
                         <a class="nav-link nav-item-sp  font-text " href="/org/Marketplace">Marketplace</a>
                     </li>
-                    <li class="nav-item font-text  mx-4">
+                    <li class="nav-item font-text active mx-4">
                         <a class="nav-link nav-item-sp  font-text " href="/org/myEvents">My events</a>
                     </li>
                     <li class="nav-item font-text mx-4 ">
@@ -84,6 +84,10 @@
                     </div>
                     <div class="banner-ele my-3">
                         <h4 class="price-tag">{{event.price}}$</h4>
+                    </div>
+                    <div class="banner-ele my-3">
+                       <a href="{% url 'Organizers:eventDashboard' eventId=event.id %}   "
+                            class="btn btn-color">See event data</a>
                     </div>
                 </div>
             </div>

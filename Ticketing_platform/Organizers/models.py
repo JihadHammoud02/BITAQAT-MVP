@@ -30,3 +30,8 @@ class ticketsMinted(models.Model):
    NFT_owner_address=models.CharField(max_length=600,default=None)
    NFT_owner_account=models.ForeignKey(myUsers,on_delete=models.CASCADE)
    NFT_token_id=models.CharField(max_length=600,default=None)
+
+
+
+
+

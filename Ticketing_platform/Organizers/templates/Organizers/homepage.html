@@ -52,11 +52,14 @@
                     <li class="nav-item font-text  mx-4">
                         <a class="nav-link nav-item-sp  font-text " href="/org/Marketplace">Marketplace</a>
                     </li>
+                    <li class="nav-item font-text  mx-4">
+                        <a class="nav-link nav-item-sp  font-text " href="/org/myEvents">My events</a>
+                    </li>
                     <li class="nav-item font-text mx-4 ">
                         <a class="nav-link nav-item-sp  font-text " href="/org/profile">Profile</a>
                     </li>
                     <li class="nav-item font-text mx-4 ">
-                        <a class="nav-link nav-item-sp  font-text" href="#">{{Logout}}</a>
+                        <a class="nav-link nav-item-sp " href="{% url 'Organizers:logoutUser' %} ">Logout</a>
                     </li>
         </nav>
     </div>

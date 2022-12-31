@@ -13,6 +13,9 @@ import asyncio
 import aiohttp
 
 
+from Organizers.query import queryEvents
+
+
 
 
 @login_required(login_url='/login/  ')
@@ -25,43 +28,19 @@ def renderProfile(request):
     return render(request,'Guests\profile.html')
 
 
+
 @login_required(login_url='/login/  ')
 def renderMarketplace(request):
-    list_of_all_events=EventsCreated.objects.all()
-    all_events=[]
-    event={}
-    for eve in list_of_all_events:
-        event['id']=eve.pk
-        event['name']=eve.event_name
-        event['date/time']=eve.event_date_time
-        event['desc']=eve.event_description
-        event['banner']=eve.event_banner
-        event['price']=eve.event_ticket_price
-        event['maxcap']=eve.event_maximum_capacity
-        event['available_places']=eve.event_maximum_capacity-eve.number_of_current_guests
-        event['organizer']=eve.event_organizer
-        all_events.append(event)
-        event={}
-    print(request.user.is_Organizer)
-    if request.user.is_Organizer:
-         return render(request,'Organizers\Marketplace.html',{'all_events':all_events})
+    all_events=queryEvents()
     return render(request,'Guests\Marketplace.html',{'all_events':all_events})
 
 
 
 @login_required(login_url='/login/  ')
 def renderSpecificEventPage(request,event_id):
-    event_query=EventsCreated.objects.get(pk=event_id)
-    event={}
-    event['id']=event_query.pk
-    event['name']=event_query.event_name
-    event['datetime']=str(event_query.event_date_time)
-    event['desc']=event_query.event_description
-    event['banner']=event_query.event_banner
-    event['price']=event_query.event_ticket_price
-    event['available_places']=event_query.event_maximum_capacity-event_query.number_of_current_guests
-    event['organizer']=event_query.event_organizer.username
-    return render(request,'Guests\event_info_page.html',{'all_events':event})
+    # GETTING EVENTS DATA FROM DATABASE
+    event=queryEvents("pk",event_id)
+    return render(request,'Guests\event_info_page.html',{'all_events':event[0]})
 
 
 
@@ -73,7 +52,6 @@ def match_address_with_account(ownedPublicAddress):
 
 
 async def buyTicket(request,event_id):
-    start_time=time.time()
     user_db=myGuests.objects.get(pk=request.user.pk)
     query=EventsCreated.objects.get(pk=event_id)
     
@@ -92,7 +70,6 @@ async def buyTicket(request,event_id):
     buyer_crypto_address=user_db.public_crypto_address
 
     time.sleep(5)
-    print(time.time()-start_time)
     TOKEN_ID=getTokenID(TRX_HASH) #We need to save the Token id in our database to be able to later on query the address of the owner of this Token from the Blockchain
 
 
@@ -105,6 +82,7 @@ async def buyTicket(request,event_id):
 
 
 def renderInventory(request):
+    print(request.user.pk)
     attendee=myGuests.objects.get(user_id=request.user.pk)
     userAddress=attendee.public_crypto_address
     collection=fetchNftsMetadata(userAddress)

@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from authentication.models import myUsers
-from .models import myOrganizers,EventsCreated
-
-
-
+from .models import myOrganizers,EventsCreated,ticketsMinted
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from Guests.views import queryEvents
 
 # A decorator that checks if the user is logged in. If not, it redirects to the login page.
 @login_required(login_url='/login/  ')
@@ -18,16 +19,20 @@ def renderHomepage(request):
 @login_required(login_url='/login/  ')
 def renderProfile(request):
     """
-    It takes the user's information from the database and renders it on the profile page.
+    It takes the user's information from the database and renders it on the profile page. GETTING MYORGANIZER FROM DB
     """
     user_info={}
+
     user_db=myOrganizers.objects.get(pk=request.user.pk)
     user_info['username']=request.user.username
     user_info['email']=request.user.email
     user_info['Coname']=user_db.Company_name
     return render(request,'Organizers\profile.html',{"data":user_info})
 
-
+@login_required(login_url='/login/  ')
+def renderMarketplace(request):
+    all_events=queryEvents()
+    return render(request,'Organizers\Marketplace.html',{'all_events':all_events})
 
 @login_required(login_url='/login/  ')
 def createEvents(request):
@@ -44,5 +49,27 @@ def createEvents(request):
 
         return render(request, 'Organizers\eventcreation.html')
     return render(request, 'Organizers\eventcreation.html')
+
+
+
+
+@login_required(login_url='/login/  ')
+def myEvents(request):
+    userEventsList=queryEvents('event_organizer',request.user.pk)
+    return render(request,'Organizers\ownedEvents.html',{"all_events":userEventsList})
+    
+    
+
+
+def eventDashboard(request,eventId):
+    queryTickets=ticketsMinted.objects.filter(**{"event_id":eventId})
+    eventData=[]
+    for ticket in queryTickets:
+        eventData.append({"ownerName":ticket.NFT_owner_account.username,"ownerAbrev":ticket.NFT_owner_account.username[0]+ticket.NFT_owner_account.username[-1],"ownerEmail":ticket.NFT_owner_account.email,"Token_ID":ticket.NFT_token_id})
+    return render(request,"Organizers\Dashboard.html",{"eventData":eventData})
+#logout the User
+def logoutUser(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("authentication:loginUsers"))
 
 

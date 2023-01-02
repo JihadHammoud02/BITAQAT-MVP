@@ -1,15 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
 body{
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
-  background: #eee;
-  color:#666;
+  background-color: #06182c !important;
+  color: #fff !important;
   margin: 25px;
 }
 .login-container{
   height: 100vh;
   width: 100%;
 
+}
+
+.text-color{
+  font-family:'Russo One', sans-serif !important;
+  color:#fff !important
 }
 .login-form{
   margin: auto;
@@ -40,10 +46,11 @@ body{
 
 
 .btn-color{
-    margin-top: 10px;
-    color: rgb(159, 34, 34);
-    background-color: #0e0739 !important;
-    color: white !important;
+  margin-top: 10px;
+  background-color: #0052ff !important;
+  border-color: rgb(0, 0, 0);
+  color: #fff !important;
+  font-family: 'Russo One', sans-serif !important;
 }
 
 .form-check-label{

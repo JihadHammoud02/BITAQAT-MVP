@@ -60,6 +60,7 @@ def fetchNftsMetadata(userAddress):
         #getting all NFTs metadata
         collection=[]
         liste_of_names=[]
+        print(fetched_query)
         for nft in fetched_query['nfts']:
             if nft['name']!=None and  nft['name'] not in liste_of_names: # There is a glitch where some nfts are labeled as None, it may be resolved later on in production when we choose another API.
                 collection.append({'image':nft['metadata']['image'], 'name':nft['metadata']['name']})

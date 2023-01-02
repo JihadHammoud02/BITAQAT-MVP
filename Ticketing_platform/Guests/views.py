@@ -1,17 +1,14 @@
 from django.shortcuts import render
-import requests
+import datetime
 from Organizers.models import EventsCreated
 from Organizers.models import ticketsMinted
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from authentication.models import myUsers
 from Guests.models import myGuests
-from django.http import HttpResponseBadRequest
 import time
 from .utils import mintNft, getTokenID, jsonifyString, fetchNftsMetadata
 import asyncio
-import aiohttp
-
 
 from Organizers.query import queryEvents
 
@@ -20,7 +17,10 @@ from Organizers.query import queryEvents
 
 @login_required(login_url='/login/  ')
 def renderHomepage(request):
-    return render(request, 'Guests\homepage.html', {"user_name": request.user.username})
+    eventNumber=queryEvents()[1]
+    attandeesNumber=len(myGuests.objects.all().filter())
+    ticketsNumber=len(ticketsMinted.objects.all().filter())
+    return render(request, 'Guests\homepage.html', {"user_name": request.user.username,"eventNumber":eventNumber,"attandeesNumber":attandeesNumber,'ticketsNumber':ticketsNumber})
 
 
 @login_required(login_url='/login/  ')
@@ -31,7 +31,7 @@ def renderProfile(request):
 
 @login_required(login_url='/login/  ')
 def renderMarketplace(request):
-    all_events=queryEvents()
+    all_events=queryEvents()[0]
     return render(request,'Guests\Marketplace.html',{'all_events':all_events})
 
 
@@ -40,7 +40,7 @@ def renderMarketplace(request):
 def renderSpecificEventPage(request,event_id):
     # GETTING EVENTS DATA FROM DATABASE
     event=queryEvents("pk",event_id)
-    return render(request,'Guests\event_info_page.html',{'all_events':event[0]})
+    return render(request,'Guests\event_info_page.html',{'all_events':event[0][0]})
 
 
 
@@ -82,7 +82,6 @@ async def buyTicket(request,event_id):
 
 
 def renderInventory(request):
-    print(request.user.pk)
     attendee=myGuests.objects.get(user_id=request.user.pk)
     userAddress=attendee.public_crypto_address
     collection=fetchNftsMetadata(userAddress)

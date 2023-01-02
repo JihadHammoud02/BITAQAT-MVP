@@ -1,0 +1,100 @@
+.bg {
+    background-color: #1E1E1E !important;
+    height: 100% !important;
+  }
+  
+  .nav-ele {
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 28px;
+    color: #b7b7b7 !important;
+  }
+  
+  .navr {
+    background-color: transparent !important;
+  }
+
+  
+  .first-child {
+    margin-left: 10px !important;
+    float: left !important;
+  }
+  
+  .sec {
+    list-style: none !important;
+    margin: 10px !important;
+    float: right !important;
+  }
+  
+  @media screen and (max-width: 1099px) {
+    
+    .nav-btn {
+        font-family: "Lilita One", cursive;
+        font-size: 15px;
+        padding: 4px 24px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        border-radius: 50px;
+        color: white !important;
+      }
+      .title {
+        color: whitesmoke;
+        font-size: 1.2rem !important;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 800;
+        width: 70% !important;
+        text-align: center;
+        margin-top: 40%;
+      }
+  }
+  @media screen and (min-width: 1100px) {
+    .nav-btn {
+      font-family: "Lilita One", cursive;
+      font-size: 15px;
+      padding: 10px 30px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      border-radius: 50px;
+      color: white !important;
+    }
+    .title {
+      color: whitesmoke;
+      font-size: 2rem;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 800;
+      width: 50% !important;
+      text-align: center !important;
+      padding-top: 5%;
+    }
+  }
+  .title-container {
+    margin-top: 5%;
+  }
+  
+  .btn-gradient {
+    background-color: rgb(245, 0, 74);
+    border-color: rgb(0, 0, 0);
+    color: rgba(var(--text-color));
+  }
+  
+  .border-bottom {
+    position: absolute;
+    top: 200% !important;
+    border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+  }
+  
+  .bg-red {
+    background-color: rgb(245, 0, 74);
+    opacity: 1px;
+  }
+  
+  footer {
+    position: fixed !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+  }/*# sourceMappingURL=g.css.map */

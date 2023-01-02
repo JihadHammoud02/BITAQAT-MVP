@@ -103,3 +103,8 @@ def createAccounts(request):
         else:
             error_msg = "An Account with this username already exists"
             return render(request, "authentication\Registration.html", {"error_msg_username": error_msg})
+
+
+
+def landingPage(request):
+    return render(request,"authentication\landingPage.html")

@@ -1,7 +1,7 @@
 from authentication.models import myUsers
-from Guests.models import myGuests
+from Guests.models import myGuests,loyalGuests
 from Organizers.models import EventsCreated
-from Organizers.models import ticketsMinted
+from Organizers.models import EventsticketsMinted
 
 
 
@@ -15,16 +15,18 @@ def queryEvents(filterby=None,val=None):
     for eve in list_of_all_events:
         event['id']=eve.pk
         event['name']=eve.event_name
-        event['datetime']=eve.event_date_time.__str__()
+        event['date']=str(eve.event_date_time.date())
+        event['time']=str(eve.event_date_time.time())
         event['desc']=eve.event_description
         event['banner']=eve.event_banner
         event['price']=eve.event_ticket_price
         event['maxcap']=eve.event_maximum_capacity
         event['available_places']=eve.event_maximum_capacity-eve.number_of_current_guests
         event['organizer']=eve.event_organizer
+        event['place2']=eve.event_place
+        event['currentNumber']=eve.number_of_current_guests
         all_events.append(event)
         event={}
-        print(all_events)
     return (all_events,len(all_events))
 
 
@@ -48,3 +50,18 @@ def countAttandees(userId):
     return totalAttandees
 
 
+def loyalty(eventOrganizerId):
+    loyaltyQuery=loyalGuests.objects.filter(**{'organizer':eventOrganizerId})
+    loyalData={}
+    for attandee in loyaltyQuery:
+        loyalData[attandee.guest.username]=attandee.eventsCount
+    return loyalData
+
+
+
+def queryAttEvents(guestID,organizerID):
+    ticketsQuery=EventsticketsMinted.objects.filter(**{'NFT_owner_account':guestID,'organizer':organizerID})
+    attandedEventsMetatData=[]
+    for tickets in ticketsQuery:
+        attandedEventsMetatData.append({'name':tickets.event_id.event_name,'banner':tickets.event_id.event_banner})
+    return attandedEventsMetatData

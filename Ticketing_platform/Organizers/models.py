@@ -1,7 +1,6 @@
 from django.db import models
 from authentication.models import myUsers
-
-
+import datetime
 
 class myOrganizers(models.Model):
     user = models.OneToOneField(myUsers, on_delete=models.CASCADE,
@@ -24,12 +23,15 @@ class EventsCreated(models.Model):
 
 
 
-class ticketsMinted(models.Model):
-   event_id=models.ForeignKey(EventsCreated,on_delete=models.CASCADE)
+class EventsticketsMinted(models.Model):
+   event_id=models.ForeignKey(EventsCreated,on_delete=models.CASCADE,related_name='event_id')
    event_name=EventsCreated.event_name
    NFT_owner_address=models.CharField(max_length=600,default=None)
-   NFT_owner_account=models.ForeignKey(myUsers,on_delete=models.CASCADE)
+   NFT_owner_account=models.ForeignKey(myUsers,on_delete=models.CASCADE,related_name="event_Attandee")
    NFT_token_id=models.CharField(max_length=600,default=None)
+   organizer=models.ForeignKey(myUsers,on_delete=models.CASCADE,
+                                related_name="event_organizer",default=0)
+   checkIn_Time=models.TimeField(null=True,blank=True)
 
 
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from Organizers.models import myOrganizers as Organizers
+from Organizers.models import myOrganizers as Organizers, EventsticketsMinted
 from Guests.models import myGuests as guest
 from django.db import IntegrityError
 from .models import myUsers
@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
+from Organizers.query import queryEvents
 
 
 
@@ -107,4 +108,7 @@ def createAccounts(request):
 
 
 def landingPage(request):
-    return render(request,"authentication\landingPage.html")
+    eventNumber=queryEvents()[1]
+    attandeesNumber=len(guest.objects.all().filter())
+    ticketsNumber=len(EventsticketsMinted.objects.all().filter())
+    return render(request, 'authentication\landingPage.html', {"eventNumber":eventNumber,"attandeesNumber":attandeesNumber,'ticketsNumber':ticketsNumber})

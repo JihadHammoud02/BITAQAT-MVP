@@ -15,13 +15,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'mainpage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'eventCard.css' %}">
 </head>
 
 <body class="cs-dark">
     <div class="cs-preloader cs-white_bg cs-center">
         <div class="cs-preloader_in">
-            <img src="assets/img/logo_mini.svg" alt="Logo">
+            <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo">
         </div>
     </div>
     <!-- Start Header Section -->
@@ -38,12 +38,12 @@
                     <div class="cs-main_header_center">
                         <div class="cs-nav">
                             <ul class="cs-nav_list">
-                                <li><a href="/org/homepage" class="cs-smoth_scroll">Home</a>
+                                <li><a class="nv" href="/org/homepage">Home</a>
                                 </li>
-                                <li><a href="/org/Marketplace">Browse events</a></li>
-                                <li><a href="/org/create">Create</a></li>
-                                <li><a href="/org/myEvents">My Events</a></li>
-                                <li><a href="{% url 'Organizers:logoutUser' %}">logout</a></li>
+                                <li><a class="nv" href="/org/Marketplace">Browse events</a></li>
+                                <li><a class="nv" href="/org/create">Create</a></li>
+                                <li><a class="nv" href="/org/myEvents">My Events</a></li>
+                                <li><a class="nv" href="{% url 'Organizers:logoutUser' %}">logout</a></li>
                             </ul>
                         </div>
                     </div>
@@ -56,118 +56,40 @@
             </div>
         </div>
     </header>
-    <section class="cs-hero cs-style1 cs-bg" data-src="assets/img/hero_bg.jpeg" id="home">
-        <div class="cs-dark_overlay"></div>
+    <!-- End Header Section -->
+    <!-- End Hero -->
+    <!-- End Header Section -->
+    <div class="cs-height_80 cs-height_lg_80"></div>
+    <!-- Start Team -->
+    <section id="team">
+        <div class="cs-height_70 cs-height_lg_40"></div>
         <div class="container">
-            <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
-                <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Fill in this form<br>
-                    with the event information
-                </h1>
+            <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"
+                data-wow-delay="0.2s">
+                <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">{{guestName}}</h3>
+                <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Events Attended</h2>
             </div>
+            <div class="cs-height_50 cs-height_lg_30"></div>
+            <div class="row">
+                {% for nft in attandedEvents %}
+                <div class="nft">
+                    <div class='main'>
+                        <center> <img class='tokenImage' src="../../../media/{{nft.banner}}" width="110%">
+                        </center>
+                        <center>
+                            <h2 class="title my-2">{{nft.name}}</h2>
+                        </center>
+                    </div>
+                </div>
+                {% endfor %}
+
     </section>
-    <div class="big-main d-flex justify-content-center align-items-center">
-        <form class="main2 justify-content-center " action="{% url 'Organizers:createEvents' %}" method="post"
-            enctype="multipart/form-data">
-            {% csrf_token %}
-            <center>
-                <div class="input my-5">
-                    <div class="container-fluid div-height my-5 ">
-                        <p class="title-upl">Upload Event banner</p>
-                    </div>
-                </div>
-                <div class="input my-5   d-flex justify-content-center">
-                    <img id="event-banner" src="{% static 'images/im.png' %}" class="uploaded-img">
-                </div>
-                <div class="container-fluid d-flex justify-content-center">
-                    <input type='file' class="title input-form upload-btn" id='eventimg' name="eventimg"
-                        accept=".jpg, .jpeg, .png" onchange="loadFile(event)"></input>
-                </div>
-            </center>
 
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Event name</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <input type="text" name="eventname" class="title input-form" id="name"
-                            aria-describedby="emailHelp" placeholder="  Enter event name">
-                    </div>
-                </center>
-            </div>
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Date and time</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <input type="datetime-local" name="eventdate" class="title input-form" id="date&time"
-                            placeholder="  Enter event date and time">
-                    </div>
-                </center>
-            </div>
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Number of tickets</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <input type="number" name="maxnumber" min="0.00" class="title input-form" id="maxticket"
-                            placeholder="  Enter number of tickets ">
-                    </div>
-                </center>
-            </div>
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Price per ticket in USD</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <input type="number" name="price" min="0.00" max="10000.00" step="0.01" id="price/ticket"
-                            class="title input-form" placeholder="  Ex: 250$" />
-                    </div>
-                </center>
-            </div>
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Event place</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <input type="text" name="city" class="title input-form" id="inputCity"
-                            placeholder="  Enter city">
-                    </div>
-                </center>
-            </div>
-
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Event Description</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <textarea placeholder="Ex: Join us for a fun-filled evening of music, dancing, and mingling at our annual summer party! 
-                " class="title input-form" name="desc"></textarea>
-                    </div>
-                </center>
-            </div>
-            <center>
-                <div class="input">
-                    <div class="container-fluid ">
-                        <button type="submit" class="title input-form  btn-color ">submit</button>
-                    </div>
-                </div>
-            </center>
-        </form>
-    </div>
+    <!-- End Team -->
+    <!-- Start Footer -->
     <footer class="cs-footer text-center">
         <div class="container">
+            <div class="cs-height_100 cs-height_lg_70"></div>
             <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
                 <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" width="70px" height="70px">
             </div>
@@ -239,25 +161,18 @@
         </div>
         <div class="cs-height_25 cs-height_lg_25"></div>
     </footer>
+    <!-- End Footer -->
+    </div>
 
 
+
+    <!-- Script -->
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'jquery.slick.min.js' %}"></script>
+    <script src="{% static 'jquery.counter.min.js' %}"></script>
+    <script src="{% static 'wow.min.js' %}"></script>
+    <script src="{% static 'ripples.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
 </body>
-<script src="{% static 'jquery-3.6.0.min.js' %}"></script>
-<script src="{% static 'jquery.slick.min.js' %}"></script>
-<script src="{% static 'jquery.counter.min.js' %}"></script>
-<script src="{% static 'wow.min.js' %}"></script>
-<script src="{% static 'ripples.min.js' %}"></script>
-<script src="{% static 'main.js' %}"></script>
-
-
-<script>
-
-    var loadFile = function (event) {
-        var image = document.getElementById('event-banner');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
-</script>
-
-</script>
 
 </html>

@@ -1,31 +1,28 @@
 from django.shortcuts import render
 import datetime
 from Organizers.models import EventsCreated
-from Organizers.models import ticketsMinted
+from Organizers.models import EventsticketsMinted
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from authentication.models import myUsers
-from Guests.models import myGuests
+from Guests.models import myGuests,loyalGuests
 import time
 from .utils import mintNft, getTokenID, jsonifyString, fetchNftsMetadata
 import asyncio
-
-from Organizers.query import queryEvents
-
+from django.http import HttpResponseRedirect
+from Organizers.query import queryEvents,queryAttEvents
+from django.urls import reverse
 
 
 
 @login_required(login_url='/login/  ')
 def renderHomepage(request):
+    print(request.user)
     eventNumber=queryEvents()[1]
     attandeesNumber=len(myGuests.objects.all().filter())
-    ticketsNumber=len(ticketsMinted.objects.all().filter())
+    ticketsNumber=len(EventsticketsMinted.objects.all().filter())
     return render(request, 'Guests\homepage.html', {"user_name": request.user.username,"eventNumber":eventNumber,"attandeesNumber":attandeesNumber,'ticketsNumber':ticketsNumber})
 
-
-@login_required(login_url='/login/  ')
-def renderProfile(request):
-    return render(request,'Guests\profile.html')
 
 
 
@@ -66,19 +63,26 @@ async def buyTicket(request,event_id):
     await asyncio.wait([apiResponse])
     apiResponse=apiResponse.result()
         #getting the transaction hash to use it to get the Token id of the minted NFT
+    print(apiResponse)
     TRX_HASH=str(apiResponse['transaction_hash'])
     buyer_crypto_address=user_db.public_crypto_address
 
-    time.sleep(5)
+    time.sleep(6)
     TOKEN_ID=getTokenID(TRX_HASH) #We need to save the Token id in our database to be able to later on query the address of the owner of this Token from the Blockchain
-
-
-
-
-
-    ticket_query_to_db=ticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=TOKEN_ID)
+    print("hello")
+    print(type(query.event_organizer))
+    ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=TOKEN_ID,organizer=query.event_organizer)
     ticket_query_to_db.save()
-    return renderMarketplace(request)
+
+    loyaltyQuery=loyalGuests.objects.filter(**{'organizer':query.event_organizer,"guest":request.user.pk})
+    if len(loyaltyQuery)!=0:
+        loyaltyQuery[0].eventsCount+=1
+        loyaltyQuery[0].save()
+    else:
+        loyalty=loyalGuests(guest=request.user,organizer=query.event_organizer,eventsCount=1)
+        loyalty.save()
+
+    return HttpResponseRedirect(reverse('Guests:renderMarketplace'))
 
 
 def renderInventory(request):
@@ -86,5 +90,6 @@ def renderInventory(request):
     userAddress=attendee.public_crypto_address
     collection=fetchNftsMetadata(userAddress)
     return render(request,'Guests\Inventory.html',{"collection":collection})
+
 
 

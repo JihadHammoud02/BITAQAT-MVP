@@ -824,6 +824,13 @@ pre {
   max-height: 340px;
   overflow-y: scroll; }
 
+
+.nv:hover {
+  color: #4e52d0 !important;
+  }
+.nv {
+color: white !important;
+}
 .container {
   width: 100%;
   padding-right: 10px;
@@ -14523,3 +14530,5 @@ File: scss
 @media (max-width: 991.98px) {
   .do-block {
     display: block !important; } }
+
+

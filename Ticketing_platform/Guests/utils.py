@@ -3,7 +3,7 @@ import json
 import os
 from Organizers.models import EventsticketsMinted
 from asgiref.sync import sync_to_async
-
+from moralis import evm_api
 """
 FUNCTIONS RESPONSIBLE FOR EXTERNAL DATA GATHERING
 """
@@ -52,25 +52,26 @@ def formatList(object):
     return finalListe
 
 def fetchNftsMetadata(userAddress):
-        url = "https://api.nftport.xyz/v0/accounts/"+userAddress+"?chain=polygon&page_size=50&include=metadata"
 
-        headers = {
-            "accept": "application/json",
-            "Authorization": "58ad0ea8-5abc-423d-bbcc-8ca3c344f2b8"
-        }
+    listTokens=formatList(EventsticketsMinted.objects.values_list("NFT_token_id"))
+    collection=[]
+    api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
+    params = {
+        "address": userAddress, 
+        "chain": "polygon", 
+        "format": "decimal", 
+        "limit": 20, 
+        "token_addresses": [], 
+        "cursor": "", 
+        "normalizeMetadata": True, 
+    }
 
-        response = requests.get(url, headers=headers)
-
-        listTokens=formatList(EventsticketsMinted.objects.values_list('NFT_token_id'))
-        fetched_query=jsonifyString(response.text)
-        print(listTokens)
-
-        #getting all NFTs metadata
-        collection=[]
-        liste_of_names=[]
-        for nft in fetched_query['nfts']:
-            print(nft['name'])
-            if nft['name']!=None and  nft['name'] not in liste_of_names and nft['token_id'] in listTokens:  # There is a glitch where some nfts are labeled as None, it may be resolved later on in production when we choose another API.
-                collection.append({'image':nft['metadata']['image'], 'name':nft['metadata']['name']})
-                liste_of_names.append(nft['metadata']['name'])
-        return collection
+    result = evm_api.nft.get_wallet_nfts(
+        api_key=api_key,
+        params=params,
+    )
+    for nft in result['result']:
+        if nft['token_id'] in listTokens:
+            nft_metadata=jsonifyString(nft['metadata'])
+            collection.append({"image":nft_metadata['image'],'name':nft_metadata['name']})
+    return collection

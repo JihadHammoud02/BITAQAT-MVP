@@ -63,13 +63,12 @@ async def buyTicket(request,event_id):
     await asyncio.wait([apiResponse])
     apiResponse=apiResponse.result()
         #getting the transaction hash to use it to get the Token id of the minted NFT
-    print(apiResponse)
-    TRX_HASH=str(apiResponse['transaction_hash'])
+    CROSSMINTID=str(apiResponse)
     buyer_crypto_address=user_db.public_crypto_address
 
-    time.sleep(6)
-    TOKEN_ID=getTokenID(TRX_HASH) #We need to save the Token id in our database to be able to later on query the address of the owner of this Token from the Blockchain
-    print("hello")
+
+    
+    TOKEN_ID=getTokenID(CROSSMINTID) #We need to save the Token id in our database to be able to later on query the address of the owner of this Token from the Blockchain
     print(type(query.event_organizer))
     ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=TOKEN_ID,organizer=query.event_organizer)
     ticket_query_to_db.save()

@@ -14,34 +14,52 @@ def jsonifyString(object):
     return json.loads(object)
 
 
+
+
 @sync_to_async
 def  mintNft(nftName,nftDescription,nftImg,toAddress):
 
-    url = "https://api.nftport.xyz/v0/mints/easy/files?chain=polygon&name="+nftName+"&description="+nftDescription+"&mint_to_address="+toAddress
-    working_directory = os.getcwd()
-    files = {"file": (working_directory+"/media/"+nftImg  , open(working_directory+"/media/"+nftImg , "rb"), "image/jpg")}
+    url = "https://staging.crossmint.io/api/2022-06-09/collections/default-polygon/nfts"
+
+    payload = {
+        "recipient": "polygon:"+toAddress,
+        "metadata": {
+            "name": nftName,
+            "image": nftImg,
+            "description": nftDescription
+        }
+    }
     headers = {
-        "accept": "application/json",
-        "Authorization": "58ad0ea8-5abc-423d-bbcc-8ca3c344f2b8"
+        "content-type": "application/json",
+        "x-client-secret": "sk_test.iSjwcEK4.7miWBYLfMymwL5Hm9JMo30QzVUN75NTN",
+        "x-project-id": "7b44996c-8c2b-4875-a677-8b3e2627ed7a"
     }
 
-    response_from_api : str =  requests.post(url, files=files, headers=headers)
-    return jsonifyString(response_from_api.text)
+    response = requests.post(url, json=payload, headers=headers)
+
+    fetchedResponse=jsonifyString(response.text)
+    print("minted Successfully")
+    return fetchedResponse['id']
 
 
 
-def getTokenID(trxHASH):
-    url = "https://api.nftport.xyz/v0/mints/"+trxHASH+"?chain=polygon"
+def getTokenID(CrossMintId):  
 
-    headers = {
-        "accept": "application/json",
-        "Authorization": "58ad0ea8-5abc-423d-bbcc-8ca3c344f2b8"
-    }
+    pending=True  
+    while pending==True:
+        url = "https://staging.crossmint.io/api/2022-06-09/collections/default-polygon/nfts/"+CrossMintId
 
-    response =  requests.get(url, headers=headers)
-    fetched_query=jsonifyString(response.text)
-    print(fetched_query)
-    return fetched_query['token_id']
+        headers = {
+            "x-client-secret": "sk_test.iSjwcEK4.7miWBYLfMymwL5Hm9JMo30QzVUN75NTN",
+            "x-project-id": "7b44996c-8c2b-4875-a677-8b3e2627ed7a"
+         }
+
+        response = requests.get(url, headers=headers)
+        fetchedResponse=jsonifyString(response.text)
+        if fetchedResponse['onChain']["status"]!="pending":
+            pending=False
+    print(fetchedResponse)
+    return fetchedResponse["onChain"]["tokenId"]
 
 
 
@@ -58,7 +76,7 @@ def fetchNftsMetadata(userAddress):
     api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
     params = {
         "address": userAddress, 
-        "chain": "polygon", 
+        "chain": "mumbai", 
         "format": "decimal", 
         "limit": 20, 
         "token_addresses": [], 
@@ -73,5 +91,6 @@ def fetchNftsMetadata(userAddress):
     for nft in result['result']:
         if nft['token_id'] in listTokens:
             nft_metadata=jsonifyString(nft['metadata'])
+            print(nft_metadata)
             collection.append({"image":nft_metadata['image'],'name':nft_metadata['name']})
     return collection

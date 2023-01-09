@@ -76,6 +76,16 @@
     <!-- Start Services -->
     <!-- End Services -->
     <!-- Start About -->
+    <div id="coverScreen" class="LockOn">
+    </div>
+    <script>
+        $(window).on('load', function () {
+            $("#coverScreen").hide();
+        });
+        $("#ucNoteGrid_grdViewNotes_ctl01_btnPrint").click(function () {
+            $("#coverScreen").show();
+        });
+    </script>
     <section id="about">
         <div class="container">
             <div class="row align-items-center flex-column-reverse-lg">
@@ -440,6 +450,15 @@
     <script src="{% static 'wow.min.js' %}"></script>
     <script src="{% static 'ripples.min.js' %}"></script>
     <script src="{% static 'main.js' %}"></script>
+    <script>
+        function showLoaderOnClick(url) {
+            showLoader();
+            window.location = url;
+        }
+        function showLoader() {
+            $('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
+        }
+    </script>
 </body>
 
 </html>

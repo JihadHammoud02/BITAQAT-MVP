@@ -4,7 +4,6 @@ Some basic commands for Django, gitand github
 
 ## Django Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
 pip install Django==4.1.4

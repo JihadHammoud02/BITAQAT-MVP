@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('org/',include('Organizers.urls')),
-    path('guest/',include('Guests.urls'))
+    path('guest/',include('Guests.urls')),
 
 ]
 

@@ -33,6 +33,11 @@ python manage.py migrate
 ```python
 python manage.py makemigrations
 ```
+### Install all dependencies:
+Browse to the directory where requirements.txt is and:
+```python
+ pip install -r requirements.txt 
+```
 
 
 ## Version control rules:

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Registration.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>CreateAccount</title>
+</head>
+
+<body>
+
+
+
+    <div class="login-container d-flex align-items-center justify-content-center ">
+        <form class="login-form text-center" onsubmit="return verify_password()"
+            action="{% url 'authentication:createAccounts' %}" method="post">
+            {% csrf_token %}
+            <h1 class="mb-5 font-weight-light text-uppercase text-color">Sign up</h1>
+
+            <div class="form-group">
+                <input type="email" name="emailadd"
+                    class="form-control rounded-pill form-control-lg form-control rounded-pill form-control-lg rounded-pill form-control rounded-pill form-control-lg-lg"
+                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                {% if error_msg_email %}
+                <small id="emailerror" class="" style=" color: red ; font-size: medium; ">An Account with this email
+                    address already exists.
+                </small>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <input type="text" name="username" class="form-control rounded-pill form-control-lg" id="username"
+                    placeholder="Enter username">
+                {% if error_msg_username %}
+                <small id="usererror" class="" style=" color: red ; font-size: medium; ">An Account with this
+                    username already exists.
+                </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <input type="password" name="pswrd" class="form-control rounded-pill form-control-lg"
+                    id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control rounded-pill form-control-lg" id="passwordverification"
+                    placeholder="Confirm password">
+            </div>
+            <!-- 
+            <div class="form-group">
+                <input class="form-check-input" type="radio" value="Event Organizer" id="EO" name="res"
+                    onclick="return show_organisers_more_inputs()">
+                <label class="form-check-label" for="EO">
+                    Event Organizer
+                </label>
+            </div>
+
+            <div class="form-groupe">
+                <input class="form-check-input" type="radio" value="Event Attandee" id="EA" name="res"
+                    onclick="return remove_ele()" checked>
+                <label class="form-check-label" for="EA">
+                    Event Attandee
+                </label>
+            </div> -->
+
+
+            <button type="submit" class="btn btn-block rounded-pill btn-lg btn-color">Register</button>
+            <p class="mt-3 font-weight-normal">Already have an Account? <a href="/login"><strong>Login</strong></a>
+            </p>
+            <img src="{% static 'images\RegistrationIcon.svg'%}" class="img-placer" height="200px">
+    </div>
+
+
+
+
+
+
+    <script>
+        let confirmed_password = document.querySelector("#passwordverification");
+        let real_password = document.querySelector("#exampleInputPassword1");
+        function verify_password() {
+            if (confirmed_password.value != real_password.value) {
+                alert("Password dosen't match")
+                window.location.href = "/signup"
+            }
+
+        }
+
+
+
+        // function show_organisers_more_inputs() {
+
+
+        //     let added_inputs_location = document.getElementById("inputCity")
+        //     let html = `
+        //         <div class="form-group my-3">
+        //             <input type="text" name="organisation" class="form-control rounded-pill form-control-lg" id="Coname" placeholder="Enter Company name">
+        //         </div>
+        //     `
+        //     added_inputs_location.insertAdjacentHTML('afterend', html)
+
+
+        //     return null
+        // }
+        // function remove_ele() {
+        //     let ele = document.getElementById("Coname")
+        //     ele.remove()
+        // }
+
+    </script>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

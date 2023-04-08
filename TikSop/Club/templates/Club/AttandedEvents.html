@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    {% load static %}
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Laralink">
+    <!-- Favicon Icon -->
+    <link rel="icon" href="assets/img/favicon.png" />
+    <!-- Site Title -->
+    <title>Vesperi</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'eventCard.css' %}">
+</head>
+
+<body class="cs-dark">
+    <div class="cs-preloader cs-white_bg cs-center">
+        <div class="cs-preloader_in">
+            <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo">
+        </div>
+    </div>
+    <!-- Start Header Section -->
+    <header class="cs-site_header cs-style1 cs-sticky-header cs-primary_color text-uppercase cs-white_bg">
+        <div class="cs-main_header">
+            <div class="container">
+                <div class="cs-main_header_in">
+                    <div class="cs-main_header_left">
+                        <a class="cs-site_branding cs-accent_color" href="index.html">
+                            <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" class="cs-hide_dark">
+                            <img src="{% static 'images/Haffel-full-centered.svg' %}" alt="Logo">
+                        </a>
+                    </div>
+                    <div class="cs-main_header_center">
+                        <div class="cs-nav">
+                            <ul class="cs-nav_list">
+                                <li><a class="nv" href="/org/homepage">Home</a>
+                                </li>
+                                <li><a class="nv" href="/org/Marketplace">Browse events</a></li>
+                                <li><a class="nv" href="/org/create">Create</a></li>
+                                <li><a class="nv" href="/org/myEvents">My Events</a></li>
+                                <li><a class="nv" href="{% url 'Club:logoutUser' %}">logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="cs-main_header_right">
+                        <div class="cs-toolbox">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header Section -->
+    <!-- End Hero -->
+    <!-- End Header Section -->
+    <div class="cs-height_80 cs-height_lg_80"></div>
+    <!-- Start Team -->
+    <section id="team">
+        <div class="cs-height_70 cs-height_lg_40"></div>
+        <div class="container">
+            <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"
+                data-wow-delay="0.2s">
+                <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">{{guestName}}</h3>
+                <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Events Attended</h2>
+            </div>
+            <div class="cs-height_50 cs-height_lg_30"></div>
+            <div class="row">
+                {% for nft in attandedEvents %}
+                <div class="nft">
+                    <div class='main'>
+                        <center> <img class='tokenImage' src="../../../media/{{nft.banner}}" width="110%">
+                        </center>
+                        <center>
+                            <h2 class="title my-2">{{nft.name}}</h2>
+                        </center>
+                    </div>
+                </div>
+                {% endfor %}
+
+    </section>
+
+    <!-- End Team -->
+    <!-- Start Footer -->
+    <footer class="cs-footer text-center">
+        <div class="container">
+            <div class="cs-height_100 cs-height_lg_70"></div>
+            <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" width="70px" height="70px">
+            </div>
+            <div class="cs-height_25 cs-height_lg_25"></div>
+            <div class="cs-social_btns cs-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                        <path fill="currentColor"
+                            d="m23.446 18l.889-5.791h-5.557V8.451c0-1.584.776-3.129 3.265-3.129h2.526V.392S22.277.001 20.085.001c-4.576 0-7.567 2.774-7.567 7.795v4.414H7.431v5.791h5.087v14h6.26v-14z" />
+                    </svg>
+                </a>
+                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578a9.3 9.3 0 0 1-2.958 1.13a4.66 4.66 0 0 0-7.938 4.25a13.229 13.229 0 0 1-9.602-4.868c-.4.69-.63 1.49-.63 2.342A4.66 4.66 0 0 0 3.96 9.824a4.647 4.647 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568a4.692 4.692 0 0 1-2.104.08a4.661 4.661 0 0 0 4.352 3.234a9.348 9.348 0 0 1-5.786 1.995a9.5 9.5 0 0 1-1.112-.065a13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254c0-.2-.005-.402-.014-.602a9.47 9.47 0 0 0 2.323-2.41l.002-.003Z" />
+                    </svg>
+                </a>
+                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 48 48">
+                        <mask id="svgIDa1">
+                            <g fill="none">
+                                <path fill="#fff" stroke="#fff" stroke-linejoin="round" stroke-width="4"
+                                    d="M34 6H14a8 8 0 0 0-8 8v20a8 8 0 0 0 8 8h20a8 8 0 0 0 8-8V14a8 8 0 0 0-8-8Z" />
+                                <path fill="#000" stroke="#000" stroke-linejoin="round" stroke-width="4"
+                                    d="M24 32a8 8 0 1 0 0-16a8 8 0 0 0 0 16Z" />
+                                <path fill="#000" d="M35 15a2 2 0 1 0 0-4a2 2 0 0 0 0 4Z" />
+                            </g>
+                        </mask>
+                        <path fill="currentColor" d="M0 0h48v48H0z" mask="url(#svgIDa1)" />
+                    </svg>
+                </a>
+                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <g fill="none">
+                            <g clip-path="url(#svgIDa2)">
+                                <path fill="currentColor"
+                                    d="M23.5 6.507a2.786 2.786 0 0 0-.766-1.27a3.05 3.05 0 0 0-1.338-.742C19.518 4 11.994 4 11.994 4a76.624 76.624 0 0 0-9.39.47a3.16 3.16 0 0 0-1.338.76c-.37.356-.638.795-.778 1.276A29.09 29.09 0 0 0 0 12c-.012 1.841.151 3.68.488 5.494c.137.479.404.916.775 1.269c.371.353.833.608 1.341.743c1.903.494 9.39.494 9.39.494a76.8 76.8 0 0 0 9.402-.47a3.05 3.05 0 0 0 1.338-.742a2.78 2.78 0 0 0 .765-1.27A28.38 28.38 0 0 0 24 12.023a26.579 26.579 0 0 0-.5-5.517ZM9.602 15.424V8.577l6.26 3.424l-6.26 3.423Z" />
+                            </g>
+                            <defs>
+                                <clipPath id="svgIDa2">
+                                    <path fill="#fff" d="M0 0h24v24H0z" />
+                                </clipPath>
+                            </defs>
+                        </g>
+                    </svg>
+                </a>
+                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15">
+                        <path fill="currentColor"
+                            d="M5 4.768a.5.5 0 0 1 .761.34l.14.836a.5.5 0 0 1-.216.499l-.501.334A4.501 4.501 0 0 1 5 5.5v-.732ZM9.5 10a4.5 4.5 0 0 1-1.277-.184l.334-.5a.5.5 0 0 1 .499-.217l.836.14a.5.5 0 0 1 .34.761H9.5Z" />
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M0 7.5a7.5 7.5 0 1 1 3.253 6.182l-2.53 1.265a.5.5 0 0 1-.67-.67l1.265-2.53A7.467 7.467 0 0 1 0 7.5Zm4.23-3.42l.206-.138a1.5 1.5 0 0 1 2.311 1.001l.14.837a1.5 1.5 0 0 1-.648 1.495l-.658.438A4.522 4.522 0 0 0 7.286 9.42l.44-.658a1.5 1.5 0 0 1 1.494-.648l.837.14a1.5 1.5 0 0 1 1.001 2.311l-.138.207a.5.5 0 0 1-.42.229h-1A5.5 5.5 0 0 1 4 5.5v-1a.5.5 0 0 1 .23-.42Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+            <div class="cs-height_30 cs-height_lg_30"></div>
+        </div>
+        <div class="cs-height_85 cs-height_lg_25"></div>
+        <div class="container">
+            <div class="cs-copyright text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">Copyright ©
+                2022.
+                All Rights Reserved by <span class="cs-primary_font cs-primary_color">AENFT</span></div>
+        </div>
+        <div class="cs-height_25 cs-height_lg_25"></div>
+    </footer>
+    <!-- End Footer -->
+    </div>
+
+
+
+    <!-- Script -->
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'jquery.slick.min.js' %}"></script>
+    <script src="{% static 'jquery.counter.min.js' %}"></script>
+    <script src="{% static 'wow.min.js' %}"></script>
+    <script src="{% static 'ripples.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+</body>
+
+</html>

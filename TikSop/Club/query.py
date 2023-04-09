@@ -14,11 +14,10 @@ def queryEvents(filterby=None,val=None):
     event={}
     for eve in list_of_all_events:
         event['id']=eve.pk
-        event['name']=eve.event_name
+        event['name']=str(eve.Team1Name)+" vs "+str(eve.Team2Name)
         event['date']=str(eve.event_date_time.date())
         event['time']=str(eve.event_date_time.time())
-        event['desc']=eve.event_description
-        event['banner']=eve.event_banner
+        event['banner']=eve.Team1Logo
         event['price']=eve.event_ticket_price
         event['maxcap']=eve.event_maximum_capacity
         event['available_places']=eve.event_maximum_capacity-eve.number_of_current_Fan

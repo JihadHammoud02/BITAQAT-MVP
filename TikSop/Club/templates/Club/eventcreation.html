@@ -40,9 +40,9 @@
                             <ul class="cs-nav_list">
                                 <li><a href="/org/homepage" class="cs-smoth_scroll">Home</a>
                                 </li>
-                                <li><a href="/org/Marketplace">Browse events</a></li>
+                                <li><a href="/org/Marketplace">Upcoming Games</a></li>
                                 <li><a href="/org/create">Create</a></li>
-                                <li><a href="/org/myEvents">My Events</a></li>
+                                <li><a href="/org/myEvents">My Games</a></li>
                                 <li><a href="{% url 'Club:logoutUser' %}">logout</a></li>
                             </ul>
                         </div>
@@ -77,11 +77,11 @@
                 </div>
                 <center>
                     <div class="container-fluid ">
-                        <input type="text" name="eventname" class="title input-form" id="name1"
-                            aria-describedby="emailHelp" placeholder="  Enter team name and upload logo">
+                        <input type="text" name="name1" class="title input-form" id="name1" aria-describedby="emailHelp"
+                            placeholder="  Enter team name and upload logo">
                     </div>
                     <div class="container-fluid d-flex justify-content-center">
-                        <input type='file' class="title input-form upload-btn" id='Team1' name="eventimg"
+                        <input type='file' class="title input-form upload-btn" id='Team1' name="logo1"
                             accept=".jpg, .jpeg, .png" text="kak"></input>
                     </div>
                 </center>
@@ -93,11 +93,11 @@
                 </div>
                 <center>
                     <div class="container-fluid ">
-                        <input type="text" name="eventname" class="title input-form" id="name2"
-                            aria-describedby="emailHelp" placeholder="  Enter team name and upload logo">
+                        <input type="text" name="name2" class="title input-form" id="name2" aria-describedby="emailHelp"
+                            placeholder="  Enter team name and upload logo">
                     </div>
                     <div class="container-fluid d-flex justify-content-center">
-                        <input type='file' class="title input-form upload-btn" id='Team2' name="eventimg"
+                        <input type='file' class="title input-form upload-btn" id='Team2' name="logo2"
                             accept=".jpg, .jpeg, .png" text="kak"></input>
                     </div>
                 </center>
@@ -123,6 +123,22 @@
                     <div class="container-fluid ">
                         <input type="number" name="maxnumber" min="0.00" class="title input-form" id="maxticket"
                             placeholder="  Enter number of tickets ">
+                    </div>
+                </center>
+            </div>
+            <div class="input my-5">
+
+                <div class="container-fluid div-height ">
+                    <p class="titles">Sport Categorie</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <select class="form-select title input-form" aria-label="Default select example"
+                            name="categorie">
+                            {% for categorie in categories %}
+                            <option value={{categorie}} class="title input-form">{{categorie}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </center>
             </div>
@@ -155,24 +171,39 @@
             </div>
             <div class="input my-5">
                 <div class="form-group mx-5">
-                    <input class="form-check-input" type="radio" id="priceCap" name="btn" onclick="enableInput()">
+                    <input class="form-check-input" type="radio" id="priceCap" name="check" onclick="enableInput()"
+                        value="0">
                     <label class="form-check-label" for="priceCap">
                         Set a price limit
                     </label>
                     <input type="number" name="capnumber" min="0.00" class=" title input-form w-25 mx-5" id="capPrice">
                 </div>
                 <div class="form-group mx-5 my-4">
-                    <input class="form-check-input" type="radio" id="sdb" name="btn" onclick="disableInput()">
+                    <input class="form-check-input" type="radio" id="sdb" name="check" onclick="disableInput()"
+                        value="1">
                     <label class="form-check-label" for="sdb">
                         Not tradable
                     </label>
                 </div>
                 <div class="form-group mx-5 my-4">
-                    <input class="form-check-input" type="radio" id="free" name="btn" onclick="disableInput()">
+                    <input class="form-check-input" type="radio" id="free" name="check" onclick="disableInput()"
+                        value="2">
                     <label class="form-check-label" for="free">
                         No rules
                     </label>
                 </div>
+            </div>
+            <div class="input my-5">
+
+                <div class="container-fluid div-height ">
+                    <p class="titles">Royalty rate</p>
+                </div>
+                <center>
+                    <div class="container-fluid ">
+                        <input type="number" name="royap" min="0.00" max="10000.00" step="0.01" id="royl"
+                            class="title input-form" placeholder="10%" />
+                    </div>
+                </center>
             </div>
             <center>
                 <div class="input my-5">

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from authentication.models import myUsers
-from .models import myClub,EventsCreated,EventsticketsMinted
+from .models import myClub,EventsCreated,EventsticketsMinted,SportCategories
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from Club.query import queryEvents,countAttandees,loyalty,queryAttEvents
@@ -44,19 +44,29 @@ def renderMarketplace(request):
 
 @login_required(login_url='/login/  ')
 def createEvents(request):
+    CategoriesQuery=SportCategories.objects.all()
+    Category=[]
+    for category in CategoriesQuery:
+        Category.append(category.name)
     if request.method=='POST':
-        event_name_client=request.POST.get('eventname')
-        event_date_client=request.POST.get('eventdate')
-        event_max_capacity_client=request.POST.get('maxnumber')
-        event_ticket_price_client=request.POST.get('price')
-        event_place_client=request.POST.get('city')
-        event_description_client=request.POST.get('desc')
-        event_banner_client=request.FILES['eventimg']
-        event_created=EventsCreated(event_organizer=request.user,event_name=event_name_client,event_date_time=event_date_client,event_maximum_capacity=event_max_capacity_client,event_ticket_price=event_ticket_price_client,event_place=event_place_client,event_description=event_description_client,number_of_current_Fan=0,event_banner=event_banner_client)
+        category2=request.POST.get('categorie')
+        Team1name1=request.POST.get('name1')
+        Team2name2=request.POST.get('name2')
+        Team1logo1=request.FILES['logo1']
+        Team2logo2=request.FILES['logo2']
+        game_date_client=request.POST.get('eventdate')
+        game_max_capacity_client=request.POST.get('maxnumber')
+        game_ticket_price_client=request.POST.get('price')
+        game_place_client=request.POST.get('city')
+        SecondaryMR=request.POST.getlist('check')
+        SecondaryMRN=request.POST.get('capnumber')
+        royalty=request.POST.get('royap')
+        
+        event_created=EventsCreated(event_organizer=request.user,Team1Name=Team1name1,Team2Name=Team2name2,Team1Logo=Team1logo1,Team2Logo=Team2logo2,event_date_time=game_date_client,event_maximum_capacity=game_max_capacity_client,event_ticket_price=game_ticket_price_client,event_place=game_place_client,number_of_current_Fan=0,royaltyRate=royalty,SecondarySalesRules=SecondaryMR,SecondarySalesCapPrice=SecondaryMRN,category=category2)
         event_created.save()
 
         return render(request, 'Club\eventcreation.html')
-    return render(request, 'Club\eventcreation.html')
+    return render(request, 'Club\eventcreation.html',{"categories":Category})
 
 
 

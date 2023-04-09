@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from authentication.models import myUsers
-from .models import myClub,EventsCreated,EventsticketsMinted,SportCategories
+from .models import myClub,EventsCreated,EventsticketsMinted,SportCategories,clubData
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from Club.query import queryEvents,countAttandees,loyalty,queryAttEvents
@@ -105,3 +105,23 @@ def checkInGuest(request,mintedID_DB):
     mintedTicketQuery.save()
     return HttpResponseRedirect(reverse("Club:eventDashboard",args=(mintedTicketQuery.event_id.pk,)))
 
+def getClubData(request):
+    query_clubData=clubData.objects.filter(**{"clubId":request.user.pk})
+    
+    if request.method=='POST':
+        cname=request.POST.get('name1')
+        clogo=request.FILES['logo1']
+        cstadium=request.FILES['stad']
+
+        RegisterDb=clubData(clubId=request.user,stadiumImage=cstadium,teamLogo=clogo,clubName=cname)
+        RegisterDb.save()
+    else:
+        
+        if len(query_clubData)!=0:
+            stadium=query_clubData[len(query_clubData)-1].stadiumImage
+            name=query_clubData[len(query_clubData)-1].clubName
+            logo=query_clubData[len(query_clubData)-1].teamLogo
+            container={"stadium":stadium,"name":name,"logo":logo}
+            print('yes')
+            return render(request,'Club\MyClub.html',{"data":container})
+    return render(request,'Club\MyClub.html')

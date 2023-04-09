@@ -41,3 +41,10 @@ class EventsticketsMinted(models.Model):
 
 class SportCategories(models.Model):
    name=models.CharField(max_length=500,default=None)
+
+
+class clubData(models.Model):
+   clubId=models.ForeignKey(myUsers,on_delete=models.CASCADE,related_name="clubId")
+   stadiumImage=models.ImageField(upload_to='', default=None,null=True, blank=True)
+   teamLogo=models.ImageField(upload_to='', default=None,null=True, blank=True)
+   clubName=models.CharField(max_length=600,default=None)

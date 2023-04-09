@@ -378,3 +378,15 @@ border-color: rgb(221, 214, 216);
   .text-color{
     color: white !important;
   }
+
+
+.headerData{
+    margin-bottom: 440px !important;
+}
+
+.stadium-image{
+width: 100% !important;
+height: 100% !important;
+}
+
+

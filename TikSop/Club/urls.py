@@ -16,6 +16,7 @@ urlpatterns = [
     path('Dashboard/<str:eventId>/',views.eventDashboard,name='eventDashboard'),
     path('userData/<str:guestID>/<str:guestName>/',views.renderAttandedEvents,name='renderAttandedEvents'),
     path('checkIn/<str:mintedID_DB>/',views.checkInGuest,name='checkInGuest'),
+    path('MyClub/',views.getClubData,name='MyClub'),
 
     
 ]

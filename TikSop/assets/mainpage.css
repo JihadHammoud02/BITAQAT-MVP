@@ -55,6 +55,7 @@ height: 48px;
 top: 148px;
 text-align: center;
 font-family: 'Poppins', sans-serif;
+background-color: #06182c;
 
 }
 
@@ -377,3 +378,15 @@ border-color: rgb(221, 214, 216);
   .text-color{
     color: white !important;
   }
+
+
+.headerData{
+    margin-bottom: 440px !important;
+}
+
+.stadium-image{
+width: 100% !important;
+height: 100% !important;
+}
+
+

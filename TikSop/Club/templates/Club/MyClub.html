@@ -113,60 +113,6 @@
                 </div>
             </div>
     </section>
-    <div class="big-main d-flex justify-content-center align-items-center" style="margin-top: -460px;">
-        <form class="main2 justify-content-center " action="{% url 'Club:MyClub' %}" method="post"
-            enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Change your Club Name</p>
-                </div>
-                <center>
-                    <div class="container-fluid ">
-                        <input type="text" name="name1" class="title input-form" id="name1" aria-describedby="emailHelp"
-                            placeholder="  Enter team name">
-                    </div>
-                </center>
-            </div>
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">change your Club Logo</p>
-                </div>
-                <center>
-                    <div class="container-fluid d-flex justify-content-center">
-                        <input type='file' class="title input-form upload-btn" id='Team1' name="logo1"
-                            accept=".jpg, .jpeg, .png" text="kak"></input>
-                    </div>
-                </center>
-            </div>
-            <div class="input my-5">
-
-                <div class="container-fluid div-height ">
-                    <p class="titles">Upload Stadium</p>
-                </div>
-                <center>
-                    <div class="container-fluid d-flex justify-content-center">
-                        <input type='file' class="title input-form upload-btn" id='Team1' name="stad"
-                            accept=".jpg, .jpeg, .png" text="kak"></input>
-                    </div>
-                    <div class="stadium-image border my-5">
-
-                        <center> <img class="stadium-image" src="../../../media/{{data.stadium}}" width="110%">
-                        </center>
-
-                    </div>
-                </center>
-            </div>
-            <center>
-                <div class="input my-5">
-                    <div class="container-fluid ">
-                        <button type="submit" class="title input-form  btn-color ">submit</button>
-                    </div>
-                </div>
-            </center>
 
 
 
@@ -184,12 +130,12 @@
 
 
 
-            <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
-            <script src="{% static 'jquery.slick.min.js' %}"></script>
-            <script src="{% static 'jquery.counter.min.js' %}"></script>
-            <script src="{% static 'wow.min.js' %}"></script>
-            <script src="{% static 'ripples.min.js' %}"></script>
-            <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'jquery.slick.min.js' %}"></script>
+    <script src="{% static 'jquery.counter.min.js' %}"></script>
+    <script src="{% static 'wow.min.js' %}"></script>
+    <script src="{% static 'ripples.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
 </body>
 
 

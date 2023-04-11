@@ -37,11 +37,11 @@
           <div class="cs-main_header_center">
             <div class="cs-nav">
               <ul class="cs-nav_list">
-                <li><a href="/guest/homepage" class="cs-smoth_scroll">Home</a>
+                <li><a style="font-weight: 600;" href="/guest/homepage" class="cs-smoth_scroll">Home</a>
                 </li>
-                <li><a href="/guest/Marketplace">Upcoming Games</a></li>
-                <li><a href="/guest/Myinventory">Inventory</a></li>
-                <li><a href="{% url 'Club:logoutUser' %}">Logout</a></li>
+                <li><a style="font-weight: 600;" href="/guest/Marketplace">Upcoming Games</a></li>
+                <li><a style="font-weight: 600;" href="/guest/Myinventory">Inventory</a></li>
+                <li><a style="font-weight: 600;" href="{% url 'Club:logoutUser' %}">Logout</a></li>
               </ul>
             </div>
           </div>
@@ -53,8 +53,19 @@
       </div>
     </div>
   </header>
-  <!-- End Header Section -->
-  <div class="cs-height_80 cs-height_lg_80"></div>
+  <div class="cs-hero cs-style1 cs-type2 cs-bg text-center  cs-ripple_version" data-src="assets/img/hero_bg_1.jpeg"
+    id="home">
+    <div class="cs-dark_overlay"></div>
+    <div class="container">
+      <div class="cs-hero_text wow fadeIn" data-wow-duration="1s" data-wow-delay="0.45s">
+        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold" style="margin-top: 61px;">Choose from
+          your favorite games </h1>
+        <div class="cs-btn_group">
+
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Start Team -->
 
   <div class="match_today container" id="match_today">
@@ -62,8 +73,8 @@
 
       <!--match mdw-->
       {% for event in all_events %}
-      <div class="mnajiri">
-        <a class="fullink" href="#"></a>
+      <div class="mnajiri" style="margin-top: 68px;">
+        <a class="fullink" href="{% url 'Fan:renderSpecificEventPage' event_id=event.id %}"></a>
         <div class="mnajiriin">
           <div class="mpart1">
             <div class="right_match">
@@ -73,7 +84,9 @@
                 </div>
               </span>
             </div>
-            <strong class="najiri1">19:00</strong>
+            <a class="najiri1 full" style="margin-top: 29px;"
+              href="{% url 'Fan:renderSpecificEventPage' event_id=event.id %}">Buy tickets</a>
+
             <div class="left_match">
               <span class="left_tech">
                 <img src="../../../media/{{event.banner2}}">
@@ -83,11 +96,11 @@
           </div>
           <div class="details_match">
             <span class="first_match">
-              <i aria-hidden="true" class="fa fa-clock-o"></i><b></b>
+              <i aria-hidden="true" class="fa fa-clock-o"></i><b>{{event.time}}</b>
             </span>
-            <span class="thany"><i aria-hidden="true" class="fa fa-futbol-o"></i><b>Buy Now</b>
+            <span class="thany"><i aria-hidden="true" class="fa fa-futbol-o"> </i><b>{{event.date}}</b>
             </span>
-            <span class="liga_mdw"><i aria-hidden="true" class="fa fa-desktop"></i><b>Bein Sport HD1</b>
+            <span class="liga_mdw"><i aria-hidden="true" class="fa fa-desktop"></i><b>{{event.place2}}</b>
             </span>
           </div>
         </div>
@@ -96,7 +109,7 @@
 
       <!-- End Team -->
       <!-- Start Footer -->
-      <footer class="cs-footer text-center">
+      <footer class="cs-footer text-center" style="margin-top: 145px;">
         <div class="container">
           <div class="cs-height_100 cs-height_lg_70"></div>
           <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">

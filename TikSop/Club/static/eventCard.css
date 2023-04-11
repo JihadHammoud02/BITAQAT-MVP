@@ -39,6 +39,9 @@ div#match_today h2{text-align:center;padding:10px;background:#532855;color:#fff}
 
 border-radius:5px;margin:12px auto;
 
+box-shadow:rgba(0, 0, 0, 0.57) 0px 25px 20px -21px;
+
+
 background:transparent;}
 
 /*mnajiri*/
@@ -55,25 +58,17 @@ background:transparent;}
 
 /*mnajiri*/
 
-.mpart1 strong{
-
+.mpart1 a {
     color: #fff;
-
-    height: 50px;
-
+    height: 35px;
     margin-right: -50px;
-
     position: absolute;
-
     right: 50%;
-
     text-align: center;
-
-    width: 100px;
-
+    width: 90px;
     z-index: 1;
-
-    border-radius: 5px;}
+    border-radius: 5px;
+  }
 
 .mpart1{position:relative;height:48px;line-height:48px}
 
@@ -141,7 +136,7 @@ background:transparent;}
 
 .mnajiri img{position:relative;display:block;margin:5px auto;background:transparent;border:0;padding:0}
 
-.mpart1 strong{height:36px;line-height:36px;top:30px;width:60px;margin-right:-30px}
+.mpart1 strong {height:36px;line-height:36px;top:30px;width:60px;margin-right:-30px}
 
 .najiri1{
 
@@ -160,3 +155,14 @@ background:transparent;}
     background-color: #4caf50;
 
 }
+
+.mnajiri2{display:block;height:94px;position:relative;
+
+
+    -webkit-transition:box-shadow .3s;transition:box-shadow .3s;
+    
+    border-radius:5px;margin:12px auto;
+    
+    
+    
+    background:transparent;}

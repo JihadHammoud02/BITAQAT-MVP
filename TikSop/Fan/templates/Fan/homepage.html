@@ -37,11 +37,11 @@
           <div class="cs-main_header_center">
             <div class="cs-nav">
               <ul class="cs-nav_list">
-                <li><a href="/guest/homepage" class="cs-smoth_scroll">Home</a>
+                <li><a style="font-weight: 600;" href="/guest/homepage" class="cs-smoth_scroll">Home</a>
                 </li>
-                <li><a href="/guest/Marketplace">Upcoming Games</a></li>
-                <li><a href="/guest/Myinventory">Inventory</a></li>
-                <li><a href="{% url 'Club:logoutUser' %}">Logout</a></li>
+                <li><a style="font-weight: 600;" href="/guest/Marketplace">Upcoming Games</a></li>
+                <li><a style="font-weight: 600;" href="/guest/Myinventory">Inventory</a></li>
+                <li><a style="font-weight: 600;" href="{% url 'Club:logoutUser' %}">Logout</a></li>
               </ul>
             </div>
           </div>
@@ -62,8 +62,8 @@
     <div class="cs-dark_overlay"></div>
     <div class="container">
       <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
-        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Discover & buy tickets <br> from your
-          favorite events
+        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Level Up Your Sports
+          Experience:<br>Grab NFT Tickets for Unforgettable Events!
         </h1>
         <div class="cs-btn_group">
           <a href="/guest/Marketplace" class="cs-btn cs-btn_filed cs-accent_btn"><span>Upcoming Games now</span></a>
@@ -88,14 +88,10 @@
             </div>
             <div class="cs-height_20 cs-height_lg_20"></div>
             <p>
-              Welcome to our ticketing platform! As an attendee, you can benefit greatly from using our system. Not only
-              can you easily pay for your tickets with a credit card, but our platform also utilizes blockchain
-              technology to ensure the security and authenticity of your tickets.
+              Experience secure and authentic sports ticketing with our NFT-powered website. No more ticket scams or
+              counterfeit tickets. Our verifiable, traceable NFT tickets offer controlled prices and eliminate
+              skyrocketing secondary market prices. Join us and elevate your sports event attendance now.
             </p>
-            <p>Additionally, by being a loyal user of
-              our platform, you can earn perks and rewards from event Club. And if you're looking to make a little
-              extra money, you can even trade tickets on our secondary marketplace during the event preparation stage.
-              We hope you have a great experience using our platform!</p>
             <div class="cs-height_25 cs-height_lg_15"></div>
             <div class="cs-btn_group">
               <a href="/guest/Marketplace" class="cs-btn cs-btn_filed cs-primary_btn"><span>Buy Tickets</span></a>
@@ -111,60 +107,13 @@
   <!-- End About -->
   <div class="cs-height_100 cs-height_lg_70"></div>
   <!-- Start Services -->
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-          <div class="cs-iconbox cs-style1 cs-white_bg">
-            <h4 class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0">01.</h4>
-            <div class="cs-height_20 cs-height_lg_20"></div>
-            <h3 class="cs-iconbox_title cs-font_30 cs-font_24_sm cs-m0">Upcoming Games and buy tickets</h3>
-            <div class="cs-height_10 cs-height_lg_10"></div>
-            <div class="cs-iconbox_subtitle">Checkout the current events using the Browse event section in the
-              navigation bar</div>
-          </div>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-        </div>
-        <div class="col-lg-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="cs-iconbox cs-style1 cs-white_bg">
-            <h4 class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0">02.</h4>
-            <div class="cs-height_20 cs-height_lg_20"></div>
-            <h3 class="cs-iconbox_title cs-font_30 cs-font_24_sm cs-m0">Hold your Tickets safely</h3>
-            <div class="cs-height_10 cs-height_lg_10"></div>
-            <div class="cs-iconbox_subtitle">Access your bought tickets using the Inventory section in the
-              navigation bar</div>
-          </div>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-        </div>
-        <div class="col-lg-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
-          <div class="cs-iconbox cs-style1 cs-white_bg">
-            <h4 class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0">03.</h4>
-            <div class="cs-height_20 cs-height_lg_20"></div>
-            <h3 class="cs-iconbox_title cs-font_30 cs-font_24_sm cs-m0">Cannot Go to the event?</h3>
-            <div class="cs-height_10 cs-height_lg_10"></div>
-            <div class="cs-iconbox_subtitle">Trade your tickets safely between users in our secondary
-              Marketplace
-            </div>
-            <div class="cs-height_25 cs-height_lg_25"></div>
-          </div>
-        </div>
-      </div>
-  </section>
-  <!-- End Services -->
-  <div class="cs-height_70 cs-height_lg_45"></div>
+
   <!-- Start Tending Item -->
   <div class="cs-slider cs-style1 cs-gap-24 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
     <div class="cs-slider_container" data-autoplay="1000" data-loop="1" data-speed="600" data-center="1"
       data-fade-slide="0" data-slides-per-view="responsive" data-xs-slides="2" data-sm-slides="2" data-md-slides="3"
       data-lg-slides="4" data-add-slides="6">
       <div class="cs-slider_wrapper">
-        <div class="cs-slide">
-          <a href="#">
-            <img src="{% static 'images/dp.jpg' %}" alt="Daft punk" class="rounded">
-          </a>
-
-
-        </div><!-- .cs-slide -->
       </div>
     </div><!-- .cs-slider_container -->
     <div class="cs-pagination cs-style1 cs-hide_desktop cs-accent_color"></div>
@@ -181,52 +130,6 @@
       </div>
     </div> -->
   </div><!-- .cs-slider -->
-  <!-- End Tending Item -->
-  <div class="cs-height_90 cs-height_lg_65"></div>
-  <!-- Start Fun Fact -->
-  <div class="container wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">
-    <div class="row">
-      <div class="col-lg-3 col-6">
-        <div class="cs-funfact cs-style1">
-          <div class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-            <span data-count-to="{{eventNumber}}" class="odometer"></span>
-          </div>
-          <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Active events</p>
-        </div>
-        <div class="cs-height_25 cs-height_lg_25"></div>
-      </div>
-      <div class="col-lg-3 col-6">
-        <div class="cs-funfact cs-style1">
-          <div class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-            <span data-count-to="{{attandeesNumber}}" class="odometer"></span>
-          </div>
-          <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Total Attandees</p>
-        </div>
-        <div class="cs-height_25 cs-height_lg_25"></div>
-      </div>
-      <div class="col-lg-3 col-6">
-        <div class="cs-funfact cs-style1">
-          <div class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-            <span data-count-to="{{ticketsNumber}}" class="odometer"></span>
-          </div>
-          <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Total Tickets minted</p>
-        </div>
-        <div class="cs-height_25 cs-height_lg_25"></div>
-      </div>
-      <div class="col-lg-3 col-6">
-        <div class="cs-funfact cs-style1">
-          <div class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-            <span data-count-to="42.2" class="odometer"></span>k
-          </div>
-          <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Traded volume </p>
-        </div>
-        <div class="cs-height_25 cs-height_lg_25"></div>
-      </div>
-    </div>
-  </div>
-  <!-- End Fun Fact -->
-  <div class="cs-height_65 cs-height_lg_35"></div>
-  <!-- Start Causes Seciton -->
   <section>
     <div class="container">
       <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"

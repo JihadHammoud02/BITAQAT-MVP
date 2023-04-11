@@ -18,7 +18,7 @@ def queryEvents(filterby=None,val=None):
         event['name2']=eve.Team2Name
         event['name']=str(event['name1'])+" vs "+str(event['name2'])
         event['date']=str(eve.event_date_time.date())
-        event['time']=str(eve.event_date_time.time())
+        event['time']=str(eve.event_date_time.time())[:5]
         event['banner1']=eve.Team1Logo
         event['banner2']=eve.Team2Logo
         event['price']=eve.event_ticket_price
@@ -27,6 +27,7 @@ def queryEvents(filterby=None,val=None):
         event['organizer']=eve.event_organizer
         event['place2']=eve.event_place
         event['currentNumber']=eve.number_of_current_Fan
+        event['category']=eve.category
         all_events.append(event)
         event={}
     return (all_events,len(all_events))

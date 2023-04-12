@@ -73,19 +73,40 @@
             <div class="row">
 
                 {% for event in all_events %}
-                <div class="nft">
-                    <a class="a" href="{% url 'Club:eventDashboard' eventId=event.id %}   ">
-                        <div class='main'>
-                            <center> <img class='tokenImage' src="../../../media/{{event.banner}}" width="110%">
-                            </center>
-                            <center>
-                                <h2 class="title my-2">{{event.name}}</h2>
-                            </center>
-                            <hr />
+                <div class="mnajiri" style="margin-top: 68px;">
+                    <a class="fullink" href="{% url 'Club:eventDashboard' eventId=event.id %}   "></a>
+                    <div class="mnajiriin">
+                        <div class="mpart1">
+                            <div class="right_match">
+                                <span class="right_tech">
+                                    <img src="../../../media/{{event.banner1}}">
+                                    <div class=" fname">{{event.name1}}
+                                    </div>
+                                </span>
+                            </div>
+                            <a class="najiri1 full" style="margin-top: 29px;">Insights</a>
+
+                            <div class="left_match">
+                                <span class="left_tech">
+                                    <img src="../../../media/{{event.banner2}}">
+                                    <div class="fname">{{event.name2}}</div>
+                                </span>
+                            </div>
                         </div>
-                    </a>
+                        <div class="details_match">
+                            <span class="first_match">
+                                <i aria-hidden="true" class="fa fa-clock-o"></i><b>{{event.time}}</b>
+                            </span>
+                            <span class="thany"><i aria-hidden="true" class="fa fa-futbol-o"> </i><b>{{event.date}}</b>
+                            </span>
+                            <span class="liga_mdw"><i aria-hidden="true"
+                                    class="fa fa-desktop"></i><b>{{event.place2}}</b>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
+
             </div>
 
         </div>

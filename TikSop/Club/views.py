@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from Club.query import queryEvents,countAttandees,loyalty,queryAttEvents
 from Fan.models import myFan
 import datetime
+from Fan.utils import getOwners
 
 
 # A decorator that checks if the user is logged in. If not, it redirects to the login page.
@@ -81,14 +82,15 @@ counter=0
 
 def eventDashboard(request,eventId):
     queryTickets=EventsticketsMinted.objects.filter(**{"event_id":eventId})
-    eventQuery=EventsCreated.objects.get(pk=eventId)
+    eventQuery=queryEvents("id",eventId)
     eventData=[]
-    loyaltyQuery=loyalty(request.user)
-    
+    loyaltyQuery=loyalty(request.user.pk)
+    print(request.user)
+    print(loyaltyQuery)
     for ticket in queryTickets:
         eventData.append({"ownerName":ticket.NFT_owner_account.username,"ownerAbrev":ticket.NFT_owner_account.username[0]+ticket.NFT_owner_account.username[-1],"ownerEmail":ticket.NFT_owner_account.email,"Token_ID":ticket.NFT_token_id,"loyalty":loyaltyQuery[ticket.NFT_owner_account.username],"ownerID":ticket.NFT_owner_account.pk,"ticket_id":ticket.pk,"checkin":ticket.checkIn_Time})
         print(eventData)
-    return render(request,"Club\Dashboard.html",{"eventData":eventData,"Number":len(eventData),"Revenue":eventQuery.event_ticket_price*len(eventData),"placesLeft":eventQuery.event_maximum_capacity -len(eventData),"eventName":eventQuery.event_name,"eventBanner":eventQuery.event_banner})
+    return render(request,"Club\Dashboard.html",{"eventData":eventData,"Number":len(eventData),"Revenue":eventQuery[0][0]['price']*len(eventData),"placesLeft":eventQuery[0][0]['maxcap'] -len(eventData),"eventName":eventQuery[0][0]['name']})
 #logout the User
 def logoutUser(request):
     logout(request)
@@ -107,3 +109,14 @@ def checkInGuest(request,mintedID_DB):
 
 def getClubData(request):
     return render(request,'Club\MyClub.html')
+
+
+def getTokenOwners(request):
+    OwnersDataQuery=getOwners()
+    OwnersHistory=[]
+    Tr=0
+    for owner in OwnersDataQuery['result']:
+        OwnersHistory.append({'id':Tr,'timestamps':owner['block_timestamp'],'from':owner['from_address'],'to':owner['to_address'],'value':owner['value']})
+        Tr+=1
+    print(OwnersHistory)
+    return render(request,"Club\OwnersTable.html",{"OwnersData":OwnersHistory})

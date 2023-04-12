@@ -94,3 +94,23 @@ def fetchNftsMetadata(userAddress):
             print(nft_metadata)
             collection.append({"image":nft_metadata['image'],'name':nft_metadata['name']})
     return collection
+
+
+
+def getOwners(ContractAddress=0,TokenID=0):
+    api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
+    params = {
+        "address": "0x37A310401d58C9545da86ff66Aa953BAE6FB6272",
+        "token_id": "26976",
+        "chain": "polygon",
+        "format": "decimal",
+        # "limit": 100,
+        # "cursor": "",
+    }
+
+    result = evm_api.nft.get_nft_transfers(
+        api_key=api_key,
+        params=params,
+    )
+
+    return result

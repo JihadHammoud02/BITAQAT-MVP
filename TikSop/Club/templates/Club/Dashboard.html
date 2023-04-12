@@ -163,83 +163,87 @@
     <!-- End Hero -->
 
     <!-- Start Services -->
-    <section>
-        <style>
-            .table.table-light thead th,
-            .table .thead-light th {
-                background-color: #283645 !important;
-                color: white !important;
-            }
+    <center>
+        <section>
+            <style>
+                .table.table-light thead th,
+                .table .thead-light th {
+                    background-color: #283645 !important;
+                    color: white !important;
+                }
 
-            .text-heading {
-                --x-text-opacity: 1;
-                color: white !important;
-            }
-        </style>
-        <main class="py-6">
-            <div class=" container-fluid">
-                <!-- Card stats -->
-                <div class="card shadow border-0 mb-7" style="bottom: 400px; background-color:#283645;">
-                    <div class="card-header">
-                        <h5 class="mb-0">Current Attandees</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-nowrap">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Token ID</th>
-                                    <th scope="col">Check in Time</th>
-                                    <th scope="col">Events Attanded</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for guest in eventData %}
-                                <tr>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            {{guest.ownerName}}
-                                        </a>
-                                    </td>
-                                    <td class="text-heading">
-                                        {{guest.ownerEmail}}
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            {{guest.Token_ID}}
-                                        </a>
-                                    </td>
-                                    <td class="text-heading">
-                                        {{guest.checkin}}
-                                    </td>
-                                    <td class="text-heading">
-                                        {{guest.loyalty}}
-                                    </td>
+                .text-heading {
+                    --x-text-opacity: 1;
+                    color: white !important;
+                }
+            </style>
+            <main class="py-6">
+                <div class=" container-fluid">
+                    <!-- Card stats -->
+                    <div class="card shadow border-0 mb-7" style="bottom: 400px; background-color:#283645;">
+                        <div class="card-header">
+                            <h5 class="mb-0">Current Attandees</h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-nowrap">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Token ID</th>
+                                        <th scope="col">Check in Time</th>
+                                        <th scope="col">Events Attanded</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for guest in eventData %}
+                                    <tr>
+                                        <td>
+                                            <a class="text-heading font-semibold" href="#">
+                                                {{guest.ownerName}}
+                                            </a>
+                                        </td>
+                                        <td class="text-heading">
+                                            {{guest.ownerEmail}}
+                                        </td>
+                                        <td>
+                                            <a class="text-heading font-semibold" href="#">
+                                                {{guest.Token_ID}}
+                                            </a>
+                                        </td>
+                                        <td class="text-heading">
+                                            {{guest.checkin}}
+                                        </td>
+                                        <td class="text-heading">
+                                            {{guest.loyalty}}
+                                        </td>
 
-                                    <td class="text-end">
-                                        <a href="{% url 'Club:renderAttandedEvents' guestID=guest.ownerID guestName=guest.ownerName %}"
-                                            class="btn btn-sm btn-neutral">View Data</a>
-                                        <a href="{% url 'Club:checkInGuest'  mintedID_DB=guest.ticket_id %}"
-                                            class="btn btn-sm btn-neutral mx-5">Check in</a>
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm text-heading">Showing 10 items out of 250 results found</span>
+                                        <td class="text">
+                                            <a href="{% url 'Club:renderAttandedEvents' guestID=guest.ownerID guestName=guest.ownerName %}"
+                                                class="btn btn-sm btn-neutral">View Data</a>
+                                            <a href="{% url 'Club:checkInGuest'  mintedID_DB=guest.ticket_id %}"
+                                                class="btn btn-sm btn-neutral mx-5">Check in</a>
+                                            <a href="{% url 'Club:TrackingOwners' %}"
+                                                class="btn btn-sm btn-neutral mx-5">Token Owners</a>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer border-0 py-5">
+                            <span class="text-muted text-sm text-heading">Showing 10 items out of 250 results
+                                found</span>
+                        </div>
                     </div>
                 </div>
+            </main>
             </div>
-        </main>
-        </div>
-        </div>
-    </section>
-
+            </div>
+        </section>
+    </center>
     <!-- End Services -->
     <div class="cs-height_70 cs-height_lg_45"></div>
     <!-- Start Tending Item -->

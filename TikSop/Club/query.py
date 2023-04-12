@@ -66,5 +66,5 @@ def queryAttEvents(guestID,organizerID):
     ticketsQuery=EventsticketsMinted.objects.filter(**{'NFT_owner_account':guestID,'organizer':organizerID})
     attandedEventsMetatData=[]
     for tickets in ticketsQuery:
-        attandedEventsMetatData.append({'name':tickets.event_id.event_name,'banner':tickets.event_id.event_banner})
+        attandedEventsMetatData.append({'name':str(tickets.event_id.Team1Name)+" vs "+str(tickets.event_id.Team2Name),'banner':tickets.event_id.Team1Name})
     return attandedEventsMetatData

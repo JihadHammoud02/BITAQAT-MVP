@@ -80,7 +80,7 @@
        y1="98.645149"
        x2="88.350258"
        y2="100.21835"
-       gradientUnits="userSpaceOnUse"
+       gradientUnits="myUserspaceOnUse"
        gradientTransform="matrix(0.79692809,-0.33364007,0.33364007,0.79692809,-61.300881,-19.940568)" />
     <radialGradient
        inkscape:collect="always"
@@ -92,7 +92,7 @@
        fy="415.94769"
        r="104.43833"
        gradientTransform="matrix(1,0,0,0.31598422,0,284.51479)"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="myUserspaceOnUse" />
   </defs>
   <g
      inkscape:groupmode="layer"

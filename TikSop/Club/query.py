@@ -36,12 +36,12 @@ def queryEvents(filterby=None,val=None):
 
 def queryOrganisers(filterby=None,val=None):
     if filterby==None:
-        usersQuery=myUsers.objects.all()
+        myUsersQuery=myUsers.objects.all()
     else:
-        usersQuery=myUsers.objects.all().filter(**{filterby:val})
-    users=[]
-    for user in usersQuery:
-        users.append({"username":user.username,"email":user.email,"Coname":user.Compan})
+        myUsersQuery=myUsers.objects.all().filter(**{filterby:val})
+    myUsers=[]
+    for user in myUsersQuery:
+        myUsers.append({"username":user.username,"email":user.email,"Coname":user.Compan})
 
 
 

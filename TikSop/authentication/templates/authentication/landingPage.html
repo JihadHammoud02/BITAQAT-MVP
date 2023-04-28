@@ -37,7 +37,7 @@
           <div class="cs-main_header_right">
             <div class="cs-toolbox">
 
-              <a class="cs-btn cs-btn_bordered cd-modal_btn" href="{% url 'authentication:loginUsers' %}">Sign in</a>
+              <a class="cs-btn cs-btn_bordered cd-modal_btn" href="{% url 'authentication:loginmyUsers' %}">Sign in</a>
               <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
                 href="{% url 'authentication:createAccounts' %}">Sign
                 up</a>
@@ -49,71 +49,64 @@
   </header>
   <!-- End Header Section -->
   <div class="cs-height_80 cs-height_lg_80"></div>
-
-  <!-- Start Hero -->
-  <div class="cs-hero cs-style1 cs-type2 cs-bg text-center  cs-ripple_version" data-src="assets/img/hero_bg_1.jpeg"
-    id="home">
+  <!-- End Hero -->
+  <section class="cs-hero cs-style1 cs-bg" data-src="{% static 'images/img/hero_bg.jpeg' %}" id="home">
     <div class="cs-dark_overlay"></div>
     <div class="container">
-      <div class="cs-hero_text wow fadeIn" data-wow-duration="1s" data-wow-delay="0.45s">
-        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Experience the Best in Live
-          Entertainment with Our Ticketing Platform</h1>
+      <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
+        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Empowering Clubs and Fans with Digital
+          Ticketing Solutions!</h1>
         <div class="cs-btn_group">
-          <a href="#" class="cs-btn cs-btn_filed cs-accent_btn"><span>Explore Now</span></a>
-
+          <a href="{% url 'authentication:loginmyUsers' %}" class="cs-btn cs-btn_filed cs-accent_btn"><span>EXPLORE
+              NOW<span></a>
         </div>
+        <h3 class="cs-hero_subtitle cs-font_20 cs-font_16_sm cs-body_line_height">SECURE YOUR<span
+            class="cs-accent_color"> SEAT</span><br>
+          AND OWN <span class="cs-accent_color">THE MOMENT</span></h3>
+      </div>
+    </div>
+  </section>
+  <!--End hero-->
+  <div class="cs-height_100 cs-height_lg_70"></div>
+  <!-- Start Services -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+        <div class="cs-iconbox cs-style1 cs-white_bg">
+          <h4 class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0">01.</h4>
+          <div class="cs-height_20 cs-height_lg_20"></div>
+          <h3 class="cs-iconbox_title cs-font_30 cs-font_24_sm cs-m0">Prevent Fraud</h3>
+          <div class="cs-height_10 cs-height_lg_10"></div>
+          <div class="cs-iconbox_subtitle">Next-Level Ticket Security using blockchain: Say Goodbye to Fraud and
+            Protect Your Tickets on Our Cutting-Edge Platform</div>
+        </div>
+        <div class="cs-height_25 cs-height_lg_25"></div>
+      </div>
+      <div class="col-lg-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
+        <div class="cs-iconbox cs-style1 cs-white_bg">
+          <h4 class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0">02.</h4>
+          <div class="cs-height_20 cs-height_lg_20"></div>
+          <h3 class="cs-iconbox_title cs-font_30 cs-font_24_sm cs-m0">Control Trades</h3>
+          <div class="cs-height_10 cs-height_lg_10"></div>
+          <div class="cs-iconbox_subtitle">Club-Defined NFT Ticket Rules: Clubs can set limits on the Secondary
+            Marketplace Trades from our platform
+            using smart contracts</div>
+        </div>
+        <div class="cs-height_25 cs-height_lg_25"></div>
+      </div>
+      <div class="col-lg-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
+        <div class="cs-iconbox cs-style1 cs-white_bg">
+          <h4 class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0">03.</h4>
+          <div class="cs-height_20 cs-height_lg_20"></div>
+          <h3 class="cs-iconbox_title cs-font_30 cs-font_24_sm cs-m0">Earn Royalties</h3>
+          <div class="cs-height_10 cs-height_lg_10"></div>
+          <div class="cs-iconbox_subtitle">New Revenue Stream for Clubs: Earn Royalties from NFT Ticket Resales,
+            Unavailable in Traditional Ticketing.</div>
+        </div>
+        <div class="cs-height_25 cs-height_lg_25"></div>
       </div>
     </div>
   </div>
-  <!-- End Hero -->
-  <div class="cs-height_100 cs-height_lg_70"></div>
-  <!-- Start Services -->
-  <section>
-    <div class="container wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="cs-iconbox cs-style1 cs-type1 cs-accent_bg text-center">
-            <div class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0 cs-white_color">
-              <img src="{% static 'images/cal.png' %}" width="72" height="72">
-            </div>
-            <div class="cs-height_20 cs-height_lg_20 "></div>
-            <h3 class="cs-iconbox_title cs-font_22 cs-font_20_sm cs-m0 cs-white_color">Easy Events Creation with Haffle
-            </h3>
-            <div class="cs-height_10 cs-height_lg_10"></div>
-            <div class="cs-iconbox_subtitle cs-white_color">
-            </div>
-          </div>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-        </div>
-        <div class="col-lg-4">
-          <div class="cs-iconbox cs-style1 cs-type1 cs-accent_bg text-center">
-            <div class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0 cs-white_color">
-              <img src="{% static 'images/loc.png' %}" width="72" height="72">
-            </div>
-            <div class="cs-height_20 cs-height_lg_20"></div>
-            <h3 class="cs-iconbox_title cs-font_22 cs-font_20_sm cs-m0 cs-white_color">Secure ticketing with NFTs</h3>
-            <div class="cs-height_10 cs-height_lg_10"></div>
-            <div class="cs-iconbox_subtitle cs-white_color">
-            </div>
-          </div>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-        </div>
-        <div class="col-lg-4">
-          <div class="cs-iconbox cs-style1 cs-type1 cs-accent_bg text-center">
-            <div class="cs-iconbox_icon cs-font_30 cs-font_24_sm cs-m0 cs-white_color">
-              <img src="{% static 'images/cc.svg' %}" width="72" height="72">
-            </div>
-            <div class="cs-height_20 cs-height_lg_20"></div>
-            <h3 class="cs-iconbox_title cs-font_22 cs-font_20_sm cs-m0 cs-white_color">Flexible payment options
-            </h3>
-            <div class="cs-height_10 cs-height_lg_10"></div>
-            <div class="cs-iconbox_subtitle cs-white_color">
-            </div>
-          </div>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-        </div>
-      </div>
-    </div>
   </section>
   <!-- End Services -->
   <!-- Start About -->
@@ -129,21 +122,23 @@
             </div>
             <div class="cs-height_20 cs-height_lg_20"></div>
             <p>
-              At Vesperi, we are passionate about revolutionizing the way events are managed. We believe that our
-              ticketing platform has the power to transform the event industry, giving Club the tools they need to
-              fully realize the potential of their events. Whether it's through the creation of new revenue streams on
-              the secondary marketplace or the use of data from past events to improve future ones, we are committed to
-              helping Club succeed.
+              Welcome to Netstub! We are a pioneering company dedicated to revolutionizing the sports ticketing
+              industry. Our goal is simple yet powerful: to fix the problems that plague the current ticketing system.
+              We understand the frustration of fans who encounter fraud and unregulated black market practices when
+              trying to secure tickets for their favorite sports events, especially after the primary market is closed.
+              That's why we are committed to giving sports clubs full control over the secondary market of their
+              tickets, enabling them to regulate the black market and provide their fans with a seamless and secure
+              ticketing experience.
             </p>
-            <p>We also understand the importance of security, which is why we use non-fungible tokens (NFTs) to prevent
-              ticket forging and replication. By using NFTs, we can help reduce costs and increase control for event
-              Club. If you are an event organizer looking for a comprehensive, innovative solution for your
-              events, look no further than Vesperi.</p>
+            <p>We invite sports clubs from all around the world to join us on this journey as we
+              work together to create a fair and transparent ticketing ecosystem that benefits both clubs and fans
+              alike.</p>
             <div class="cs-height_25 cs-height_lg_15"></div>
           </div>
         </div>
         <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
-          <img src="assets/img/about_img.svg" alt="">
+          <img src="{% static 'images/img/about_img.png' %}">
+          <img alt="">
         </div>
       </div>
     </div>
@@ -203,133 +198,56 @@
   <div class="cs-height_70 cs-height_lg_40"></div>
   <!-- Start Tending Item -->
   <!-- Start Goals -->
-  <section id="roadmap">
-    <div class="cs-height_70 cs-height_lg_40"></div>
+  <section>
     <div class="container">
       <div class="cs-seciton_heading cs-style1 text-uppercase text-center wow fadeInUp" data-wow-duration="1s"
         data-wow-delay="0.2s">
-        <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">Simple steps</h3>
-        <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Platform Walkthrough</h2>
+        <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">Not the "NFT" you know !</h3>
+        <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Our Non fungible Tickets</h2>
       </div>
       <div class="cs-height_50 cs-height_lg_30"></div>
-      <div class="cs-accent_seperator_1 cs-accent_color wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-      </div>
-      <div class="row wow fadeIn" data-wow-duration="1s" data-wow-delay="0.35s">
-        <div class="col-lg-3 col-md-6">
-          <div class="cs-card cs-style2">
-            <div class="cs-card_number cs-accent_bg cs-white_color cs-center cs-primary_font cs-font_22 cs-bold">
-              1
-              <div class="cs-card_tick">
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0.899994 9.90957C0.899994 5.43606 4.52649 1.80957 8.99999 1.80957C13.4735 1.80957 17.1 5.43606 17.1 9.90957C17.1 14.3831 13.4735 18.0096 8.99999 18.0096C4.52649 18.0096 0.899994 14.3831 0.899994 9.90957Z"
-                    fill="#06182C" stroke="#0A2540" stroke-width="2" />
-                  <path
-                    d="M8.99999 1.80957C4.52649 1.80957 0.899994 5.43606 0.899994 9.90957C0.899994 14.3831 4.52649 18.0096 8.99999 18.0096C13.4735 18.0096 17.1 14.3831 17.1 9.90957C17.1 5.43606 13.4735 1.80957 8.99999 1.80957ZM12.4755 5.60348L14.1584 7.28636L8.90211 12.5437L7.2291 14.2157L5.54622 12.5328L3.84158 10.8271L5.51359 9.15512L7.21824 10.8608L12.4755 5.60348Z"
-                    fill="white" />
-                </svg>
-              </div>
-            </div>
-            <div class="cs-height_30 cs-height_lg_15"></div>
-            <div class="cs-card_in cs-white_bg" style="height:20%;">
-              <h3 class="cs-gradient_color cs-font_18 cs-font_16_sm cs-m0">step 1</h3>
-              <div class="cs-height_5 cs-height_lg_5"></div>
-              <h2 class="cs-font_22 cs-font_16_sm cs-m0">Buy and Sell tickets </h2>
-              <div class="cs-height_10 cs-height_lg_10"></div>
-              <p class="cs-m0">Our platform allows event Club to sell tickets for their events, and attendees to
-                purchase and trade tickets.</p>
-
+      <div class="row wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
+        <div class="col-xl-3 col-md-6">
+          <div class="cs-card cs-style3 text-center cs-accent_bg">
+            <div class="cs-card_in">
+              <div class="cs-card_number cs-font_20 cs-font_20_sm cs-primary_font cs-body_line_height cs-center">1</div>
+              <h3 class="cs-card_title cs-font_20 cs-font_20_sm cs-m0 cs-white_color">Fixed price in US Dollar</h3>
             </div>
           </div>
           <div class="cs-height_25 cs-height_lg_25"></div>
         </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="cs-card cs-style2">
-            <div class="cs-card_number cs-accent_bg cs-white_color cs-center cs-primary_font cs-font_22 cs-bold">
-              2
-              <div class="cs-card_tick">
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0.899994 9.90957C0.899994 5.43606 4.52649 1.80957 8.99999 1.80957C13.4735 1.80957 17.1 5.43606 17.1 9.90957C17.1 14.3831 13.4735 18.0096 8.99999 18.0096C4.52649 18.0096 0.899994 14.3831 0.899994 9.90957Z"
-                    fill="#06182C" stroke="#0A2540" stroke-width="2" />
-                  <path
-                    d="M8.99999 1.80957C4.52649 1.80957 0.899994 5.43606 0.899994 9.90957C0.899994 14.3831 4.52649 18.0096 8.99999 18.0096C13.4735 18.0096 17.1 14.3831 17.1 9.90957C17.1 5.43606 13.4735 1.80957 8.99999 1.80957ZM12.4755 5.60348L14.1584 7.28636L8.90211 12.5437L7.2291 14.2157L5.54622 12.5328L3.84158 10.8271L5.51359 9.15512L7.21824 10.8608L12.4755 5.60348Z"
-                    fill="white" />
-                </svg>
-              </div>
-            </div>
-            <div class="cs-height_30 cs-height_lg_15"></div>
-            <div class="cs-card_in cs-white_bg" style="height:20%;">
-              <h3 class="cs-gradient_color cs-font_18 cs-font_16_sm cs-m0">step 2</h3>
-              <div class="cs-height_5 cs-height_lg_5"></div>
-              <h2 class="cs-font_22 cs-font_16_sm cs-m0">Build Loyal Attendees</h2>
-              <div class="cs-height_10 cs-height_lg_10"></div>
-              <p class="cs-m0">Our platform allows Club to access data about past events and use this information
-                to offer perks to loyal attendees.</p>
-
+        <div class="col-xl-3 col-md-6">
+          <div class="cs-card cs-style3 text-center cs-accent_bg">
+            <div class="cs-card_in">
+              <div class="cs-card_number cs-font_20 cs-font_24_sm cs-primary_font cs-body_line_height cs-center">2</div>
+              <h3 class="cs-card_title cs-font_20 cs-font_24_sm cs-m0 cs-white_color">Can Be bought using Credit card
+              </h3>
             </div>
           </div>
           <div class="cs-height_25 cs-height_lg_25"></div>
         </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="cs-card cs-style2">
-            <div class="cs-card_number cs-accent_bg cs-white_color cs-center cs-primary_font cs-font_22 cs-bold">
-              3
-              <div class="cs-card_tick">
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0.899994 9.90957C0.899994 5.43606 4.52649 1.80957 8.99999 1.80957C13.4735 1.80957 17.1 5.43606 17.1 9.90957C17.1 14.3831 13.4735 18.0096 8.99999 18.0096C4.52649 18.0096 0.899994 14.3831 0.899994 9.90957Z"
-                    fill="#06182C" stroke="#0A2540" stroke-width="2" />
-                  <path
-                    d="M8.99999 1.80957C4.52649 1.80957 0.899994 5.43606 0.899994 9.90957C0.899994 14.3831 4.52649 18.0096 8.99999 18.0096C13.4735 18.0096 17.1 14.3831 17.1 9.90957C17.1 5.43606 13.4735 1.80957 8.99999 1.80957ZM12.4755 5.60348L14.1584 7.28636L8.90211 12.5437L7.2291 14.2157L5.54622 12.5328L3.84158 10.8271L5.51359 9.15512L7.21824 10.8608L12.4755 5.60348Z"
-                    fill="white" />
-                </svg>
-              </div>
-            </div>
-            <div class="cs-height_30 cs-height_lg_15"></div>
-            <div class="cs-card_in cs-white_bg" style="height:20%;">
-              <h3 class="cs-gradient_color cs-font_18 cs-font_16_sm cs-m0">step 3</h3>
-              <div class="cs-height_5 cs-height_lg_5"></div>
-              <h2 class="cs-font_22 cs-font_16_sm cs-m0">Earn Roylaties from trading
-              </h2>
-              <div class="cs-height_10 cs-height_lg_10"></div>
-              <p class="cs-m0">Our platform allows attendees to trade tickets, Club of these Tickets can earn
-                Roylaties from resales</p>
-
+        <div class="col-xl-3 col-md-6">
+          <div class="cs-card cs-style3 text-center cs-accent_bg">
+            <div class="cs-card_in">
+              <div class="cs-card_number cs-font_20 cs-font_24_sm cs-primary_font cs-body_line_height cs-center">3</div>
+              <h3 class="cs-card_title cs-font_20 cs-font_24_sm cs-m0 cs-white_color">Cannot exceed a price cap
+              </h3>
             </div>
           </div>
           <div class="cs-height_25 cs-height_lg_25"></div>
         </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="cs-card cs-style2">
-            <div class="cs-card_number cs-accent_bg cs-white_color cs-center cs-primary_font cs-font_22 cs-bold">
-              4
-              <div class="cs-card_tick">
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0.899994 9.90957C0.899994 5.43606 4.52649 1.80957 8.99999 1.80957C13.4735 1.80957 17.1 5.43606 17.1 9.90957C17.1 14.3831 13.4735 18.0096 8.99999 18.0096C4.52649 18.0096 0.899994 14.3831 0.899994 9.90957Z"
-                    fill="#06182C" stroke="#0A2540" stroke-width="2" />
-                  <path
-                    d="M8.99999 1.80957C4.52649 1.80957 0.899994 5.43606 0.899994 9.90957C0.899994 14.3831 4.52649 18.0096 8.99999 18.0096C13.4735 18.0096 17.1 14.3831 17.1 9.90957C17.1 5.43606 13.4735 1.80957 8.99999 1.80957ZM12.4755 5.60348L14.1584 7.28636L8.90211 12.5437L7.2291 14.2157L5.54622 12.5328L3.84158 10.8271L5.51359 9.15512L7.21824 10.8608L12.4755 5.60348Z"
-                    fill="white" />
-                </svg>
-              </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="cs-card cs-style3 text-center cs-accent_bg">
+            <div class="cs-card_in">
+              <div class="cs-card_number cs-font_20 cs-font_24_sm cs-primary_font cs-body_line_height cs-center">4</div>
+              <h3 class="cs-card_title cs-font_20 cs-font_24_sm cs-m0 cs-white_color">Limited numbers per wallet
+              </h3>
             </div>
-            <div class="cs-height_30 cs-height_lg_15"></div>
-            <div class="cs-card_in cs-white_bg" style="height:20%;">
-              <h3 class="cs-gradient_color cs-font_18 cs-font_16_sm cs-m0">step 4</h3>
-              <div class="cs-height_5 cs-height_lg_5"></div>
-              <h2 class="cs-font_22 cs-font_16_sm cs-m0">Event check in using Username
-              </h2>
-              <div class="cs-height_10 cs-height_lg_10"></div>
-              <p class="cs-m0">Attandees can use their username only to access events,which will be checked by
-                Club using the platform </p>
-
-            </div>
-            <div class="cs-height_25 cs-height_lg_25"></div>
           </div>
+          <div class="cs-height_25 cs-height_lg_25"></div>
         </div>
       </div>
+    </div>
   </section>
   <!-- End Goals -->
 
@@ -347,32 +265,33 @@
         <div class="col-lg-8 offset-lg-2">
           <div class="cs-accordian cs-white_bg active">
             <div class="cs-accordian_head">
-              <h2 class="cs-accordian_title cs-m0 cs-font_22 cs-font_18_sm"><span>Q1.</span> How to Mint a Ticket?</h2>
+              <h2 class="cs-accordian_title cs-m0 cs-font_22 cs-font_18_sm"><span>Q1.</span>What is Netstub?</h2>
               <span class="cs-accordian_toggle"></span>
             </div>
             <div class="cs-accordian-body">
-              On our platform, when an attendee purchases a ticket, the minting process occurs and the ticket is sent to
-              the attendee's assigned cryptocurrency wallet. This means that tickets are not originally minted by
-              Club, but rather by the attendee who owns the ticket.
+              We are a sports event ticketing platform that enables clubs to sell tickets in a manner that ensures their
+              legitimacy can be verified and provides the club with control over trades on the secondary marketplace
+              through the use of NFTs. This means that fans can now purchase tickets for this club with confidence on
+              any secondary marketplace that supports NFT trading, and they can also benefit from regulations that
+              prevent inflated prices on the secondary marketplace.
             </div>
           </div><!-- .cs-accordian -->
           <div class="cs-height_25 cs-height_lg_25"></div>
           <div class="cs-accordian cs-white_bg">
             <div class="cs-accordian_head">
-              <h2 class="cs-accordian_title cs-m0 cs-font_22 cs-font_18_sm"><span>Q2.</span> How do Attandees check in
-                into the event?</h2>
+              <h2 class="cs-accordian_title cs-m0 cs-font_22 cs-font_18_sm"><span>Q2.</span> How do fans check in
+                into the game?</h2>
               <span class="cs-accordian_toggle"></span>
             </div>
             <div class="cs-accordian-body">
-              Club will maintain a dashboard displaying current event data, including the accounts usernames and
-              emails of event attendees.Attandees just have to give their unique username for check-in
+              Fans just have to give their wallet address on the gate of the stadium.
             </div>
           </div><!-- .cs-accordian -->
           <div class="cs-height_25 cs-height_lg_25"></div>
           <div class="cs-accordian cs-white_bg">
             <div class="cs-accordian_head">
               <h2 class="cs-accordian_title cs-m0 cs-font_22 cs-font_18_sm"><span>Q3.</span>Can tickets be Traded After
-                an Event finishes?</h2>
+                a game finishes?</h2>
               <span class="cs-accordian_toggle"></span>
             </div>
             <div class="cs-accordian-body">
@@ -389,8 +308,8 @@
               <span class="cs-accordian_toggle"></span>
             </div>
             <div class="cs-accordian-body">
-              Unfortunately no, but tickets are not able to be traded outside of the platform's marketplace due to
-              control reasons.
+              YES!! Fans can checkout the Secret keys sections in the navbar and use the keys to sign in into any crypto
+              wallet and sell their owned NFTs on any NFT trading platform
             </div>
           </div><!-- .cs-accordian -->
           <div class="cs-height_25 cs-height_lg_25"></div>
@@ -502,15 +421,6 @@
           </a>
         </div>
         <div class="cs-height_30 cs-height_lg_30"></div>
-        <ul class="cs-footer_menu cs-primary_font cs-primary_color cs-center text-uppercase wow fadeInUp"
-          data-wow-duration="1s" data-wow-delay="0.4s">
-          <li><a href="">Home</a></li>
-          <li><a href="">About</a></li>
-          <li><a href="">Roadmap</a></li>
-          <li><a href="">Team</a></li>
-          <li><a href="">FAQ</a></li>
-          <li><a href="">Pages</a></li>
-        </ul>
       </div>
       <div class="cs-height_85 cs-height_lg_25"></div>
       <div class="container wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -522,91 +432,6 @@
     <!-- End Footer -->
   </div>
 
-  <!-- Start Connect Modal -->
-  <div class="cs-modal" data-modal="connect_wallet">
-    <div class="cs-modal_in">
-      <div class="cs-modal_container cs-white_bg">
-        <button class="cs-close_modal cs-center cs-primary_bg">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.7071 1.70711C12.0976 1.31658 12.0976 0.683417 11.7071 0.292893C11.3166 -0.0976311 10.6834 -0.0976311 10.2929 0.292893L11.7071 1.70711ZM0.292893 10.2929C-0.0976311 10.6834 -0.0976311 11.3166 0.292893 11.7071C0.683417 12.0976 1.31658 12.0976 1.70711 11.7071L0.292893 10.2929ZM1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L1.70711 0.292893ZM10.2929 11.7071C10.6834 12.0976 11.3166 12.0976 11.7071 11.7071C12.0976 11.3166 12.0976 10.6834 11.7071 10.2929L10.2929 11.7071ZM10.2929 0.292893L0.292893 10.2929L1.70711 11.7071L11.7071 1.70711L10.2929 0.292893ZM0.292893 1.70711L10.2929 11.7071L11.7071 10.2929L1.70711 0.292893L0.292893 1.70711Z"
-              fill="white" />
-          </svg>
-        </button>
-        <div class="cs-wallet_secton text-center">
-          <h2 class="cs-font_22 text-uppercase cs-normal cs-m0">Connect Wallet</h2>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-          <ul class="cs-list cs-style1 cs-mp0">
-            <li><a href="#"><img src="assets/img/metamask.svg" alt="Logo"></a></li>
-            <li><a href="#"><img src="assets/img/coinbase.svg" alt="Logo"></a></li>
-            <li><a href="#"><img src="assets/img/trustwallet.svg" alt="Logo"></a></li>
-            <li><a href="#"><img src="assets/img/walletconnect.svg" alt="Logo"></a></li>
-          </ul>
-          <div class="cs-height_15 cs-height_lg_15"></div>
-          <p class="cs-m0">Wallet are many variations of pass <br>ges of availabl.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Start Connect Modal -->
-  <!-- Start Mint Modal -->
-  <div class="cs-modal" data-modal="mint">
-    <div class="cs-modal_in">
-      <div class="cs-modal_container cs-white_bg">
-        <button class="cs-close_modal cs-center cs-primary_bg">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.7071 1.70711C12.0976 1.31658 12.0976 0.683417 11.7071 0.292893C11.3166 -0.0976311 10.6834 -0.0976311 10.2929 0.292893L11.7071 1.70711ZM0.292893 10.2929C-0.0976311 10.6834 -0.0976311 11.3166 0.292893 11.7071C0.683417 12.0976 1.31658 12.0976 1.70711 11.7071L0.292893 10.2929ZM1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L1.70711 0.292893ZM10.2929 11.7071C10.6834 12.0976 11.3166 12.0976 11.7071 11.7071C12.0976 11.3166 12.0976 10.6834 11.7071 10.2929L10.2929 11.7071ZM10.2929 0.292893L0.292893 10.2929L1.70711 11.7071L11.7071 1.70711L10.2929 0.292893ZM0.292893 1.70711L10.2929 11.7071L11.7071 10.2929L1.70711 0.292893L0.292893 1.70711Z"
-              fill="white" />
-          </svg>
-        </button>
-        <div class="cs-mint_secton">
-          <h2 class="cs-font_22 text-uppercase cs-normal cs-m0 text-center">Collect your NFT before <br>the deadline.
-          </h2>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-          <div class="cs-mint_avatar text-center"><img src="assets/img/avatar_1.png" alt=""></div>
-          <div class="cs-height_50 cs-height_lg_30"></div>
-          <ul class="cs-list cs-style2 cs-mp0 cs-primary_color cs-primary_font">
-            <li>
-              <div class="cs-list_left">Remaining</div>
-              <div class="cs-list_right">725 / 725 Minted</div>
-            </li>
-            <li>
-              <div class="cs-list_left">Quantity / <span class="cs-accent_color">0.25 ETH</span></div>
-              <div class="cs-list_right">
-                <div class="cs-quantity">
-                  <button class="cs-quantity_btn cs-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
-                      preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 12H4" />
-                    </svg>
-                  </button>
-                  <input type="text" value="1" class="cs-quantity_number">
-                  <button class="cs-quantity_btn cs-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
-                      preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                        d="M12 20v-8m0 0V4m0 8h8m-8 0H4" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="cs-list_left">Total Price</div>
-              <div class="cs-list_right">0.5 ETH</div>
-            </li>
-          </ul>
-          <div class="cs-height_25 cs-height_lg_25"></div>
-          <button class="cs-btn cs-btn_filed cs-accent_btn text-center text-uppercase w-100"><span>Mint
-              Now</span></button>
-          <div class="cs-height_15 cs-height_lg_15"></div>
-          <p class="cs-m0 text-center">Presale & whitelist : Soldout</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Start Mint Modal -->
 
   <!-- Script -->
   <script src="{% static 'jquery-3.6.0.min.js' %}"></script>

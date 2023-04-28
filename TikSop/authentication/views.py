@@ -28,7 +28,7 @@ def createWallet():
 
 
 
-def loginUsers(request):
+def loginmyUsers(request):
     """
     If the request method is POST, then get the username and password from the request, 
     authenticate the user, and if the user is authenticated, then redirect to the appropriate page.

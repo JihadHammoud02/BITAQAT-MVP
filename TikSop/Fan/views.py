@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import login_required
 from authentication.models import myUsers
 from Fan.models import myFan,loyalFan
 import time
-from .utils import mintNft, getTokenID, jsonifyString, fetchNftsMetadata
+from .utils import fetchNftsMetadata,getTokenID
 import asyncio
 from django.http import HttpResponseRedirect
 from Club.query import queryEvents,queryAttEvents
 from django.urls import reverse
-
+from .SmartContract import main,upload_to_ipfs,TokenId
 
 
 @login_required(login_url='/login/  ')
@@ -29,6 +29,7 @@ def renderHomepage(request):
 @login_required(login_url='/login/  ')
 def renderMarketplace(request):
     all_events=queryEvents()[0]
+    user_db=myFan.objects.get(pk=request.user.pk)
     return render(request,'Fan\Marketplace.html',{'all_events':all_events})
 
 
@@ -48,29 +49,17 @@ def match_address_with_account(ownedPublicAddress):
     return user
 
 
-async def buyTicket(request,event_id):
+def buyTicket(request,event_id):
     user_db=myFan.objects.get(pk=request.user.pk)
     query=EventsCreated.objects.get(pk=event_id)
-    
-    
-    number=str(query.event_maximum_capacity-query.number_of_current_Fan)
+    buyer_crypto_address=user_db.public_crypto_address
+    print(buyer_crypto_address)
     #calling the minting function 
-    apiResponse=asyncio.ensure_future(mintNft(query.event_name+number,query.event_description,str(query.event_banner),user_db.public_crypto_address,))
-
-    #updating the number of Fan of the event in the db
+    tx_hash=main(buyer_crypto_address,query.royaltyRate*1000,"0x074C6794461525243043377094DbA36eed0A951B",upload_to_ipfs(str(query.Team1Name)+" vs "+str(query.Team2Name)+" #"+str(query.number_of_current_Fan),"This is a match between "+
+    str(query.Team1Name) +" and "+str(query.Team2Name)+" it will be played at "+str(query.event_place)+" on "+str(query.event_date_time.date())+" at "+str(query.event_date_time.time()),query.Team1Logo.path))
     query.number_of_current_Fan+=1
     query.save()
-    await asyncio.wait([apiResponse])
-    apiResponse=apiResponse.result()
-        #getting the transaction hash to use it to get the Token id of the minted NFT
-    CROSSMINTID=str(apiResponse)
-    buyer_crypto_address=user_db.public_crypto_address
-
-
-    
-    TOKEN_ID=getTokenID(CROSSMINTID) #We need to save the Token id in our database to be able to later on query the address of the owner of this Token from the Blockchain
-    print(type(query.event_organizer))
-    ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=TOKEN_ID,organizer=query.event_organizer)
+    ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=None,organizer=query.event_organizer)
     ticket_query_to_db.save()
 
     loyaltyQuery=loyalFan.objects.filter(**{'organizer':query.event_organizer,"guest":request.user.pk})
@@ -81,7 +70,22 @@ async def buyTicket(request,event_id):
         loyalty=loyalFan(guest=request.user,organizer=query.event_organizer,eventsCount=1)
         loyalty.save()
 
+
+
     return HttpResponseRedirect(reverse('Fan:renderMarketplace'))
+
+
+
+
+def getTokenId(request,tx_hash):
+    try:
+        tokenid=TokenId(tx_hash=tx_hash)
+        
+
+    except:
+        return {"message":"404"}
+
+
 
 
 def renderInventory(request):

@@ -36,6 +36,7 @@ class EventsticketsMinted(models.Model):
    organizer=models.ForeignKey(myUsers,on_delete=models.CASCADE,
                                 related_name="event_organizer",default=0)
    checkIn_Time=models.TimeField(null=True,blank=True)
+   TimeStamp=models.TimeField(null=True,blank=True)
 
 
 

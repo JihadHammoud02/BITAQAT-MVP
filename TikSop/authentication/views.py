@@ -28,6 +28,7 @@ def createWallet():
 
 
 
+
 def loginmyUsers(request):
     """
     If the request method is POST, then get the username and password from the request, 
@@ -79,8 +80,13 @@ def createAccounts(request):
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)
             user.save()
-            account = guest(user=user,public_crypto_address=createWallet()[1],private_crypto_address=createWallet()[0])
-                
+            wallet=createWallet()
+            public_addresse=wallet[1]
+            private_addresse=wallet[0]
+            print(public_addresse)
+            print(private_addresse)
+            account = guest(user=user,public_crypto_address=public_addresse,private_crypto_address=private_addresse)
+            print()
             account.save()
 
             return render(request, "authentication\Login.html")

@@ -16,32 +16,6 @@ def jsonifyString(object):
 
 
 
-@sync_to_async
-def  mintNft(nftName,nftDescription,nftImg,toAddress):
-
-    url = "https://staging.crossmint.io/api/2022-06-09/collections/default-polygon/nfts"
-
-    payload = {
-        "recipient": "polygon:"+toAddress,
-        "metadata": {
-            "name": nftName,
-            "image": nftImg,
-            "description": nftDescription
-        }
-    }
-    headers = {
-        "content-type": "application/json",
-        "x-client-secret": "sk_test.iSjwcEK4.7miWBYLfMymwL5Hm9JMo30QzVUN75NTN",
-        "x-project-id": "7b44996c-8c2b-4875-a677-8b3e2627ed7a"
-    }
-
-    response = requests.post(url, json=payload, headers=headers)
-
-    fetchedResponse=jsonifyString(response.text)
-    print("minted Successfully")
-    return fetchedResponse['id']
-
-
 
 def getTokenID(CrossMintId):  
 
@@ -56,6 +30,7 @@ def getTokenID(CrossMintId):
 
         response = requests.get(url, headers=headers)
         fetchedResponse=jsonifyString(response.text)
+        print(fetchedResponse)
         if fetchedResponse['onChain']["status"]!="pending":
             pending=False
     print(fetchedResponse)
@@ -114,3 +89,6 @@ def getOwners(ContractAddress=0,TokenID=0):
     )
 
     return result
+
+
+

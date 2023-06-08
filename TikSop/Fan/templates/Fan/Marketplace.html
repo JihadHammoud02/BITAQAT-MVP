@@ -194,42 +194,7 @@
     <script src="{% static 'wow.min.js' %}"></script>
     <script src="{% static 'ripples.min.js' %}"></script>
     <script src="{% static 'main.js' %}"></script>
-    <!-- <script>
-      function handleTransactionReceipt(txnHash) {
-        fetch(`/check_receipt/${txnHash}/`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.receipt) {
-              // Transaction is mined, handle the receipt
-              const tokenId = data.receipt.events.Transfer.returnValues.tokenId;
-              console.log('Token ID:', tokenId);
-              // Update the UI or perform any other required actions
-            } else {
-              // Transaction is not yet mined, check again after a delay
-              setTimeout(() => {
-                handleTransactionReceipt(txnHash);
-              }, 3000); // Check again after 3 seconds
-            }
-          });
-      }
-
-      function mintNFT(eventid) {
-        fetch('Buy/' + eventid + '/', { method: 'POST' })
-          .then(response => response.json())
-          .then(data => {
-            const txnHash = data.txnHash;
-            console.log('Transaction Hash:', txnHash);
-            // Start checking for the transaction receipt in the background
-            handleTransactionReceipt(txnHash);
-            // Display a message to the user indicating that the transaction is being processed
-            console.log('Transaction processing in the background...');
-          });
-      }
-
-      // Call the mintNFT function when the user clicks the mint button or performs the minting action
-      document.getElementById('mint-button').addEventListener('click', mintNFT);
-    </script> -->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 
 </html>

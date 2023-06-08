@@ -72,12 +72,12 @@ def fetchNftsMetadata(userAddress):
 
 
 
-def getOwners(ContractAddress=0,TokenID=0):
+def getOwners(ContractAddress,TokenID):
     api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
     params = {
-        "address": "0x37A310401d58C9545da86ff66Aa953BAE6FB6272",
-        "token_id": "26976",
-        "chain": "polygon",
+        "address": ContractAddress,
+        "token_id":TokenID,
+        "chain": "mumbai",
         "format": "decimal",
         # "limit": 100,
         # "cursor": "",

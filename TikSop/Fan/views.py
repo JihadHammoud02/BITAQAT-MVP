@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import login_required
 from authentication.models import myUsers
 from Fan.models import myFan,loyalFan
 import time
-from .utils import fetchNftsMetadata,getTokenID
+from .utils import fetchNftsMetadata
 import asyncio
 from django.http import HttpResponseRedirect
 from Club.query import queryEvents,queryAttEvents
 from django.urls import reverse
-from .SmartContract import main,upload_to_ipfs,TokenId
+from .SmartContract import main,upload_to_ipfs
 
 
 @login_required(login_url='/login/  ')
@@ -55,11 +55,11 @@ def buyTicket(request,event_id):
     buyer_crypto_address=user_db.public_crypto_address
     print(buyer_crypto_address)
     #calling the minting function 
-    tx_hash=main(buyer_crypto_address,query.royaltyRate*1000,"0x074C6794461525243043377094DbA36eed0A951B",upload_to_ipfs(str(query.Team1Name)+" vs "+str(query.Team2Name)+" #"+str(query.number_of_current_Fan),"This is a match between "+
+    token_id=main(buyer_crypto_address,query.royaltyRate*1000,"0x074C6794461525243043377094DbA36eed0A951B",upload_to_ipfs(str(query.Team1Name)+" vs "+str(query.Team2Name)+" #"+str(query.number_of_current_Fan),"This is a match between "+
     str(query.Team1Name) +" and "+str(query.Team2Name)+" it will be played at "+str(query.event_place)+" on "+str(query.event_date_time.date())+" at "+str(query.event_date_time.time()),query.Team1Logo.path))
     query.number_of_current_Fan+=1
     query.save()
-    ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=None,organizer=query.event_organizer)
+    ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=token_id,organizer=query.event_organizer)
     ticket_query_to_db.save()
 
     loyaltyQuery=loyalFan.objects.filter(**{'organizer':query.event_organizer,"guest":request.user.pk})
@@ -76,14 +76,6 @@ def buyTicket(request,event_id):
 
 
 
-
-def getTokenId(request,tx_hash):
-    try:
-        tokenid=TokenId(tx_hash=tx_hash)
-        
-
-    except:
-        return {"message":"404"}
 
 
 

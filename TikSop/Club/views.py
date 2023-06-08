@@ -111,10 +111,11 @@ def getClubData(request):
     return render(request,'Club\MyClub.html')
 
 
-def getTokenOwners(request):
-    OwnersDataQuery=getOwners()
+def getTokenOwners(request,TokenId):
+    OwnersDataQuery=getOwners(TokenID=TokenId,ContractAddress="0x44872B49d25c1A3A22C432b3e42290dE9103e53b")
     OwnersHistory=[]
     Tr=0
+    print(OwnersDataQuery)
     for owner in OwnersDataQuery['result']:
         OwnersHistory.append({'id':Tr,'timestamps':owner['block_timestamp'],'from':owner['from_address'],'to':owner['to_address'],'value':owner['value']})
         Tr+=1

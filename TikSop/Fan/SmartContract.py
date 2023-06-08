@@ -58,18 +58,12 @@ def main(recipient_address,quantity,royaltyrec,tokenuri):
         print('Transaction sent. Hash:', transaction_hash)
     else:
         print('Failed to request test tokens from the faucet.')
-    time.sleep(5)
-    tx_receipt=w3.eth.get_transaction_receipt(transaction_hash)
+    tx_receipt=w3.eth.wait_for_transaction_receipt(transaction_hash)
     token_id = w3.to_int(tx_receipt['logs'][0]['topics'][3])
     print(token_id)
 
-    return transaction_hash
-
-
-def TokenId(tx_hash):
-    tx_receipt=w3.eth.get_transaction_receipt(tx_hash)
-    token_id = w3.to_int(tx_receipt['logs'][0]['topics'][3])
     return token_id
+
 
 
 

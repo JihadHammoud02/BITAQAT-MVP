@@ -224,7 +224,7 @@
                                                 class="btn btn-sm btn-neutral">View Data</a>
                                             <a href="{% url 'Club:checkInGuest'  mintedID_DB=guest.ticket_id %}"
                                                 class="btn btn-sm btn-neutral mx-5">Check in</a>
-                                            <a href="{% url 'Club:TrackingOwners' %}"
+                                            <a href="{% url 'Club:getTokenOwners' TokenId=guest.Token_ID %}"
                                                 class="btn btn-sm btn-neutral mx-5">Token Owners</a>
                                             </button>
                                         </td>

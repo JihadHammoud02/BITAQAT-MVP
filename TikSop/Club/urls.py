@@ -18,6 +18,8 @@ urlpatterns = [
     path('checkIn/<str:mintedID_DB>/',views.checkInGuest,name='checkInGuest'),
     path('MyClub/',views.getClubData,name='MyClub'),
     path('getTokenOwners/<str:TokenId>/',views.getTokenOwners,name='getTokenOwners'),
+    path('scan-qr-code/', views.qr_ccode_scan_view, name='scan-qr-code'),
+    path('check-qr-code/', views.check_qr_code, name='check-qr-code'),
 
     
 ]

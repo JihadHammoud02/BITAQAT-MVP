@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect
 from Club.query import queryEvents,queryAttEvents
 from django.urls import reverse
 from .SmartContract import main,upload_to_ipfs
+from django.http import HttpResponse
 
 
 @login_required(login_url='/login/  ')
@@ -54,9 +55,11 @@ def buyTicket(request,event_id):
     query=EventsCreated.objects.get(pk=event_id)
     buyer_crypto_address=user_db.public_crypto_address
     print(buyer_crypto_address)
+    tokenuri=upload_to_ipfs(str(query.Team1Name)+" vs "+str(query.Team2Name)+" #"+str(query.number_of_current_Fan),"This is a match between "+
+    str(query.Team1Name) +" and "+str(query.Team2Name)+" it will be played at "+str(query.event_place)+" on "+str(query.event_date_time.date())+" at "+str(query.event_date_time.time()),query.Team1Logo.path)
     #calling the minting function 
-    token_id=main(buyer_crypto_address,query.royaltyRate*1000,"0x074C6794461525243043377094DbA36eed0A951B",upload_to_ipfs(str(query.Team1Name)+" vs "+str(query.Team2Name)+" #"+str(query.number_of_current_Fan),"This is a match between "+
-    str(query.Team1Name) +" and "+str(query.Team2Name)+" it will be played at "+str(query.event_place)+" on "+str(query.event_date_time.date())+" at "+str(query.event_date_time.time()),query.Team1Logo.path))
+    time.sleep(3)
+    token_id=main(buyer_crypto_address,query.royaltyRate*1000,"0x074C6794461525243043377094DbA36eed0A951B",tokenuri)
     query.number_of_current_Fan+=1
     query.save()
     ticket_query_to_db=EventsticketsMinted(event_id=query,NFT_owner_address=str(buyer_crypto_address),NFT_owner_account=match_address_with_account(buyer_crypto_address),NFT_token_id=token_id,organizer=query.event_organizer)
@@ -75,7 +78,8 @@ def buyTicket(request,event_id):
     return HttpResponseRedirect(reverse('Fan:renderMarketplace'))
 
 
-
+# def requestMetadata(name,description,image_url):
+#     return {"name":name,}
 
 
 
@@ -88,3 +92,11 @@ def renderInventory(request):
 
 
 
+def ReturnImg(request):
+    object=EventsCreated.objects.get(pk=2)
+    response = HttpResponse(content_type="image/jpeg")
+    image=object.Team1Logo
+    # Set the image content as the response content
+    response.write(image)
+
+    return response

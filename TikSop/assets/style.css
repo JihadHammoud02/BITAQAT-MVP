@@ -1530,7 +1530,7 @@ ul.cs-list.cs-style2 li:not(:last-child) {
   }
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 1px) {
   .cs-right_space_40,
   .cs-right_space_150 {
     padding-right: 0;
@@ -1902,7 +1902,7 @@ ul.cs-list.cs-style2 li:not(:last-child) {
   }
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 1px) {
   .cs-gap-50 .slick-slide {
     padding-left: 15px;
     padding-right: 15px;
@@ -2401,7 +2401,7 @@ ul.cs-list.cs-style2 li:not(:last-child) {
   background-color: #fff;
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 1px) {
   .cs-main_header .container {
     max-width: 100%;
   }
@@ -2638,7 +2638,7 @@ li.menu-item-has-children
   }
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 1px) {
   .cs-munu_dropdown_toggle {
     position: absolute;
     height: 30px;
@@ -3068,7 +3068,7 @@ li.menu-item-has-children
   }
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 1px) {
   .cs-hero.cs-style1 .cs-hero_img {
     right: 2%;
     max-width: 420px;
@@ -3535,7 +3535,7 @@ li.menu-item-has-children
           backdrop-filter: blur(10px);
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 1px) {
   .cs-dark .cs-nav .cs-nav_list {
     background-color: #283645;
     border-color: rgba(255, 255, 255, 0.1);

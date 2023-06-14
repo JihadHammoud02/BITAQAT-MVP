@@ -38,13 +38,14 @@
                     <div class="cs-main_header_center">
                         <div class="cs-nav">
                             <ul class="cs-nav_list">
-                                <li><a class="nv" href="/org/homepage">Home</a>
+                                <li class="menu-item-has-children"><a href="/org/homepage"
+                                        class="cs-smoth_scroll">Home</a>
                                 </li>
-                                <li><a class="nv" href="/org/Marketplace">Upcoming Games</a></li>
-                                <li><a class="nv" href="/org/create">Create</a></li>
-                                <li><a class="nv" href="/org/myEvents">My Games</a></li>
-
-                                <li><a class="nv" href="{% url 'Club:logoutUser' %}">logout</a></li>
+                                <li><a href="/org/Marketplace">Upcoming Games</a></li>
+                                <li><a href="/org/create">Create</a></li>
+                                <li><a href="/org/myEvents">My Games</a></li>
+                                <li><a href="/org/scan-qr-code">Scan Tickets</a></li>
+                                <li><a href="{% url 'Club:logoutUser' %}">logout</a></li>
                             </ul>
                         </div>
                     </div>

@@ -9,6 +9,8 @@ from Club.query import queryEvents,countAttandees,loyalty,queryAttEvents
 from Fan.models import myFan
 import datetime
 from Fan.utils import getOwners
+from Fan.models import NFTMetadata
+import time
 
 
 # A decorator that checks if the user is logged in. If not, it redirects to the login page.
@@ -40,7 +42,6 @@ def renderProfile(request):
 @login_required(login_url='/login/  ')
 def renderMarketplace(request):
     all_events=queryEvents()[0]
-    print(all_events)
     return render(request,'Club\Marketplace.html',{'all_events':all_events})
 
 @login_required(login_url='/login/  ')
@@ -121,3 +122,32 @@ def getTokenOwners(request,TokenId):
         Tr+=1
     print(OwnersHistory)
     return render(request,"Club\OwnersTable.html",{"OwnersData":OwnersHistory})
+
+
+def qr_ccode_scan_view(request):
+    return render(request,"test.html")
+
+
+
+from django.http import JsonResponse
+
+def check_qr_code(request):
+    if request.method == 'POST':
+        qr_code = request.POST.get('qr_code')
+        # Perform the comparison with values stored in the database
+        # Retrieve relevant data and compare with qr_code
+        db_query=NFTMetadata.objects.all()
+        flag=False
+        tokenid=0
+        for hash in db_query:
+            if hash.user_Hash == qr_code:
+                flag=True
+                tokenid=hash.Tokenid
+                break
+        # Example comparison
+        if flag == True:
+            query=EventsticketsMinted.objects.get(NFT_token_id=tokenid)
+            query.checkIn_Time=time.time()
+            return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False})

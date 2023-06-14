@@ -1,0 +1,86 @@
+<!-- qr_code_scan.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>QR Code Scan</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Scan QR Code</h1>
+    <div id="scanner-container"></div>
+    <div id="qr-reader" style="width:500px"></div>
+    <div id="qr-reader-results"></div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script>
+        // Retrieve the CSRF token from the cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrfToken = getCookie('csrftoken');
+
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+
+        function onSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // Handle on success condition with the decoded message.
+                console.log('Scan result:', decodedText);
+
+                // Send the scanned QR code to the Django view
+                $.ajax({
+                    url: '/org/check-qr-code/',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: csrfToken,
+                        qr_code: decodedText
+                    },
+                    beforeSend: function (xhr, settings) {
+                        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                            xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                        }
+                    },
+                    success: function (response) {
+                        if (response.success == true) {
+
+                            alert("Successfully checked in ");
+                            location.reload();
+                        }
+                        else {
+                            alert("Invalide Qr Code");
+                            location.reload();
+                        }
+                        // Handle the success response from the Django view
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error:', error);
+                        // Handle the error response from the Django view
+                    }
+                });
+            }
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onSuccess);
+    </script>
+</body>
+
+</html>

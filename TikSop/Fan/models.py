@@ -19,3 +19,9 @@ class loyalFan(models.Model):
     eventsCount=models.IntegerField(default=0)
 
 
+class NFTMetadata(models.Model):
+    name=models.CharField(max_length=120,default=None)
+    description=models.CharField(max_length=120,default=None)
+    user_Hash=models.CharField(max_length=300,default=None)
+    BlockNumber=models.IntegerField(default=None)
+    Tokenid=models.IntegerField(default=None)

@@ -31,7 +31,7 @@
                 <div class="cs-main_header_in">
                     <div class="cs-main_header_left">
                         <a class="cs-site_branding cs-accent_color" href="index.html">
-                            <img src="{% static 'images/Haffel-full-centered.svg' %}" alt="Logo" class="cs-hide_white">
+                            <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
 
                         </a>
                     </div>
@@ -41,37 +41,55 @@
                                 <li class="menu-item-has-children"><a href="/org/homepage"
                                         class="cs-smoth_scroll">Home</a>
                                 </li>
-                                <li><a href="/org/Marketplace">Upcoming Games</a></li>
-                                <li><a href="/org/create">Create</a></li>
-                                <li><a href="/org/myEvents">My Games</a></li>
-                                <li><a href="/org/scan-qr-code">Scan Tickets</a></li>
-                                <li><a href="{% url 'Club:logoutUser' %}">logout</a></li>
+                                <li><a href="/org/Marketplace" class="cs-smoth_scroll">Games</a></li>
+                                <li><a href="/org/create" class="cs-smoth_scroll">Create</a></li>
+                                <li><a href="/org/myEvents" class="cs-smoth_scroll">Analytics</a></li>
+                                <li><a href="" class="cs-smoth_scroll">Check-in</a></li>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="cs-main_header_right">
                         <div class="cs-toolbox">
-
+                            <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                href="{% url 'Club:logoutUser' %}">Logout
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <section class="cs-hero cs-style1 cs-bg" data-src="assets/img/hero_bg.jpeg" id="home">
+    <div class="cs-hero cs-style1 cs-type2 cs-bg text-center " data-src="{% static 'images/hero_bg.png' %}" id="home">
         <div class="cs-dark_overlay"></div>
         <div class="container">
-            <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
-                <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Fill in this form<br>
-                    with the event information
-                </h1>
+            <div class="cs-hero_text wow fadeIn" data-wow-duration="1s" data-wow-delay="0.45s">
+                <br><br><br>
+                <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">
+                    Empower Your Event: Create and Sell Tickets</h1>
+                <h3 class="cs-hero_subtitle cs-font_20 cs-font_16_sm cs-body_line_height">Complete the form below and
+                    start
+                    <span class="cs-accent_color">earning</span> <br>
+                </h3>
             </div>
-    </section>
+        </div>
+    </div>
     <div class="big-main d-flex justify-content-center align-items-center">
         <form class="main2 justify-content-center " action="{% url 'Club:createEvents' %}" method="post"
             enctype="multipart/form-data">
             {% csrf_token %}
+            <div class="input my-5">
 
+                <div class="container-fluid div-height ">
+                    <p class="titles">Match Banner</p>
+                </div>
+                <center>
+                    <div class="container-fluid d-flex justify-content-center">
+                        <input type='file' class="title input-form upload-btn" id='Team1' name="logo1"
+                            accept=".jpg, .jpeg, .png" text="kak"></input>
+                    </div>
+                </center>
+            </div>
             <div class="input my-5">
 
                 <div class="container-fluid div-height ">
@@ -167,33 +185,6 @@
                             class="title input-form" placeholder="  Ex: 250$" />
                     </div>
                 </center>
-            </div>
-            <div class="container-fluid div-height ">
-                <p class="titles">Secondary sales rules</p>
-            </div>
-            <div class="input my-5">
-                <div class="form-group mx-5">
-                    <input class="form-check-input" type="radio" id="priceCap" name="check" onclick="enableInput()"
-                        value="0">
-                    <label class="form-check-label" for="priceCap">
-                        Set a price limit
-                    </label>
-                    <input type="number" name="capnumber" min="0.00" class=" title input-form w-25 mx-5" id="capPrice">
-                </div>
-                <div class="form-group mx-5 my-4">
-                    <input class="form-check-input" type="radio" id="sdb" name="check" onclick="disableInput()"
-                        value="1">
-                    <label class="form-check-label" for="sdb">
-                        Not tradable
-                    </label>
-                </div>
-                <div class="form-group mx-5 my-4">
-                    <input class="form-check-input" type="radio" id="free" name="check" onclick="disableInput()"
-                        value="2">
-                    <label class="form-check-label" for="free">
-                        No rules
-                    </label>
-                </div>
             </div>
             <div class="input my-5">
 

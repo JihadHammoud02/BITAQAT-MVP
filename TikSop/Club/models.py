@@ -9,6 +9,7 @@ class myClub(models.Model):
 
 
 class EventsCreated(models.Model):
+   EventBanner=models.ImageField(upload_to='', default=None,null=True, blank=True)
    event_organizer=models.ForeignKey(myUsers,on_delete=models.CASCADE)
    Team1Name=models.CharField(max_length=500,default=None)
    Team2Name=models.CharField(max_length=500,default=None)

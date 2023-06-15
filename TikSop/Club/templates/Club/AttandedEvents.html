@@ -31,8 +31,8 @@
                 <div class="cs-main_header_in">
                     <div class="cs-main_header_left">
                         <a class="cs-site_branding cs-accent_color" href="index.html">
-                            <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" class="cs-hide_dark">
-                            <img src="{% static 'images/Haffel-full-centered.svg' %}" alt="Logo">
+                            <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
+
                         </a>
                     </div>
                     <div class="cs-main_header_center">
@@ -41,17 +41,19 @@
                                 <li class="menu-item-has-children"><a href="/org/homepage"
                                         class="cs-smoth_scroll">Home</a>
                                 </li>
-                                <li><a href="/org/Marketplace">Upcoming Games</a></li>
-                                <li><a href="/org/create">Create</a></li>
-                                <li><a href="/org/myEvents">My Games</a></li>
-                                <li><a href="/org/scan-qr-code">Scan Tickets</a></li>
-                                <li><a href="{% url 'Club:logoutUser' %}">logout</a></li>
+                                <li><a href="/org/Marketplace" class="cs-smoth_scroll">Games</a></li>
+                                <li><a href="/org/create" class="cs-smoth_scroll">Create</a></li>
+                                <li><a href="/org/myEvents" class="cs-smoth_scroll">Analytics</a></li>
+                                <li><a href="" class="cs-smoth_scroll">Check-in</a></li>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="cs-main_header_right">
                         <div class="cs-toolbox">
-
+                            <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                href="{% url 'Club:logoutUser' %}">Logout
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style2.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'eventCard.css' %}">
 </head>
 
@@ -24,14 +25,14 @@
             <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logsso">
         </div>
     </div>
-    <!-- Start Header Section -->
     <header class="cs-site_header cs-style1 cs-sticky-header cs-primary_color text-uppercase cs-white_bg">
         <div class="cs-main_header">
             <div class="container">
                 <div class="cs-main_header_in">
                     <div class="cs-main_header_left">
                         <a class="cs-site_branding cs-accent_color" href="index.html">
-                            <img src="{% static 'images/Haffel-full-centered.svg' %}" alt="Logo" class="cs-hide_white">
+                            <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
+
                         </a>
                     </div>
                     <div class="cs-main_header_center">
@@ -40,16 +41,19 @@
                                 <li class="menu-item-has-children"><a href="/org/homepage"
                                         class="cs-smoth_scroll">Home</a>
                                 </li>
-                                <li><a href="/org/Marketplace">Upcoming Games</a></li>
-                                <li><a href="/org/create">Create</a></li>
-                                <li><a href="/org/myEvents">My Games</a></li>
-                                <li><a href="/org/scan-qr-code">Scan Tickets</a></li>
-                                <li><a href="{% url 'Club:logoutUser' %}">logout</a></li>
+                                <li><a href="/org/Marketplace" class="cs-smoth_scroll">Games</a></li>
+                                <li><a href="/org/create" class="cs-smoth_scroll">Create</a></li>
+                                <li><a href="/org/myEvents" class="cs-smoth_scroll">Analytics</a></li>
+                                <li><a href="" class="cs-smoth_scroll">Check-in</a></li>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="cs-main_header_right">
                         <div class="cs-toolbox">
+                            <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                href="{% url 'Club:logoutUser' %}">Logout
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -60,41 +64,77 @@
     <div class="cs-height_80 cs-height_lg_80"></div>
     <!-- Start Team -->
 
+    <section class="cs-hero cs-style1 cs-bg" data-src="{% static 'images/hero_bg.png' %}" id="home">
+        <div class="cs-dark_overlay"></div>
+        <div class="container">
+            <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
+                <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Buy Tickets for<br>Upcoming
+                    Games
+                </h1>
+                <h3 class="cs-hero_subtitle cs-font_20 cs-font_16_sm cs-body_line_height">Secure your
+                    <span class="cs-accent_color">seat</span> <br>
+                    And own the <span class="cs-accent_color">moment</span>
+                </h3>
+            </div>
+            <div class="cs-hero_img wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                <img src="{% static 'images/hero_cr.png' %}">
+            </div>
+        </div>
+    </section>
+
     <div class="match_today container" id="match_today">
         <div class="widget-content">
-
+            <div class="cs-height_80 cs-height_lg_80"></div>
             <!--match mdw-->
-            {% for event in all_events %}
-            <div class="mnajiri" style="margin-top: 68px;">
-                <div class="mnajiriin">
-                    <div class="mpart1">
-                        <div class="right_match">
-                            <span class="right_tech">
-                                <img src="../../../media/{{event.banner1}}">
-                                <div class=" fname">{{event.name1}}
+            <div class="row">
+                {% for event in all_events %}
+                <div class="col-lg-4 mb-2">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div
+                                    class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img src="../../../media/{{event.banner1}}" alt="Image" width="50%"
+                                            height="50%">
+                                        <h3>{{event.name1}}</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img src="../../../media/{{event.banner2}}" alt="Image" width="50%"
+                                            height="50%">
+                                        <h3>{{event.name2}}</h3>
+                                    </div>
                                 </div>
-                            </span>
+                            </div>
                         </div>
 
-                        <div class="left_match">
-                            <span class="left_tech">
-                                <img src="../../../media/{{event.banner2}}">
-                                <div class="fname">{{event.name2}}</div>
-                            </span>
+                        <div class="text-center widget-vs-contents mb-4">
+                            <div class="cs-toolbox">
+                                <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                    href="{% url 'Club:logoutUser' %}">Buy Tickets
+                                </a>
+                            </div>
+                            <p class="mb-5" style="  margin-bottom: 1rem !important;">
+                                <span class="d-block">{{event.date}}</span>
+                                <span class="d-block">{{event.time}}</span>
+                                <strong class="text-primary">{{event.place2}}</strong>
+                            </p>
+
                         </div>
-                    </div>
-                    <div class="details_match">
-                        <span class="first_match">
-                            <i aria-hidden="true" class="fa fa-clock-o"></i><b>{{event.time}}</b>
-                        </span>
-                        <span class="thany"><i aria-hidden="true" class="fa fa-futbol-o"> </i><b>{{event.date}}</b>
-                        </span>
-                        <span class="liga_mdw"><i aria-hidden="true" class="fa fa-desktop"></i><b>{{event.place2}}</b>
-                        </span>
+
                     </div>
                 </div>
+
+                {% endfor %}
+
+
+
+
+
             </div>
-            {% endfor %}
 
             <!-- End Team -->
             <!-- Start Footer -->

@@ -177,3 +177,20 @@ def mainQrcode(receiver_address,token_id):
     time.sleep(5)
     mintedQrcode=MintQrCode(tokenuri=Qrcodelink,recipient_address=receiver_address)
     return hashed_data
+
+
+
+def get_balance(wallet_address):
+    balance_wei = w3.eth.get_balance(wallet_address)
+
+# Convert the balance from Wei to Ether
+    balance_ether = w3.from_wei(balance_wei, 'ether')
+
+    # Fetch the current Ether price in USD from an external API (e.g., CoinGecko)
+    response = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd')
+    data = response.json()
+    matic_price_usd = data['matic-network']['usd']
+    # Calculate the balance in USD
+    balance_usd = float(balance_ether) * matic_price_usd
+
+    return round(balance_usd,2)

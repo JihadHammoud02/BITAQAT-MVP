@@ -14,6 +14,7 @@ def queryEvents(filterby=None,val=None):
     event={}
     for eve in list_of_all_events:
         event['id']=eve.pk
+        event['img']=eve.EventBanner
         event['name1']=eve.Team1Name
         event['name2']=eve.Team2Name
         event['name']=str(event['name1'])+" vs "+str(event['name2'])

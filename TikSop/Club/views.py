@@ -8,11 +8,11 @@ from django.http import HttpResponseRedirect
 from Club.query import queryEvents,countAttandees,loyalty,queryAttEvents
 from Fan.models import myFan
 import datetime
-from Fan.utils import getOwners
+from Fan.utils import getOwners,VolumneTraded
 from Fan.models import NFTMetadata
 import time
-
-
+from Fan.SmartContract import get_balance
+from datetime import datetime, timedelta
 # A decorator that checks if the user is logged in. If not, it redirects to the login page.
 @login_required(login_url='/login/  ')
 def renderHomepage(request):
@@ -63,8 +63,9 @@ def createEvents(request):
         SecondaryMR=request.POST.getlist('check')
         SecondaryMRN=request.POST.get('capnumber')
         royalty=request.POST.get('royap')
+        banner=request.POST.get('banner')
         
-        event_created=EventsCreated(event_organizer=request.user,Team1Name=Team1name1,Team2Name=Team2name2,Team1Logo=Team1logo1,Team2Logo=Team2logo2,event_date_time=game_date_client,event_maximum_capacity=game_max_capacity_client,event_ticket_price=game_ticket_price_client,event_place=game_place_client,number_of_current_Fan=0,royaltyRate=royalty,SecondarySalesRules=SecondaryMR,SecondarySalesCapPrice=SecondaryMRN,category=category2)
+        event_created=EventsCreated(event_organizer=request.user,Team1Name=Team1name1,Team2Name=Team2name2,Team1Logo=Team1logo1,Team2Logo=Team2logo2,event_date_time=game_date_client,event_maximum_capacity=game_max_capacity_client,event_ticket_price=game_ticket_price_client,event_place=game_place_client,number_of_current_Fan=0,royaltyRate=royalty,SecondarySalesRules=SecondaryMR,SecondarySalesCapPrice=SecondaryMRN,category=category2,EventBanner=banner)
         event_created.save()
 
         return render(request, 'Club\eventcreation.html')
@@ -81,17 +82,7 @@ def myEvents(request):
     
 counter=0
 
-def eventDashboard(request,eventId):
-    queryTickets=EventsticketsMinted.objects.filter(**{"event_id":eventId})
-    eventQuery=queryEvents("id",eventId)
-    eventData=[]
-    loyaltyQuery=loyalty(request.user.pk)
-    print(request.user)
-    print(loyaltyQuery)
-    for ticket in queryTickets:
-        eventData.append({"ownerName":ticket.NFT_owner_account.username,"ownerAbrev":ticket.NFT_owner_account.username[0]+ticket.NFT_owner_account.username[-1],"ownerEmail":ticket.NFT_owner_account.email,"Token_ID":ticket.NFT_token_id,"loyalty":loyaltyQuery[ticket.NFT_owner_account.username],"ownerID":ticket.NFT_owner_account.pk,"ticket_id":ticket.pk,"checkin":ticket.checkIn_Time})
-        print(eventData)
-    return render(request,"Club\Dashboard.html",{"eventData":eventData,"Number":len(eventData),"Revenue":eventQuery[0][0]['price']*len(eventData),"placesLeft":eventQuery[0][0]['maxcap'] -len(eventData),"eventName":eventQuery[0][0]['name']})
+
 #logout the User
 def logoutUser(request):
     logout(request)
@@ -151,3 +142,152 @@ def check_qr_code(request):
             return JsonResponse({'success': True})
     
     return JsonResponse({'success': False})
+
+
+
+
+
+
+#-------------- Analytics calculator -----------------------------------------
+
+
+
+def Revenue_Calc(pk,query_object,query):
+    current_date = datetime.now()
+    print(current_date)
+    current_month = current_date.month
+    print("Current Month:", current_month)
+
+    last_month = current_date.replace(day=1) - timedelta(days=1)
+    last_month_number = last_month.month
+    print("Last Month:", last_month_number)
+    current_month_revenue=0
+    last_month_revenue=250
+    for game in query:
+        if game.datebought.month == current_month:
+            current_month_revenue+=game.event_id.event_ticket_price
+        else:
+            if game.event_date_time.month==last_month:
+                last_month_revenue+=game.event_id.event_ticket_price
+    alpha=((current_month_revenue - last_month_revenue) / last_month_revenue) * 100
+    return (round(alpha,2),current_month_revenue)
+        
+
+def Royalty_Calc(walletAddresse):
+    return get_balance(wallet_address=walletAddresse)
+
+def Volume_Traded_Calc(pk,query):
+    volume=0
+    for row in query:
+        volume+=VolumneTraded("0x44872B49d25c1A3A22C432b3e42290dE9103e53b",row.NFT_token_id)
+    return volume
+
+def AttendanceRateCalc(pk,query_object):
+    AttendanceRate=0
+    for event in query_object:
+        AttendanceRate+=event.number_of_current_Fan / event.event_maximum_capacity
+    return round(AttendanceRate * 100,2)
+
+
+def LatestTransactions(pk,query):
+    log={}
+    res=[]
+    for tickets_minted in query[0:4]:
+        log['name']=tickets_minted.NFT_owner_account.username
+        log['event_name']=str(tickets_minted.event_id.Team1Name)+" vs "+str(tickets_minted.event_id.Team2Name)
+        log['token_id']=tickets_minted.NFT_token_id
+        log['timestamp']=tickets_minted.TimeStamp
+        res.append(log)
+        log={}
+    return res
+
+
+def MostPopularGames(pk,query_object):
+    query=query_object.order_by("-number_of_current_Fan")[:5]
+    log={}
+    res=[]
+    for game in query:
+        log['img_url']=game.Team2Logo
+        log['name']=str(game.Team1Name)+" vs "+str(game.Team2Name)
+        log['total_revenue']=game.number_of_current_Fan * game.event_ticket_price
+        log['date']=game.event_date_time.date
+        res.append(log)
+        log={}
+    return res
+
+def BestRevenueEvent(pk,queryEvents):
+    mapping={}
+    for event in queryEvents:
+        mapping[event.pk]=event.event_ticket_price * event.number_of_current_Fan
+    
+    sorted_dict = dict(sorted(mapping.items(), key=lambda item: item[1], reverse=True))
+
+    event_result=EventsCreated.objects.get(pk=next(iter(sorted_dict.items()))[0])
+
+    return {"name":event_result.Team2Name,"date":event_result.event_date_time.date(),"revenue":next(iter(sorted_dict.items()))[1],"img":event_result.Team2Logo}
+
+def TotalTicketSold(pk,queryEvents):
+    number_of_tickets=0
+    for event in queryEvents:
+        number_of_tickets+=event.number_of_current_Fan
+    return number_of_tickets
+
+
+
+
+def RenderGames(pk,queryEvents):
+    events=[]
+    event={}
+    for eve in queryEvents:
+        event['name']=str(eve.Team1Name)+" vs "+str(eve.Team2Name)
+        event['place']=eve.event_place
+        event['date']=eve.event_date_time
+        event['price']=eve.event_ticket_price
+        event['status']=eve.number_of_current_Fan
+        event['img']=eve.Team2Logo
+        event['royalty']=eve.royaltyRate
+        event['id']=eve.id
+        events.append(event)
+        event={}
+    return events
+
+
+def renderAnalytics(request):
+    user_pk=request.user.pk
+    query_object=EventsCreated.objects.filter(**{"event_organizer_id":user_pk})
+    query=EventsticketsMinted.objects.filter(**{"organizer_id":user_pk})
+    
+    revenue=Revenue_Calc(user_pk,query_object,query)
+    Rev_from_ticket=revenue[1]
+    deltaRevenue=revenue[0]
+    RevenueFromRoyalties=Royalty_Calc("0x3B9019DC197393d4425e51d9fCd94600d523Bc89")
+    VolumeTradeds=Volume_Traded_Calc(user_pk,query)
+    AttendanceRate=AttendanceRateCalc(user_pk,query_object)
+    if deltaRevenue<0:
+        indicator=0
+    else:
+        indicator=1
+    latest_transactions_list=LatestTransactions(user_pk,query)
+    ppopulargames=MostPopularGames(user_pk,query_object)
+    Bestevent=BestRevenueEvent(user_pk,query_object)
+    TotalTickets=TotalTicketSold(user_pk,query_object)
+    AllGames=RenderGames(user_pk,query_object)
+    return render(request,'Club\Dashboard.html',{"rev":Rev_from_ticket,"delta":deltaRevenue,"roy":RevenueFromRoyalties,"vol":VolumeTradeds,"att":AttendanceRate,"ind":indicator,"pg":ppopulargames,"transaction":latest_transactions_list,"bestevent":Bestevent,"numberoftickets":TotalTickets,"games":AllGames})
+
+
+
+def eventDashboard(request,eventId):
+    queryTickets=EventsticketsMinted.objects.filter(**{"event_id":eventId})
+    eventQuery=queryEvents("id",eventId)
+    revenue=eventQuery[0][0]['price']*eventQuery[0][0]['currentNumber']
+    currentnumber=eventQuery[0][0]['currentNumber']
+    placesleft=eventQuery[0][0]['available_places']
+    print(revenue)
+    eventData=[]
+    loyaltyQuery=loyalty(request.user.pk)
+    print(request.user)
+    print(loyaltyQuery)
+    for ticket in queryTickets:
+        eventData.append({"ownerName":ticket.NFT_owner_account.username,"ownerAbrev":ticket.NFT_owner_account.username[0]+ticket.NFT_owner_account.username[-1],"ownerEmail":ticket.NFT_owner_account.email,"Token_ID":ticket.NFT_token_id,"loyalty":loyaltyQuery[ticket.NFT_owner_account.username],"ownerID":ticket.NFT_owner_account.pk,"ticket_id":ticket.pk,"checkin":ticket.checkIn_Time})
+        print(eventData)
+    return render(request,"Club\MyGame.html",{"eventData":eventData,"revenue":revenue,"cn":currentnumber,"pf":placesleft})

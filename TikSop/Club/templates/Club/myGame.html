@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    {% load static %}
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Laralink">
+    <!-- Favicon Icon -->
+    <link rel="icon" href="assets/img/favicon.png" />
+    <!-- Site Title -->
+    <title>Vesperi</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'eventCard.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/@webpixels/css@1.1.5/dist/index.css">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/jvectormap/jquery-jvectormap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/owl-carousel-2/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/owl-carousel-2/owl.theme.default.min.css' %}">
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/css/vendor.bundle.base.css' %}">
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/mdi/css/materialdesignicons.min.css' %}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style3.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css">
+</head>
+
+
+
+<body class="cs-dark">
+
+    <style>
+        a {
+            color: white;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #0052FF;
+        }
+    </style>
+    <div class="cs-preloader cs-white_bg cs-center">
+        <div class="cs-preloader_in">
+            <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo">
+        </div>
+    </div>
+    <!-- Start Header Section -->
+    <header class="cs-site_header cs-style1 cs-sticky-header cs-primary_color text-uppercase cs-white_bg">
+        <div class="cs-main_header">
+            <div class="container">
+                <div class="cs-main_header_in">
+                    <div class="cs-main_header_left">
+                        <a class="cs-site_branding cs-accent_color" href="index.html">
+                            <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
+
+                        </a>
+                    </div>
+                    <div class="cs-main_header_center">
+                        <div class="cs-nav">
+                            <ul class="cs-nav_list">
+                                <li class="menu-item-has-children"><a href="/org/homepage"
+                                        class="cs-smoth_scroll">Home</a>
+                                </li>
+                                <li><a href="/org/Marketplace" class="cs-smoth_scroll">Games</a></li>
+                                <li><a href="/org/create" class="cs-smoth_scroll">Create</a></li>
+                                <li><a href="/org/myEvents" class="cs-smoth_scroll">Analytics</a></li>
+                                <li><a href="" class="cs-smoth_scroll">Check-in</a></li>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="cs-main_header_right">
+                        <div class="cs-toolbox">
+                            <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                href="{% url 'Club:logoutUser' %}">Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header Section -->
+    <!-- End Header Section -->
+    <div class="cs-height_80 cs-height_lg_80"></div>
+    <!-- Start Team -->
+    <section id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card corona-gradient-card">
+                        <div class="card-body py-0 px-0 px-sm-3">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">${{revenue}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">Revenue</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">{{cn}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-warning">
+                                        <span class=" mdi mdi-crown  "></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">Numbers of Fans</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">{{pf}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-success">
+                                        <span class="  mdi mdi-cash-multiple    "></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">available places</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="col-12 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Per game analytics</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="form-check form-check-muted m-0">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input">
+                                                    </label>
+                                                </div>
+                                            </th>
+                                            <th>Token ID</th>
+                                            <th> Name </th>
+                                            <th> Email </th>
+                                            <th> Games Attanded </th>
+                                            <th> Check-in Time </th>
+                                            <th> Previous Games</th>
+                                            <th> Track Owners </th>
+                                            <th>Check in</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in eventData %}
+                                        <tr>
+                                            <td>
+                                                <div class="form-check form-check-muted m-0">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="ps-2">{{user.Token_ID}}</span>
+                                            </td>
+                                            <td> {{user.ownerName}} </td>
+                                            <td> {{user.ownerEmail}} </td>
+                                            <td> {{user.loyalty}} </td>
+                                            <td> {{user.checkin}} </td>
+                                            <td>
+                                                <div>
+                                                    <a href="{% url 'Club:renderAttandedEvents' guestID=user.ownerID guestName=user.ownerName %}"
+                                                        class="btn btn-outline-success">Previou Games</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <a href="{% url 'Club:getTokenOwners' TokenId=user.Token_ID %}"
+                                                        class="btn btn-outline-success">Track</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <a href="{% url 'Club:checkInGuest'  mintedID_DB=user.ticket_id %}"
+                                                        class="btn btn-outline-success">Check in</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <section class="cs-hero cs-style1 cs-bg" data-src="assets/img/hero_bg.jpeg" id="home">
+                <div class="cs-dark_overlay h-0"></div>
+                <div class="container " style="margin-bottom: 297px;">
+                    <div class="container wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="cs-funfact cs-style1">
+                                    <div
+                                        class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
+                                        <span data-count-to="{{Number}}" class="odometer"></span>
+                                    </div>
+                                    <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Attandees</p>
+                                </div>
+                                <div class="cs-height_25 cs-height_lg_25"></div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="cs-funfact cs-style1">
+                                    <div
+                                        class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
+                                        <span data-count-to="{{placesLeft}}" class="odometer"></span>
+                                    </div>
+                                    <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">places left</p>
+                                </div>
+                                <div class="cs-height_25 cs-height_lg_25"></div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="cs-funfact cs-style1">
+                                    <div
+                                        class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
+                                        <span data-count-to="{{Revenue}}" class="odometer"></span>$
+                                    </div>
+                                    <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Revenue </p>
+                                </div>
+                                <div class="cs-height_25 cs-height_lg_25"></div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="cs-funfact cs-style1">
+                                    <div
+                                        class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
+                                        <span data-count-to="42.2" class="odometer"></span>k
+                                    </div>
+                                    <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_18_sm">Traded volume
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Hero -->
+
+            <!-- Start Services -->
+            <center>
+                <section>
+                    <style>
+                        .table.table-light thead th,
+                        .table .thead-light th {
+                            background-color: #283645 !important;
+                            color: white !important;
+                        }
+
+                        .text-heading {
+                            --x-text-opacity: 1;
+                            color: white !important;
+                        }
+                    </style>
+                    <main class="py-6">
+                        <div class=" container-fluid">
+                            <!-- Card stats -->
+                            <div class="card shadow border-0 mb-7" style="bottom: 400px; background-color:#283645;">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Current Attandees</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-nowrap">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Token ID</th>
+                                                <th scope="col">Check in Time</th>
+                                                <th scope="col">Events Attanded</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for guest in eventData %}
+                                            <tr>
+                                                <td>
+                                                    <a class="text-heading font-semibold" href="#">
+                                                        {{guest.ownerName}}
+                                                    </a>
+                                                </td>
+                                                <td class="text-heading">
+                                                    {{guest.ownerEmail}}
+                                                </td>
+                                                <td>
+                                                    <a class="text-heading font-semibold" href="#">
+                                                        {{guest.Token_ID}}
+                                                    </a>
+                                                </td>
+                                                <td class="text-heading">
+                                                    {{guest.checkin}}
+                                                </td>
+                                                <td class="text-heading">
+                                                    {{guest.loyalty}}
+                                                </td>
+
+                                                <td class="text">
+                                                    <a href="{% url 'Club:renderAttandedEvents' guestID=guest.ownerID guestName=guest.ownerName %}"
+                                                        class="btn btn-sm btn-neutral">View Data</a>
+                                                    <a href="{% url 'Club:checkInGuest'  mintedID_DB=guest.ticket_id %}"
+                                                        class="btn btn-sm btn-neutral mx-5">Check in</a>
+                                                    <a href="{% url 'Club:getTokenOwners' TokenId=guest.Token_ID %}"
+                                                        class="btn btn-sm btn-neutral mx-5">Token Owners</a>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer border-0 py-5">
+                                    <span class="text-muted text-sm text-heading">Showing 10 items out of 250
+                                        results
+                                        found</span>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+        </div>
+        </div>
+    </section>
+    </center>
+    <!-- End Services -->
+    <div class="cs-height_70 cs-height_lg_45"></div>
+    <!-- Start Tending Item -->
+    <div class="cs-slider cs-style1 cs-gap-24 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
+        <div class="cs-slider_container" data-autoplay="1000" data-loop="1" data-speed="600" data-center="1"
+            data-fade-slide="0" data-slides-per-view="responsive" data-xs-slides="2" data-sm-slides="2"
+            data-md-slides="3" data-lg-slides="4" data-add-slides="6">
+        </div><!-- .cs-slider_container -->
+        <div class="cs-pagination cs-style1 cs-hide_desktop cs-accent_color"></div>
+        <!-- <div class="cs-slider_arrows cs-style1 cs-center">
+      <div class="cs-left_arrow cs-center cs-radius_3 cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 4.32031L8 12.3203L16 20.3203" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>              
+      </div>
+      <div class="cs-right_arrow cs-center cs-radius_3 cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 4.32031L16 12.3203L8 20.3203" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>              
+      </div>
+    </div> -->
+    </div><!-- .cs-slider -->
+    <!-- End Tending Item -->
+    <div class="cs-height_90 cs-height_lg_65"></div>
+    <!-- Start Fun Fact -->
+    <script>
+
+    </script>
+
+
+
+
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'jquery.slick.min.js' %}"></script>
+    <script src="{% static 'jquery.counter.min.js' %}"></script>
+    <script src="{% static 'wow.min.js' %}"></script>
+    <script src="{% static 'ripples.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+</body>

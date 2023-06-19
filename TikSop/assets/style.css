@@ -281,6 +281,11 @@ kbd {
   margin-top: -60px;
 }
 
+.cs-preloader_in.stop-spinning:after {
+  -webkit-animation: none;
+  animation: none;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);

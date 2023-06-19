@@ -1,4 +1,4 @@
-from .models import NFTMetadata
+from .models import QrCodeChecking as NFTMetadata
 
 
 query=NFTMetadata.objects.all()

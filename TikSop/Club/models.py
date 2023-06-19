@@ -6,6 +6,7 @@ class myClub(models.Model):
                                 primary_key=True,default=None)
     Number_of_events_created=models.PositiveIntegerField(default=0)
     Company_name=models.CharField(max_length=250,default=None)
+    RoyaltyReceiverAddresse=models.CharField(max_length=500,default=None)
 
 
 class EventsCreated(models.Model):
@@ -38,6 +39,7 @@ class EventsticketsMinted(models.Model):
                                 related_name="event_organizer",default=0)
    checkIn_Time=models.TimeField(null=True,blank=True)
    TimeStamp=models.TimeField(null=True,blank=True)
+   datebought=models.DateField(null=True,blank=True)
 
 
 

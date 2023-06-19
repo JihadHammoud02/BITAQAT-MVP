@@ -64,10 +64,9 @@ def fetchNftsMetadata(userAddress):
         params=params,
     )
     for nft in result['result']:
-        if nft['token_id'] in listTokens:
+        if nft['token_id'] in listTokens and nft['metadata'] !=None :
             nft_metadata=jsonifyString(nft['metadata'])
-            print(nft_metadata)
-            collection.append({"image":nft_metadata['image'],'name':nft_metadata['name']})
+            collection.append({"image":nft_metadata['image'],'name':nft_metadata['name'],"tokenid":nft['token_id']})
     return collection
 
 
@@ -92,3 +91,20 @@ def getOwners(ContractAddress,TokenID):
 
 
 
+def VolumneTraded(ContractAddress,TokenID):
+    api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
+    params = {
+        "address": ContractAddress,
+        "token_id":TokenID,
+        "chain": "mumbai",
+        "format": "decimal",
+        # "limit": 100,
+        # "cursor": "",
+    }
+
+    result = evm_api.nft.get_nft_transfers(
+        api_key=api_key,
+        params=params,
+    )
+
+    return len(result['result'])

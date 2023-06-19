@@ -11,7 +11,8 @@ urlpatterns = [
       path('event/<str:event_id>/', views.renderSpecificEventPage, name="renderSpecificEventPage"),
       path('Buy/<str:event_id>/',views.buyTicket,name='buyTicket'),
       path('Myinventory/',views.renderInventory,name='renderInventory'),
-      path("img/",views.ReturnImg,name="returnImg")
+      path("Mykeys/",views.renderKeys,name="Mykeys"),
+      path("verification/<str:token_id>/",views.generate_qr_code,name="verf"),
 
 ]
 

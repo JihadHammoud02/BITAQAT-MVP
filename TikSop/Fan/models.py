@@ -25,3 +25,11 @@ class NFTMetadata(models.Model):
     user_Hash=models.CharField(max_length=300,default=None)
     BlockNumber=models.IntegerField(default=None)
     Tokenid=models.IntegerField(default=None)
+
+
+
+class QrCodeChecking(models.Model):
+    Qrcode=models.ImageField(upload_to='', default=None,null=True, blank=True)
+    hash=models.CharField(max_length=300,default=None)
+    token_id=models.IntegerField(default=None)
+    checked=models.BooleanField(default=False)

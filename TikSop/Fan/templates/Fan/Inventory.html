@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style2.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'eventCard.css' %}">
 </head>
 
@@ -32,22 +33,27 @@
                     <div class="cs-main_header_left">
                         <a class="cs-site_branding cs-accent_color" href="index.html">
                             <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
+
                         </a>
                     </div>
                     <div class="cs-main_header_center">
                         <div class="cs-nav">
                             <ul class="cs-nav_list">
-                                <li><a style="font-weight: 600;" href="/guest/homepage" class="cs-smoth_scroll">Home</a>
+                                <li class="menu-item-has-children"><a href="/guest/homepage"
+                                        class="cs-smoth_scroll">Home</a>
                                 </li>
-                                <li><a style="font-weight: 600;" href="/guest/Marketplace">Upcoming Games</a></li>
-                                <li><a style="font-weight: 600;" href="/guest/Myinventory">Inventory</a></li>
-                                <li><a style="font-weight: 600;" href="{% url 'Club:logoutUser' %}">Logout</a></li>
+                                <li><a href="/guest/Marketplace" class="cs-smoth_scroll">Games</a></li>
+                                <li><a href="/guest/Myinventory" class="cs-smoth_scroll">My Tickets</a></li>
+                                <li><a href="/guest/Myinventory" class="cs-smoth_scroll">My Keys</a></li>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="cs-main_header_right">
                         <div class="cs-toolbox">
-
+                            <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                href="{% url 'Club:logoutUser' %}">Logout
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -56,30 +62,76 @@
     </header>
     <!-- End Header Section -->
     <div class="cs-height_80 cs-height_lg_80"></div>
+    <div class="cs-height_100 cs-height_lg_70"></div>
     <!-- Start Team -->
-    <section id="team">
-        <div class="cs-height_70 cs-height_lg_40"></div>
-        <div class="container">
+
+    <div class="container">
+
+        <section id="team">
             <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"
                 data-wow-delay="0.2s">
-                <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">Inventory</h3>
-                <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Your tickets</h2>
+                <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">My Tickets</h3>
+                <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Inventory</h2>
             </div>
-            <div class="cs-height_50 cs-height_lg_30"></div>
-            <div class="row">
-                {% for nft in collection %}
-                <div class="nft">
-                    <div class='main'>
-                        <center> <img class='tokenImage' src="../../../media/{{nft.image}}" width="110%">
-                        </center>
-                        <center>
-                            <h2 class="title my-2">{{nft.name}}</h2>
-                        </center>
-                    </div>
-                </div>
-                {% endfor %}
 
-    </section>
+
+            <div class="match_today container" id="match_today">
+                <div class="widget-content">
+                    <div class="cs-height_80 cs-height_lg_80"></div>
+                    <!--match mdw-->
+                    <div class="row">
+                        {% for event in collection %}
+                        <div class="col-lg-4 mb-2">
+                            <div class="bg-light p-4 rounded">
+                                <div class="widget-body">
+                                    <div class="widget-vs">
+                                        <div
+                                            class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                            <div class="team-1 text-center">
+                                                <img src="../../../media/{{event.team1logo}}" alt="Image" width="50%"
+                                                    height="50%">
+                                                <h3>{{event.team1name}}</h3>
+                                            </div>
+                                            <div>
+                                                <span class="vs"><span>VS</span></span>
+                                            </div>
+                                            <div class="team-2 text-center">
+                                                <img src="../../../media/{{event.team2logo}}" alt="Image" width="50%"
+                                                    height="50%">
+                                                <h3>{{event.team2name}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center widget-vs-contents mb-4">
+
+                                    <p class="mb-5" style="  margin-bottom: 1rem !important;">
+                                        <span class="d-block">Date: {{event.date}}</span>
+                                        <strong class="text-primary">Token id: {{event.tokenid}}</strong>
+
+                                    </p>
+                                    <div class="cs-toolbox">
+                                        <a href="{% url 'Fan:verf' token_id=event.tokenid %}"
+                                            class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn">Check in
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </div>
 
     <!-- End Team -->
     <!-- Start Footer -->

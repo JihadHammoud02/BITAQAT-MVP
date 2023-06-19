@@ -73,6 +73,31 @@
     $(".cs-preloader").delay(150).fadeOut("slow");
   }
 
+
+  function executeBuying() {
+    $(".cs-preloader_in").fadeOut();
+    $.ajax({
+      url: "/your-view-url/",  // Replace with the actual URL of your Django view
+      type: "POST",  // Use the appropriate HTTP method (POST, GET, etc.)
+      data: {
+        // Provide any data needed for your view function
+        event_id: "your-event-id",  // Replace with the actual event ID or pass it dynamically
+      },
+      success: function (response) {
+        // Handle the response from the Django view
+
+        // Hide the loading screen
+        $("#loading-screen").fadeOut();
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        // Handle any error that occurred during the AJAX call
+
+        // Hide the loading screen
+        $("#loading-screen").fadeOut();
+      }
+    });
+
+  }
   /*--------------------------------------------------------------
     2. Mobile Menu
   --------------------------------------------------------------*/
@@ -94,7 +119,7 @@
     // Mega Menu
     $(".cs-mega-wrapper>li>a").removeAttr("href");
     // Modal Btn
-    $('.cs-mode_btn').on('click', function() {
+    $('.cs-mode_btn').on('click', function () {
       $(this).toggleClass('active');
       $('body').toggleClass('cs-dark');
     })
@@ -242,12 +267,12 @@
     11. Modal Video
   --------------------------------------------------------------*/
   function modal() {
-    $(".cs-modal_btn").on('click', function() {
-      var modalData = $(this).attr("data-modal") 
+    $(".cs-modal_btn").on('click', function () {
+      var modalData = $(this).attr("data-modal")
       $(`[data-modal='${modalData}']`).addClass('active')
     })
-    $(".cs-close_modal").on('click', function() {
-      var modalData = $(this).parents('.cs-modal').attr("data-modal") 
+    $(".cs-close_modal").on('click', function () {
+      var modalData = $(this).parents('.cs-modal').attr("data-modal")
       $(`[data-modal='${modalData}']`).removeClass('active')
     })
   }

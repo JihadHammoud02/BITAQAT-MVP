@@ -17,8 +17,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'eventCard.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/@webpixels/css@1.1.5/dist/index.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/jvectormap/jquery-jvectormap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/owl-carousel-2/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/vendors/owl-carousel-2/owl.theme.default.min.css' %}">
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/css/vendor.bundle.base.css' %}">
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/mdi/css/materialdesignicons.min.css' %}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style3.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css">
 </head>
 
 
@@ -81,182 +95,317 @@
     <div class="cs-height_80 cs-height_lg_80"></div>
     <!-- Start Team -->
     <section id="team">
-        <div class="cs-height_70 cs-height_lg_40"></div>
         <div class="container">
-            <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"
-                data-wow-delay="0.2s">
-                <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">Dashboard</h3>
-                <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">{{eventName}}</h2>
-            </div>
-            <div class="cs-height_50 cs-height_lg_30"></div>
             <div class="row">
-            </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card corona-gradient-card">
+                        <div class="card-body py-0 px-0 px-sm-3">
 
-    </section>
-    <!-- Start Hero -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <section class="cs-hero cs-style1 cs-bg" data-src="assets/img/hero_bg.jpeg" id="home">
-        <div class="cs-dark_overlay h-0"></div>
-        <div class="container " style="margin-bottom: 297px;">
-            <div class="container wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <div class="cs-funfact cs-style1">
-                            <div
-                                class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-                                <span data-count-to="{{Number}}" class="odometer"></span>
-                            </div>
-                            <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Attandees</p>
-                        </div>
-                        <div class="cs-height_25 cs-height_lg_25"></div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="cs-funfact cs-style1">
-                            <div
-                                class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-                                <span data-count-to="{{placesLeft}}" class="odometer"></span>
-                            </div>
-                            <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">places left</p>
-                        </div>
-                        <div class="cs-height_25 cs-height_lg_25"></div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="cs-funfact cs-style1">
-                            <div
-                                class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-                                <span data-count-to="{{Revenue}}" class="odometer"></span>$
-                            </div>
-                            <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_22_sm">Revenue </p>
-                        </div>
-                        <div class="cs-height_25 cs-height_lg_25"></div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="cs-funfact cs-style1">
-                            <div
-                                class="cs-font_60 cs-font_36_sm cs-m0 cs-primary_font cs-primary_color cs-heading_line_height cs-bold">
-                                <span data-count-to="42.2" class="odometer"></span>k
-                            </div>
-                            <p class="cs-m0 cs-font_30 cs-heading_line_height cs-font_18_sm">Traded volume </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- End Hero -->
-
-    <!-- Start Services -->
-    <center>
-        <section>
-            <style>
-                .table.table-light thead th,
-                .table .thead-light th {
-                    background-color: #283645 !important;
-                    color: white !important;
-                }
-
-                .text-heading {
-                    --x-text-opacity: 1;
-                    color: white !important;
-                }
-            </style>
-            <main class="py-6">
-                <div class=" container-fluid">
-                    <!-- Card stats -->
-                    <div class="card shadow border-0 mb-7" style="bottom: 400px; background-color:#283645;">
-                        <div class="card-header">
-                            <h5 class="mb-0">Current Attandees</h5>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-nowrap">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Token ID</th>
-                                        <th scope="col">Check in Time</th>
-                                        <th scope="col">Events Attanded</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for guest in eventData %}
-                                    <tr>
-                                        <td>
-                                            <a class="text-heading font-semibold" href="#">
-                                                {{guest.ownerName}}
-                                            </a>
-                                        </td>
-                                        <td class="text-heading">
-                                            {{guest.ownerEmail}}
-                                        </td>
-                                        <td>
-                                            <a class="text-heading font-semibold" href="#">
-                                                {{guest.Token_ID}}
-                                            </a>
-                                        </td>
-                                        <td class="text-heading">
-                                            {{guest.checkin}}
-                                        </td>
-                                        <td class="text-heading">
-                                            {{guest.loyalty}}
-                                        </td>
-
-                                        <td class="text">
-                                            <a href="{% url 'Club:renderAttandedEvents' guestID=guest.ownerID guestName=guest.ownerName %}"
-                                                class="btn btn-sm btn-neutral">View Data</a>
-                                            <a href="{% url 'Club:checkInGuest'  mintedID_DB=guest.ticket_id %}"
-                                                class="btn btn-sm btn-neutral mx-5">Check in</a>
-                                            <a href="{% url 'Club:getTokenOwners' TokenId=guest.Token_ID %}"
-                                                class="btn btn-sm btn-neutral mx-5">Token Owners</a>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer border-0 py-5">
-                            <span class="text-muted text-sm text-heading">Showing 10 items out of 250 results
-                                found</span>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">${{rev}}</h3>
+                                        {% if ind == 0 %}
+                                        <p class="text-danger ms-2 mb-0 font-weight-medium">{{delta}}%</p>
+                                        {% elif ind == 1 %}
+                                        <p class="text-success ms-2 mb-0 font-weight-medium">{{delta}}%</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    {% if ind == 0 %}
+                                    <div class="icon icon-box-danger ">
+                                        <span class="mdi mdi-arrow-bottom-right icon-item"></span>
+                                    </div>
+                                    {% elif ind == 1 %}
+                                    <div class="icon icon-box-success ">
+                                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">Current Month Revenue</h6>
                         </div>
                     </div>
                 </div>
-            </main>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">${{roy}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-warning">
+                                        <span class=" mdi mdi-crown  "></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">Revenue from Royalties</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">{{vol}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-success">
+                                        <span class="  mdi mdi-cash-multiple    "></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">Volume Traded</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0">{{att}}%</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-success ">
+                                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted font-weight-normal">Attendance Rate</h6>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Transaction History</h4>
+                            {% for tr in transaction %}
+                            <div
+                                class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row px-4 px-md-3 px-xl-4 rounded mt-3">
+                                <div class="text-md-center text-xl-left">
+                                    <h6 class="mb-1">{{tr.event_name}}</h6> <br>
+                                    <h6 class="mb-1">{{tr.name}}</h6>
+                                    <p class="text-muted mb-0">{{tr.token_id}}</p>
+                                    <p class="text-muted mb-0">{{tr.timestamp}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-row justify-content-between">
+                                <h4 class="card-title mb-1">Most Popular Games</h4>
+                                <p class="text-muted mb-1">Revenue</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="preview-list">
+                                        {% for games in pg %}
+                                        <div class="preview-item border-bottom">
+                                            <div class="preview-thumbnail">
+                                                <img src="../../../media/{{games.img_url}}" alt="Image"
+                                                    style="height: 4rem !important;width: 3rem !important; max-height: 55px !important; max-width: 55px !important;">
+                                            </div>
+                                            <div class="preview-item-content d-sm-flex flex-grow">
+                                                <div class="flex-grow">
+                                                    <h6 class="preview-subject">{{games.name}}</h6>
+                                                    <p class="text-muted mb-0">{{games.date}}</p>
+                                                </div>
+                                                <div class="me-auto text-sm-right pt-2 pt-sm-0">
+                                                    <h6 class="text-success ms-2 mb-0 font-weight-medium">
+                                                        ${{games.total_revenue}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </center>
-    <!-- End Services -->
-    <div class="cs-height_70 cs-height_lg_45"></div>
-    <!-- Start Tending Item -->
-    <div class="cs-slider cs-style1 cs-gap-24 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
-        <div class="cs-slider_container" data-autoplay="1000" data-loop="1" data-speed="600" data-center="1"
-            data-fade-slide="0" data-slides-per-view="responsive" data-xs-slides="2" data-sm-slides="2"
-            data-md-slides="3" data-lg-slides="4" data-add-slides="6">
-        </div><!-- .cs-slider_container -->
-        <div class="cs-pagination cs-style1 cs-hide_desktop cs-accent_color"></div>
-        <!-- <div class="cs-slider_arrows cs-style1 cs-center">
+            <div class="row">
+                <div class="col-sm-4 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Most Sold out game</h5>
+                            <div class="row">
+                                <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                    <div class="d-flex d-sm-block d-md-flex align-items-center mb-3">
+                                        <h2 class="mb-0 text-success ms-2 mb-0 font-weight-medium">
+                                            ${{bestevent.revenue}}</h2>
+                                    </div>
+                                    <h6 class=" text-muted font-weight-normal">vs {{bestevent.name}}<br> on
+                                        {{bestevent.date}}</h6>
+                                </div>
+                                <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                    <img src="../../../media/{{bestevent.img}}" alt="Image"
+                                        style="height: 5rem !important;width: 4rem !important; max-height: 65px !important; max-width: 55px !important;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Total Tickets sold</h5>
+                            <div class="row">
+                                <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                    <div class="d-flex d-sm-block d-md-flex align-items-center ">
+                                        <h2 class="mb-0">{{numberoftickets}}</h2>
+                                    </div>
+                                    <h6 class=" text-muted font-weight-normal">Ticket sold on Bitaqat</h6>
+
+                                </div>
+                                <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                    <i class="icon-lg  mdi mdi-ticket  text-danger ms-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Purchase</h5>
+                            <div class="row">
+                                <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                    <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                        <h2 class="mb-0">$2039</h2>
+                                        <p class="text-danger ms-2 mb-0 font-weight-medium">-2.1% </p>
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal">2.27% Since last month</h6>
+                                </div>
+                                <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                    <i class="icon-lg mdi mdi-monitor text-success ms-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-12 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Per game analytics</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="form-check form-check-muted m-0">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input">
+                                                    </label>
+                                                </div>
+                                            </th>
+                                            <th> Game</th>
+                                            <th> Place </th>
+                                            <th> Date </th>
+                                            <th> Price </th>
+                                            <th> fans </th>
+                                            <th> Royalty rate</th>
+                                            <th> Payment Status </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for game in games %}
+                                        <tr>
+                                            <td>
+                                                <div class="form-check form-check-muted m-0">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="../../../media/{{game.img}}" alt="Image"
+                                                    style="height: 7% !important;width: 7% !important; ">
+                                                <span class="ps-2">{{game.name}}</span>
+                                            </td>
+                                            <td> {{game.place}} </td>
+                                            <td> {{game.date}} </td>
+                                            <td> ${{game.price}} </td>
+                                            <td> {{game.status}} </td>
+                                            <td> {{game.royalty}}% </td>
+                                            <td>
+                                                <div>
+                                                    <a href="{% url 'Club:eventDashboard' eventId=game.id %}"
+                                                        class="btn btn-outline-success">More</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </center>
+            <!-- End Services -->
+            <div class="cs-height_70 cs-height_lg_45"></div>
+            <!-- Start Tending Item -->
+            <div class="cs-slider cs-style1 cs-gap-24 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
+                <div class="cs-slider_container" data-autoplay="1000" data-loop="1" data-speed="600" data-center="1"
+                    data-fade-slide="0" data-slides-per-view="responsive" data-xs-slides="2" data-sm-slides="2"
+                    data-md-slides="3" data-lg-slides="4" data-add-slides="6">
+                </div><!-- .cs-slider_container -->
+                <div class="cs-pagination cs-style1 cs-hide_desktop cs-accent_color"></div>
+                <!-- <div class="cs-slider_arrows cs-style1 cs-center">
       <div class="cs-left_arrow cs-center cs-radius_3 cs-accent_bg_hover cs-white_bg cs-white_color_hover">
         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 4.32031L8 12.3203L16 20.3203" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -268,24 +417,26 @@
         </svg>              
       </div>
     </div> -->
-    </div><!-- .cs-slider -->
-    <!-- End Tending Item -->
-    <div class="cs-height_90 cs-height_lg_65"></div>
-    <!-- Start Fun Fact -->
-    <script>
+            </div><!-- .cs-slider -->
+            <!-- End Tending Item -->
+            <div class="cs-height_90 cs-height_lg_65"></div>
+            <!-- Start Fun Fact -->
+            <script>
 
-    </script>
-
-
+            </script>
 
 
-    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'jquery.slick.min.js' %}"></script>
-    <script src="{% static 'jquery.counter.min.js' %}"></script>
-    <script src="{% static 'wow.min.js' %}"></script>
-    <script src="{% static 'ripples.min.js' %}"></script>
-    <script src="{% static 'main.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+
+
+            <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+            <script src="{% static 'jquery.slick.min.js' %}"></script>
+            <script src="{% static 'jquery.counter.min.js' %}"></script>
+            <script src="{% static 'wow.min.js' %}"></script>
+            <script src="{% static 'ripples.min.js' %}"></script>
+            <script src="{% static 'main.js' %}"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"
+                crossorigin="anonymous"></script>
 </body>

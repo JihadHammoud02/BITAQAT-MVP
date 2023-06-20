@@ -101,6 +101,10 @@ def renderInventory(request):
         event['team2name']=object.event_id.Team2Name
         event['date']=object.event_id.event_date_time
         event['tokenid']=object.NFT_token_id
+        if  object.checked==True:
+            event['checked']=True
+        else:
+            event['checked']=False
         all_events.append(event)
         event={}
     return render(request,'Fan\Inventory.html',{"collection":all_events})
@@ -180,7 +184,7 @@ def generate_qr_code(request,token_id):
     qr_code.save()
 
     # Start a background timer for 2 minutes
-    timer = Timer(60, verify_qr_code, args=(token_id,))
+    timer = Timer(180, verify_qr_code, args=(token_id,))
     timer.start()
 
     return render(request, 'Fan/Qrcode.html',{"image":qr_code.Qrcode})

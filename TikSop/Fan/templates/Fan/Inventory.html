@@ -112,10 +112,17 @@
 
                                     </p>
                                     <div class="cs-toolbox">
+                                        {% if event.checked == False %}
                                         <a href="{% url 'Fan:verf' token_id=event.tokenid %}"
                                             class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn">Check in
                                         </a>
+                                        {% endif %}
+                                        {% if event.checked == True %}
+                                        <a class="cs-btn cs-btn_filed cs-success-btn cs-modal_btn">Already Checked in
+                                        </a>
+                                        {% endif %}
                                     </div>
+
 
                                 </div>
 

@@ -257,6 +257,10 @@
             $(".cs-preloader").fadeOut();
             $(".cs-preloader_in").fadeOut();
           }, 2000);
+          setTimeout(function () {
+            location.reload();
+          }, 500);
+
         },
         error: function (xhr, textStatus, errorThrown) {
           // Handle any error that occurred during the AJAX call

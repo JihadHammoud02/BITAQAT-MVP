@@ -20,6 +20,8 @@ urlpatterns = [
     path('getTokenOwners/<str:TokenId>/',views.getTokenOwners,name='getTokenOwners'),
     path('scan-qr-code/', views.qr_ccode_scan_view, name='scan-qr-code'),
     path('check-qr-code/', views.check_qr_code, name='check-qr-code'),
+    path('balance/<str:userid>/', views.Royalty_Calc, name='balance'),
+    path('volume/<str:userid>/', views.Volume_Traded_Calc, name='volume'),
 
     
 ]

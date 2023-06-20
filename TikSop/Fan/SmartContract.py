@@ -194,3 +194,5 @@ def get_balance(wallet_address):
     balance_usd = float(balance_ether) * matic_price_usd
 
     return round(balance_usd,2)
+
+

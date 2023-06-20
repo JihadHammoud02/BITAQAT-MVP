@@ -19,17 +19,14 @@ class loyalFan(models.Model):
     eventsCount=models.IntegerField(default=0)
 
 
-class NFTMetadata(models.Model):
-    name=models.CharField(max_length=120,default=None)
-    description=models.CharField(max_length=120,default=None)
-    user_Hash=models.CharField(max_length=300,default=None)
-    BlockNumber=models.IntegerField(default=None)
-    Tokenid=models.IntegerField(default=None)
 
 
 
 class QrCodeChecking(models.Model):
+    name=models.CharField(max_length=120,default=None)
+    description=models.CharField(max_length=120,default=None)
     Qrcode=models.ImageField(upload_to='', default=None,null=True, blank=True)
     hash=models.CharField(max_length=300,default=None)
     token_id=models.IntegerField(default=None)
     checked=models.BooleanField(default=False)
+    BlockNumber=models.IntegerField(default=None,null=True,blank=True)

@@ -3541,3 +3541,8 @@ li.menu-item-has-children
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+
+.html5-qrcode-element {
+  background-color: red !important;
+}

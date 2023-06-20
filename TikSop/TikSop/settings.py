@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["172.16.30.101","127.0.0.1","172.26.141.46","172.26.5.116","172.20.10.4"]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 

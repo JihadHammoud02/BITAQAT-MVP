@@ -9,10 +9,10 @@ from Club.query import queryEvents,countAttandees,loyalty,queryAttEvents
 from Fan.models import myFan
 import datetime
 from Fan.utils import getOwners,VolumneTraded
-from Fan.models import NFTMetadata
 import time
 from Fan.SmartContract import get_balance
 from datetime import datetime, timedelta
+from Fan.models import QrCodeChecking
 # A decorator that checks if the user is logged in. If not, it redirects to the login page.
 @login_required(login_url='/login/  ')
 def renderHomepage(request):
@@ -116,7 +116,7 @@ def getTokenOwners(request,TokenId):
 
 
 def qr_ccode_scan_view(request):
-    return render(request,"test.html")
+    return render(request,"qr_code_scan.html")
 
 
 
@@ -127,18 +127,22 @@ def check_qr_code(request):
         qr_code = request.POST.get('qr_code')
         # Perform the comparison with values stored in the database
         # Retrieve relevant data and compare with qr_code
-        db_query=NFTMetadata.objects.all()
+        db_query=QrCodeChecking.objects.all()
         flag=False
         tokenid=0
         for hash in db_query:
-            if hash.user_Hash == qr_code:
+            if hash.hash == qr_code and hash.checked==False:
                 flag=True
-                tokenid=hash.Tokenid
+                tokenid=hash.token_id
+                hash.checked=True
+                hash.save()
                 break
         # Example comparison
         if flag == True:
+            
             query=EventsticketsMinted.objects.get(NFT_token_id=tokenid)
-            query.checkIn_Time=time.time()
+            query.checked=True
+            query.save()
             return JsonResponse({'success': True})
     
     return JsonResponse({'success': False})
@@ -173,14 +177,24 @@ def Revenue_Calc(pk,query_object,query):
     return (round(alpha,2),current_month_revenue)
         
 
-def Royalty_Calc(walletAddresse):
-    return get_balance(wallet_address=walletAddresse)
+def Royalty_Calc(request,userid):
+    club_query=myClub.objects.get(pk=userid)
+    wallet_address=club_query.RoyaltyReceiverAddresse
+    balance=get_balance(wallet_address)
+    return JsonResponse({'balance': balance})
 
-def Volume_Traded_Calc(pk,query):
+
+
+
+def Volume_Traded_Calc(request,userid):
+    query=EventsticketsMinted.objects.filter(**{"organizer_id":userid})
     volume=0
     for row in query:
-        volume+=VolumneTraded("0x44872B49d25c1A3A22C432b3e42290dE9103e53b",row.NFT_token_id)
-    return volume
+        volume+=VolumneTraded(str(row.NFT_token_id))
+    return JsonResponse({'volume': volume})
+
+
+
 
 def AttendanceRateCalc(pk,query_object):
     AttendanceRate=0
@@ -260,8 +274,6 @@ def renderAnalytics(request):
     revenue=Revenue_Calc(user_pk,query_object,query)
     Rev_from_ticket=revenue[1]
     deltaRevenue=revenue[0]
-    RevenueFromRoyalties=Royalty_Calc("0x3B9019DC197393d4425e51d9fCd94600d523Bc89")
-    VolumeTradeds=Volume_Traded_Calc(user_pk,query)
     AttendanceRate=AttendanceRateCalc(user_pk,query_object)
     if deltaRevenue<0:
         indicator=0
@@ -272,7 +284,7 @@ def renderAnalytics(request):
     Bestevent=BestRevenueEvent(user_pk,query_object)
     TotalTickets=TotalTicketSold(user_pk,query_object)
     AllGames=RenderGames(user_pk,query_object)
-    return render(request,'Club\Dashboard.html',{"rev":Rev_from_ticket,"delta":deltaRevenue,"roy":RevenueFromRoyalties,"vol":VolumeTradeds,"att":AttendanceRate,"ind":indicator,"pg":ppopulargames,"transaction":latest_transactions_list,"bestevent":Bestevent,"numberoftickets":TotalTickets,"games":AllGames})
+    return render(request,'Club\Dashboard.html',{"rev":Rev_from_ticket,"delta":deltaRevenue,"att":AttendanceRate,"ind":indicator,"pg":ppopulargames,"transaction":latest_transactions_list,"bestevent":Bestevent,"numberoftickets":TotalTickets,"games":AllGames,"user_id":user_pk})
 
 
 

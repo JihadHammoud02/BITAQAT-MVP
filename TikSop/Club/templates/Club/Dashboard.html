@@ -142,7 +142,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">${{roy}}</h3>
+                                        <h3 id="royalty" class="mb-0"></h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -161,7 +161,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">{{vol}}</h3>
+                                        <h3 class="mb-0" id="volume">fetching...</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -200,17 +200,16 @@
                         <div class="card-body">
                             <h4 class="card-title">Transaction History</h4>
                             {% for tr in transaction %}
-                            <div
-                                class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row px-4 px-md-3 px-xl-4 rounded mt-3">
-                                <div class="text-md-center text-xl-left">
-                                    <h6 class="mb-1">{{tr.event_name}}</h6> <br>
-                                    <h6 class="mb-1">{{tr.name}}</h6>
-                                    <p class="text-muted mb-0">{{tr.token_id}}</p>
-                                    <p class="text-muted mb-0">{{tr.timestamp}}</p>
+                            <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row px-4 px-md-3 px-xl-4 rounded mt-3"
+                                style="background-color:#1e2c3c">
+                                <div _ngcontent-eqf-c7="" class="text-md-center text-xl-left">
+                                    <h6 _ngcontent-eqf-c7="" class="mb-1">{{tr.event_name}}</h6>
+                                    <p _ngcontent-eqf-c7="" class="text-muted mb-0">by {{tr.name}} with token id :
+                                        {{tr.token_id}}</p>
                                 </div>
+
                             </div>
                             {% endfor %}
-
                         </div>
                     </div>
                 </div>
@@ -421,7 +420,37 @@
             <!-- End Tending Item -->
             <div class="cs-height_90 cs-height_lg_65"></div>
             <!-- Start Fun Fact -->
+
+
+
+
             <script>
+                fetch(`/org/balance/{{user_id}}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Extract the balance from the response
+                        const balance = data.balance;
+                        console.log(balance)
+                        // Update the HTML with the balance
+                        document.getElementById('royalty').innerHTML = "$" + balance;
+                    })
+                    .catch(error => {
+                        console.log('Error:', error);
+                    });
+
+
+                fetch(`/org/volume/{{user_id}}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Extract the balance from the response
+                        const volume = data.volume;
+                        console.log(volume)
+                        // Update the HTML with the balance
+                        document.getElementById('volume').innerHTML = volume;
+                    })
+                    .catch(error => {
+                        console.log('Error:', error);
+                    });
 
             </script>
 

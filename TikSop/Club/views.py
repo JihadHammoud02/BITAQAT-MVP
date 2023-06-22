@@ -217,7 +217,12 @@ def LatestTransactions(pk,query):
 
 
 def MostPopularGames(pk,query_object):
-    query=query_object.order_by("-number_of_current_Fan")[:5]
+    from django.db.models import F, ExpressionWrapper, DecimalField
+
+    query = query_object.annotate(
+    revenue=ExpressionWrapper(F('event_ticket_price') * F('number_of_current_Fan'),
+                              output_field=DecimalField())
+).order_by('-revenue')[:5]
     log={}
     res=[]
     for game in query:
@@ -300,6 +305,11 @@ def eventDashboard(request,eventId):
     print(request.user)
     print(loyaltyQuery)
     for ticket in queryTickets:
-        eventData.append({"ownerName":ticket.NFT_owner_account.username,"ownerAbrev":ticket.NFT_owner_account.username[0]+ticket.NFT_owner_account.username[-1],"ownerEmail":ticket.NFT_owner_account.email,"Token_ID":ticket.NFT_token_id,"loyalty":loyaltyQuery[ticket.NFT_owner_account.username],"ownerID":ticket.NFT_owner_account.pk,"ticket_id":ticket.pk,"checkin":ticket.checkIn_Time})
+        if ticket.organizer==0:
+            username=ticket.NFT_owner_address
+            email='Not specified'
+        username=ticket.NFT_owner_account.username
+        email=ticket.NFT_owner_account.email
+        eventData.append({"ownerName":username,"ownerAbrev":ticket.NFT_owner_account.username[0]+ticket.NFT_owner_account.username[-1],"ownerEmail":email,"Token_ID":ticket.NFT_token_id,"loyalty":loyaltyQuery[ticket.NFT_owner_account.username],"ownerID":ticket.NFT_owner_account.pk,"ticket_id":ticket.pk,"checkin":ticket.checked})
         print(eventData)
     return render(request,"Club\MyGame.html",{"eventData":eventData,"revenue":revenue,"cn":currentnumber,"pf":placesleft})

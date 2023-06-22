@@ -6,8 +6,9 @@ import time
 import json
 from django.core.management.base import BaseCommand
 from multiprocessing import Process
-from Fan.models import NFTMetadata
+from Fan.models import QrCodeChecking,myFan
 from Fan.SmartContract import mainQrcode
+from Club.models import EventsticketsMinted
 import django
 from django.apps import apps
 
@@ -29,10 +30,11 @@ def detect_event():
 
 
     # Set the starting block number
-    last_object=NFTMetadata.objects.last()
+    last_object=QrCodeChecking.objects.last()
     starting_block = 36795836  # Set the appropriate starting block
 
     while True:
+
         latest_block = w3.eth.block_number
 
         # Get the transfer events since the last checked block
@@ -42,8 +44,11 @@ def detect_event():
         for event in events:
             if event['args']['from'] != "0x0000000000000000000000000000000000000000":
                 user_hash=mainQrcode(event['args']['to'],event['args']['tokenId'])
-                event_object=NFTMetadata(name="QrCode",description="This is a Qr code",user_Hash=user_hash,BlockNumber=event['blockNumber'],Tokenid=event['args']['tokenId'])
+                event_object=QrCodeChecking(name="QrCode",description="This is a Qr code",user_Hash=user_hash,BlockNumber=event['blockNumber'],Tokenid=event['args']['tokenId'])
                 event_object.save()
+                token_id_query_info=EventsticketsMinted.objects.get(NFT_token_id=event['args'['tokenId']])
+                token_id_query_info.NFT_owner_address=event['args']['to']
+                token_id_query_info.organizer=0
                 print(event)
                 time.sleep(10)
             

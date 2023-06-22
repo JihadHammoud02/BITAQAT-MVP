@@ -37,7 +37,7 @@ class EventsticketsMinted(models.Model):
    NFT_token_id=models.CharField(max_length=600,default=None)
    organizer=models.ForeignKey(myUsers,on_delete=models.CASCADE,
                                 related_name="event_organizer",default=0)
-   checked=models.BooleanField(null=True,blank=True)
+   checked=models.BooleanField(default=False)
    TimeStamp=models.TimeField(null=True,blank=True)
    datebought=models.DateField(null=True,blank=True)
 

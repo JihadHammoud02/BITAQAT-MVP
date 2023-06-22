@@ -179,6 +179,7 @@ def generate_qr_code(request,token_id):
     qr_code_hash=hashData(public_key,token_id)
     qr_code_img= generate_qr_code_hash(qr_code_hash)
     # Save the QR code hash and token ID in the database
+
     qr_code = QrCodeChecking(Qrcode="",hash=qr_code_hash, token_id=token_id)
     qr_code.Qrcode.save(str(qr_code.token_id)+"Qrcode.png",qr_code_img,save=True)
     qr_code.save()

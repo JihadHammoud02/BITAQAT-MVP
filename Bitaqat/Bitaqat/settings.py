@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-uycj5#9dne3y-166-flpeuptz0silcyao89v9v8k()wl3y_h7)"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -41,11 +41,19 @@ INSTALLED_APPS = [
     "authentication",
     "Club",
     "Fan",
-    'silk'
+    'silk',
+    "debug_toolbar",
+    "compressor"
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,6 +63,15 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
+]
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_OUTPUT_DIR = 'compressed'
+
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+    'compressor.filters.uglifyjs.UglifyJSFilter',
 ]
 
 ROOT_URLCONF = "Bitaqat.urls"
@@ -84,7 +101,7 @@ WSGI_APPLICATION = "Bitaqat.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'BitaqatDB',
+        'NAME': 'Bitaqat',
         'USER': 'postgres',
         'PASSWORD': 'Jihad2002',
         'HOST': '127.0.0.1',
@@ -135,8 +152,21 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "Club\static"),
     os.path.join(BASE_DIR, "Fan\static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets2')
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+
+# DEBUG_TOOLBAR_CONFIG = {
+#     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+# }

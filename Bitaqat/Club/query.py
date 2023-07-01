@@ -1,5 +1,5 @@
 from authentication.models import myUsers
-from Fan.models import myFan, loyalFan
+from Fan.models import myFan
 from Club.models import Event
 from Club.models import MintedTickets
 
@@ -15,21 +15,22 @@ def queryEvents(filterby=None, val=None):
     for eve in list_of_all_events:
         event['id'] = eve.pk
         event['img'] = eve.banner
-        event['name1'] = eve.team1_name
-        event['name2'] = eve.team2_name
-        event['name'] = str(event['name1'])+" vs "+str(event['name2'])
+
         event['date'] = str(eve.datetime.date())
         event['time'] = str(eve.datetime.time())[:5]
-        event['banner1'] = eve.team1_logo
-        event['banner2'] = eve.team2_logo
         event['price'] = eve.ticket_price
         event['maxcap'] = eve.maximum_capacity
         event['available_places'] = eve.maximum_capacity - \
             eve.current_fan_count
         event['organizer'] = eve.organizer
+        event['opposite'] = eve.opposite_team
         event['place2'] = eve.place
         event['currentNumber'] = eve.current_fan_count
-        event['category'] = eve.category
+        event['name1'] = event['organizer'].club.name
+        event['logo'] = event['organizer'].club.logo
+        event['name2'] = event['opposite'].name
+        event['banner2'] = event['opposite'].logo
+        event['name'] = str(event['name1'])+" vs "+str(event['name2'])
         all_events.append(event)
         event = {}
     return (all_events, len(all_events))
@@ -53,14 +54,6 @@ def countAttandees(userId):
     for event in list_of_all_events:
         totalAttandees += event.current_fan_count
     return totalAttandees
-
-
-def loyalty(eventOrganizerId):
-    loyaltyQuery = loyalFan.objects.filter(**{'organizer': eventOrganizerId})
-    loyalData = {}
-    for attandee in loyaltyQuery:
-        loyalData[attandee.guest.username] = attandee.eventsCount
-    return loyalData
 
 
 def queryAttEvents(guestID, organizerID):

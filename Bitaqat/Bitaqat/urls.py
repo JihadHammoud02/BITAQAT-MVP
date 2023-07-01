@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
+import debug_toolbar
 
 
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('org/', include('Club.urls')),
     path('guest/', include('Fan.urls')),
+    # path("debug/", include(debug_toolbar.urls)),
 
 
 ]

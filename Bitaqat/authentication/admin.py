@@ -4,4 +4,4 @@ from .models import myUsers
 # Register your models here.
 
 
-admin.site.register(myUsers,UserAdmin)
+admin.site.register(myUsers, UserAdmin)

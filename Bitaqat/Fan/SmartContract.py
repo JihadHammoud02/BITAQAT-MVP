@@ -42,37 +42,27 @@ def send_signed_transaction(signed_transaction):
 
 
 def main(recipient_address, quantity, royaltyrec, tokenuri):
+    contract_instance = w3.eth.contract(address=contract_address, abi=abi)
 
-    # Request test tokens from the Polygon Mumbai Testnet Faucet
-    faucet_url = 'https://faucet.matic.network/transfer'
-    response = requests.post(faucet_url, data={'address': from_address})
-    if response.status_code == 200:
-        print('Test tokens received from the faucet.')
+    # Construct the transaction data
+    transaction_data = contract_instance.functions.mint(recipient_address, quantity, royaltyrec, tokenuri).build_transaction({
+        'from': from_address,
+        'value': 0,
+        'gas': 2000000,
+        'gasPrice': w3.to_wei('50', 'gwei'),
+        'nonce': w3.eth.get_transaction_count(from_address),
+        'chainId': 80001  # Chain ID of the Polygon Mumbai chain
+    })
+    print(transaction_data)
 
-        # Load contract instance
-        contract_instance = w3.eth.contract(address=contract_address, abi=abi)
+    # Sign the transaction locally
+    signed_transaction = Account.sign_transaction(
+        transaction_data, private_key)
 
-        # Construct the transaction data
-        transaction_data = contract_instance.functions.mint(recipient_address, quantity, royaltyrec, tokenuri).build_transaction({
-            'from': from_address,
-            'value': 0,
-            'gas': 2000000,
-            'gasPrice': w3.to_wei('50', 'gwei'),
-            'nonce': w3.eth.get_transaction_count(from_address),
-            'chainId': 80001  # Chain ID of the Polygon Mumbai chain
-        })
-        print(transaction_data)
+    # Send the signed transaction
+    transaction_hash = send_signed_transaction(signed_transaction)
 
-        # Sign the transaction locally
-        signed_transaction = Account.sign_transaction(
-            transaction_data, private_key)
-
-        # Send the signed transaction
-        transaction_hash = send_signed_transaction(signed_transaction)
-
-        print('Transaction sent. Hash:', transaction_hash)
-    else:
-        print('Failed to request test tokens from the faucet.')
+    print('Transaction sent. Hash:', transaction_hash)
     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
     token_id = w3.to_int(tx_receipt['logs'][0]['topics'][3])
     return token_id
@@ -102,7 +92,6 @@ def upload_to_ipfs(name, description, image_path):
     # Upload the metadata to IPFS
     response = requests.post('https://ipfs.infura.io:5001/api/v0/add',
                              auth=(proj_id, proj_secret), files=metadata_file)
-    print(response.text)
     metadata_hash = response.json()['Hash']
 
     # Return the URI for the metadata JSON file
@@ -201,3 +190,24 @@ def get_balance(wallet_address):
     balance_usd = float(balance_ether) * matic_price_usd
 
     return round(balance_usd, 2)
+
+
+def get_user_nfts(wallet_address):
+    # Create a contract instance
+    contract = w3.eth.contract(address=contract_address, abi=abi)
+
+    # Get the total number of tokens owned by the wallet address
+    total_tokens = contract.functions.balanceOf(wallet_address).call()
+
+    # Retrieve the contract addresses and token IDs of all the NFTs
+    nfts = []
+    for i in range(total_tokens):
+        token_id = contract.functions.tokenOfOwnerByIndex(
+            wallet_address, i).call()
+        nft = {
+            'contract_address': contract_address,
+            'token_id': token_id
+        }
+        nfts.append(nft)
+
+    return nfts

@@ -42,7 +42,7 @@ def formatList(object):
 
 def fetchNftsMetadata(userAddress):
 
-    listTokens = formatList(MintedTickets.objects.values_list("NFT_token_id"))
+    listTokens = formatList(MintedTickets.objects.values_list("token_id"))
     collection = []
     api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
     params = {
@@ -60,7 +60,7 @@ def fetchNftsMetadata(userAddress):
         params=params,
     )
     for nft in result['result']:
-        if nft['token_id'] in listTokens and nft['metadata'] != None:
+        if nft['token_id'] in listTokens:
             nft_metadata = jsonifyString(nft['metadata'])
             collection.append(
                 {"image": nft_metadata['image'], 'name': nft_metadata['name'], "tokenid": nft['token_id']})

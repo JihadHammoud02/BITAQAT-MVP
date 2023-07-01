@@ -13,6 +13,14 @@ import django
 from django.apps import apps
 
 
+def Fan_to_address_Mapping(address):
+    try:
+        fan = myFan.objects.get(public_key=address)
+        return fan.user
+    except:
+        return None
+
+
 def detect_event():
 
     w3 = Web3(Web3.HTTPProvider(
@@ -30,7 +38,7 @@ def detect_event():
 
     # Set the starting block number
     last_object = QrCodeChecking.objects.last()
-    starting_block = 36795836  # Set the appropriate starting block
+    starting_block = last_object.BlockNumber  # Set the appropriate starting block
 
     while True:
 
@@ -46,12 +54,14 @@ def detect_event():
                 user_hash = mainQrcode(
                     event['args']['to'], event['args']['tokenId'])
                 event_object = QrCodeChecking(name="QrCode", description="This is a Qr code",
-                                              user_Hash=user_hash, BlockNumber=event['blockNumber'], Tokenid=event['args']['tokenId'])
+                                              hash=user_hash, BlockNumber=event['blockNumber'], token_id=event['args']['tokenId'])
                 event_object.save()
                 token_id_query_info = MintedTickets.objects.get(
-                    token_id=event['args'['tokenId']])
+                    token_id=event['args']['tokenId'])
                 token_id_query_info.owner_crypto_address = event['args']['to']
-                token_id_query_info.organizer = 0
+                mappingfan = Fan_to_address_Mapping(event['args']['to'])
+                token_id_query_info.owner_account = mappingfan
+                token_id_query_info.save()
                 print(event)
                 time.sleep(10)
 

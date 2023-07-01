@@ -1,0 +1,53 @@
+.event-img{
+    max-width: 100% !important ;
+    height: 250px;
+}
+
+
+.card-title-font{
+    font-size:20px;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 600;
+    color: white;
+}
+
+
+
+@media screen and (max-width:569px)  {
+
+    .banner-ele{
+        display: flex !important;
+        justify-content: center !important;
+    }
+    .description-txt{
+       text-align: center;
+       font-size:medium !important;
+       font-family: Arial, Helvetica, sans-serif;
+       color: white;
+
+    }
+}
+
+
+.description-txt{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+
+ }
+
+
+.price-tag{
+    font-size:30px;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 600;
+    color: white;
+}
+
+
+.btn-color2{
+    background-color: rgb(245, 0, 74) !important;
+    border-color: rgb(0, 0, 0);
+    font-family: "Lilita One", cursive !important;
+    color:#fff !important;
+}
+

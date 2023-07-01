@@ -5,17 +5,8 @@ from authentication.models import myUsers
 class myFan(models.Model):
     user = models.OneToOneField(myUsers, on_delete=models.CASCADE,
                                 primary_key=True, default=None)
-    public_crypto_address = models.CharField(max_length=600, default=None)
-    private_crypto_address = models.CharField(max_length=600, default=None)
-
-
-class loyalFan(models.Model):
-    guest = models.OneToOneField(myUsers, on_delete=models.CASCADE,
-                                 default=None, related_name='Fan')
-    organizer = models.ForeignKey(myUsers, on_delete=models.CASCADE,
-                                  default=None, related_name='Club')
-
-    eventsCount = models.IntegerField(default=0)
+    public_key = models.CharField(max_length=600, default=None)
+    private_key = models.CharField(max_length=600, default=None)
 
 
 class QrCodeChecking(models.Model):

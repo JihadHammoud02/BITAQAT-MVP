@@ -1,4 +1,6 @@
 import io
+
+import requests
 from Fan.models import QrCodeChecking
 from django.core.files.base import ContentFile
 from threading import Timer
@@ -13,7 +15,7 @@ from Club.models import MintedTickets
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from authentication.models import myUsers
-from Fan.models import myFan, loyalFan
+from Fan.models import myFan
 import time
 from .utils import fetchNftsMetadata
 import asyncio
@@ -23,6 +25,8 @@ from django.urls import reverse
 from .SmartContract import main, upload_to_ipfs
 from django.http import HttpResponse
 from PIL import Image
+from django.core.serializers import serialize
+from Club.models import myClub
 
 
 @login_required(login_url='/login/  ')
@@ -44,13 +48,12 @@ def renderMarketplace(request):
 def renderSpecificEventPage(request, event_id):
     # GETTING EVENTS DATA FROM DATABASE
     event = queryEvents("pk", event_id)
-    print(event[0][0])
     return render(request, 'Fan\event_info_page.html', {'all_events': event[0][0]})
 
 
 # Search in the database who owns this address
 def match_address_with_account(ownedPublicAddress):
-    queriedGuest = myFan.objects.get(public_crypto_address=ownedPublicAddress)
+    queriedGuest = myFan.objects.get(public_key=ownedPublicAddress)
     user = myUsers.objects.get(pk=queriedGuest.user_id)
     return user
 
@@ -59,60 +62,45 @@ def buyTicket(request, event_id):
     if request.method == "POST":
         user_db = myFan.objects.get(pk=request.user.pk)
         query = Event.objects.get(pk=event_id)
-        buyer_crypto_address = user_db.public_crypto_address
+        buyer_crypto_address = user_db.public_key
         print(buyer_crypto_address)
-        tokenuri = upload_to_ipfs(str(query.team1_name)+" vs "+str(query.team2_name)+" #"+str(query.current_fan_count), "This is a match between " +
-                                  str(query.team1_name) + " and "+str(query.team2_name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.team1_logo.path)
+        tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
+                                  str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.organizer.club.logo.path)
         # calling the minting function
-        time.sleep(3)
-        token_id = main(buyer_crypto_address, query.royalty_rate*1000,
-                        "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
+        response = requests.get(tokenuri)
+        print("resp: "+str(response))
+        if response.status_code == 200:
+            # calling the minting function
+            token_id = main(buyer_crypto_address, query.royalty_rate*1000,
+                            "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
+
         query.current_fan_count += 1
         query.save()
-        ticket_query_to_db = MintedTickets(event_id=query, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
-            buyer_crypto_address), token_id=token_id, organizer=query.organizer, datebought="2023-06-19")
+        ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
+            buyer_crypto_address), token_id=token_id, organizer=query.organizer)
         ticket_query_to_db.save()
-
-        loyaltyQuery = loyalFan.objects.filter(
-            **{'organizer': query.organizer, "guest": request.user.pk})
-        if len(loyaltyQuery) != 0:
-            loyaltyQuery[0].eventsCount += 1
-            loyaltyQuery[0].save()
-        else:
-            loyalty = loyalFan(guest=request.user,
-                               organizer=query.organizer, eventsCount=1)
-            loyalty.save()
         return JsonResponse({"status": "success"})
 
     return HttpResponseRedirect(reverse('Fan:renderMarketplace'))
 
 
-# def requestMetadata(name,description,image_url):
-#     return {"name":name,}
-
-
 def renderInventory(request):
-    attendee = myFan.objects.get(user_id=request.user.pk)
-    userAddress = attendee.public_crypto_address
-    collection = fetchNftsMetadata(userAddress)
     all_events = []
     event = {}
-    for events in collection:
-        object = MintedTickets.objects.get(
-            token_id=events['tokenid'])
-        event['team1_logo'] = object.event_id.team1_logo
-        event['team2_logo'] = object.event_id.team2_logo
-        event['team1_name'] = object.event_id.team1_name
-        event['team2_name'] = object.event_id.team2_name
-        event['date'] = object.event_id.datetime
-        event['tokenid'] = object.token_id
-        if object.checked == True:
-            event['checked'] = True
-        else:
-            event['checked'] = False
+    collection = MintedTickets.objects.filter(
+        **{"owner_account": request.user.pk})
+    for eve in collection:
+        event['team1_logo'] = eve.organizer.club.logo
+        event['team2_logo'] = eve.event.opposite_team.logo
+        event['team1_name'] = eve.organizer.club.name
+        event['team2_name'] = eve.event.opposite_team.name
+        event['date'] = eve.event.datetime
+        event['tokenid'] = eve.token_id
+        event['checked'] = eve.checked
         all_events.append(event)
         event = {}
-    return render(request, 'Fan\Inventory.html', {"collection": all_events})
+    context = {'collection': all_events}
+    return render(request, 'Fan\Inventory.html', context)
 
 
 def ReturnImg(request):
@@ -128,8 +116,8 @@ def ReturnImg(request):
 def renderKeys(request):
     user2 = request.user
     query_object = myFan.objects.get(pk=user2)
-    public_key = query_object.public_crypto_address
-    private_key = query_object.private_crypto_address
+    public_key = query_object.public_key
+    private_key = query_object.private_key
     return render(request, "Fan\Keys.html", {"pk": private_key, "publickey": public_key})
 
 
@@ -172,7 +160,7 @@ def generate_qr_code(request, token_id):
     # Generate the QR code hash
     user2 = request.user
     query_object = myFan.objects.get(pk=user2)
-    public_key = query_object.public_crypto_address
+    public_key = query_object.public_key
     qr_code_hash = hashData(public_key, token_id)
     qr_code_img = generate_qr_code_hash(qr_code_hash)
     # Save the QR code hash and token ID in the database

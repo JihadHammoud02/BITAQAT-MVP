@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from Club.models import myClub as Club, MintedTickets
-from Fan.models import myFan as guest
+from Club.models import myClub as Club
 from django.db import IntegrityError
 from .models import myUsers
 from eth_account import Account
@@ -10,7 +9,8 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
-from Club.query import queryEvents
+from Fan.models import myFan
+from compression_middleware.decorators import compress_page
 
 
 def createWallet():
@@ -42,15 +42,17 @@ def loginmyUsers(request):
         if user is not None:
             Upk = user.pk
             clubModelCheck = Club.objects.filter(pk=Upk).exists()
+            fanModelCheck = myFan.objects.filter(pk=Upk).exists()
             if clubModelCheck:
                 login(request, user)
                 return HttpResponseRedirect(
                     reverse("Club:renderHomepage"))
 
             else:
-                login(request, user)
-                return HttpResponseRedirect(
-                    reverse("Fan:renderHomepage"))
+                if fanModelCheck:
+                    login(request, user)
+                    return HttpResponseRedirect(
+                        reverse("Fan:renderHomepage"))
 
         else:
             return render(request, 'authentication\Login.html', {'error_msg': True})
@@ -80,8 +82,8 @@ def createAccounts(request):
             private_addresse = wallet[0]
             print(public_addresse)
             print(private_addresse)
-            account = guest(user=user, public_crypto_address=public_addresse,
-                            private_crypto_address=private_addresse)
+            account = myFan(user=user, public_key=public_addresse,
+                            private_key=private_addresse)
             print()
             account.save()
 

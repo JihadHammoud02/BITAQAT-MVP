@@ -3,10 +3,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from authentication.models import myUsers
-from .models import myClub, Event, MintedTickets
+from .models import myClub, Event, MintedTickets, ClubsData
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from Club.query import queryEvents, countAttandees, loyalty, queryAttEvents
+from Club.query import queryEvents, countAttandees, queryAttEvents
 from Fan.models import myFan
 import datetime
 from Fan.utils import getOwners, VolumneTraded
@@ -14,7 +14,32 @@ import time
 from Fan.SmartContract import get_balance
 from datetime import datetime, timedelta
 from Fan.models import QrCodeChecking
-# A decorator that checks if the user is logged in. If not, it redirects to the login page.
+
+
+from django.conf import settings
+from PIL import Image
+import os
+
+
+def convert_png_to_webp(png_path):
+    image = Image.open(png_path)
+    webp_path = os.path.splitext(png_path)[0] + '.webp'
+    image.save(webp_path, 'webp', lossless=True)
+    return webp_path
+
+
+def convert_media_to_webp():
+    media_root = settings.MEDIA_ROOT
+    for root, dirs, files in os.walk(media_root):
+        for file in files:
+            if file.lower().endswith('.png'):
+                png_path = os.path.join(root, file)
+                webp_path = convert_png_to_webp(png_path)
+                os.remove(png_path)
+                print(f"Converted: {png_path} -> {webp_path}")
+
+
+# Run the conversion script
 
 
 @login_required(login_url='/login/  ')
@@ -28,35 +53,35 @@ def renderMarketplace(request):
     return render(request, 'Club\Marketplace.html', {'all_events': all_events})
 
 
-@login_required(login_url='/login/  ')
+@ login_required(login_url='/login/  ')
 def createEvents(request):
+    current_user = request.user
+    current_club = myClub.objects.get(pk=current_user)
+    query_clubs = ClubsData.objects.all()
+    clubs = []
+    for club in query_clubs:
+        if club.name != current_club.club.name:
+            clubs.append(club.name)
     if request.method == 'POST':
-        team1_name1 = request.POST.get('name1')
-        team2_name2 = request.POST.get('name2')
-        team1_logo1 = request.FILES['logo1']
-        team2_logo2 = request.FILES['logo2']
-        game_date_client = request.POST.get('eventdate')
+        team2_name2 = request.POST.get('team')
         game_max_capacity_client = request.POST.get('maxnumber')
         game_ticket_price_client = request.POST.get('price')
         game_place_client = request.POST.get('city')
         royalty = request.POST.get('royap')
         banner = request.POST.get('banner')
-
-        event_created = Event(organizer=request.user, team1_name=team1_name1, team2_name=team2_name2, team1_logo=team1_logo1, team2_logo=team2_logo2, datetime=game_date_client, maximum_capacity=game_max_capacity_client,
+        opposite_club = ClubsData.objects.get(name=team2_name2)
+        event_created = Event(organizer=current_club, opposite_team=opposite_club, maximum_capacity=game_max_capacity_client,
                               ticket_price=game_ticket_price_client, place=game_place_client, current_fan_count=0, royalty_rate=royalty,  banner=banner)
         event_created.save()
 
         return render(request, 'Club\eventcreation.html')
-    return render(request, 'Club\eventcreation.html')
+    return render(request, 'Club\eventcreation.html', {"clubs": clubs})
 
 
-@login_required(login_url='/login/  ')
+@ login_required(login_url='/login/  ')
 def myEvents(request):
     userEventsList = queryEvents('organizer', request.user.pk)[0]
     return render(request, 'Club\ownedEvents.html', {"all_events": userEventsList})
-
-
-counter = 0
 
 
 # logout the User
@@ -142,10 +167,10 @@ def Revenue_Calc(pk, query_object, query):
     last_month_revenue = 250
     for game in query:
         if game.datebought.month == current_month:
-            current_month_revenue += game.event_id.ticket_price
+            current_month_revenue += game.event.ticket_price
         else:
             if game.datetime.month == last_month:
-                last_month_revenue += game.event_id.ticket_price
+                last_month_revenue += game.event.ticket_price
     alpha = ((current_month_revenue - last_month_revenue) /
              last_month_revenue) * 100
     return (round(alpha, 2), current_month_revenue)
@@ -177,11 +202,13 @@ def LatestTransactions(pk, query):
     log = {}
     res = []
     for tickets_minted in query[0:4]:
-        log['name'] = tickets_minted.owner_account.username
-        log['event_name'] = str(
-            tickets_minted.event_id.team1_name)+" vs "+str(tickets_minted.event_id.team2_name)
         log['token_id'] = tickets_minted.token_id
-        log['timestamp'] = tickets_minted.TimeStamp
+    if tickets_minted.owner_account != None:
+        log['name'] = tickets_minted.owner_account.username
+    else:
+        log['name'] = tickets_minted.owner_crypto_address
+        log['event_name'] = str(
+            tickets_minted.event.organizer.club.name)+" vs "+str(tickets_minted.event.opposite_team.name)
         res.append(log)
         log = {}
     return res
@@ -197,8 +224,9 @@ def MostPopularGames(pk, query_object):
     log = {}
     res = []
     for game in query:
-        log['img_url'] = game.team2_logo
-        log['name'] = str(game.team1_name)+" vs "+str(game.team2_name)
+        log['img_url'] = game.opposite_team.logo
+        log['name'] = str(game.organizer.club.name) + \
+            " vs "+str(game.opposite_team.name)
         log['total_revenue'] = game.current_fan_count * \
             game.ticket_price
         log['date'] = game.datetime.date
@@ -219,7 +247,7 @@ def BestRevenueEvent(pk, queryEvents):
     event_result = Event.objects.get(
         pk=next(iter(sorted_dict.items()))[0])
 
-    return {"name": event_result.team2_name, "date": event_result.datetime.date(), "revenue": next(iter(sorted_dict.items()))[1], "img": event_result.team2_logo}
+    return {"name": event_result.opposite_team.name, "date": event_result.datetime.date(), "revenue": next(iter(sorted_dict.items()))[1], "img": event_result.opposite_team.logo}
 
 
 def TotalTicketSold(pk, queryEvents):
@@ -233,12 +261,13 @@ def RenderGames(pk, queryEvents):
     events = []
     event = {}
     for eve in queryEvents:
-        event['name'] = str(eve.team1_name)+" vs "+str(eve.team2_name)
+        event['name'] = str(eve.organizer.club.name) + \
+            " vs "+str(eve.opposite_team.name)
         event['place'] = eve.place
         event['date'] = eve.datetime
         event['price'] = eve.ticket_price
         event['status'] = eve.current_fan_count
-        event['img'] = eve.team2_logo
+        event['img'] = eve.opposite_team.logo
         event['royalty'] = eve.royalty_rate
         event['id'] = eve.id
         events.append(event)
@@ -274,11 +303,7 @@ def eventDashboard(request, eventId):
     revenue = eventQuery[0][0]['price']*eventQuery[0][0]['currentNumber']
     currentnumber = eventQuery[0][0]['currentNumber']
     placesleft = eventQuery[0][0]['available_places']
-    print(revenue)
     eventData = []
-    loyaltyQuery = loyalty(request.user.pk)
-    print(request.user)
-    print(loyaltyQuery)
     for ticket in queryTickets:
         if ticket.organizer == 0:
             username = ticket.owner_crypto_address
@@ -286,6 +311,5 @@ def eventDashboard(request, eventId):
         username = ticket.owner_account.username
         email = ticket.owner_account.email
         eventData.append({"ownerName": username, "ownerAbrev": ticket.owner_account.username[0]+ticket.owner_account.username[-1], "ownerEmail": email, "Token_ID": ticket.token_id,
-                         "loyalty": loyaltyQuery[ticket.owner_account.username], "ownerID": ticket.owner_account.pk, "ticket_id": ticket.pk, "checkin": ticket.checked})
-        print(eventData)
+                          })
     return render(request, "Club\MyGame.html", {"eventData": eventData, "revenue": revenue, "cn": currentnumber, "pf": placesleft})

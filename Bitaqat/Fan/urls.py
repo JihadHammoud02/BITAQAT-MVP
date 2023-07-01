@@ -7,16 +7,16 @@ app_name = 'Fan'
 
 urlpatterns = [
     path('homepage/', views.renderHomepage, name="renderHomepage"),
-     path('Marketplace/', views.renderMarketplace, name="renderMarketplace"),
-      path('event/<str:event_id>/', views.renderSpecificEventPage, name="renderSpecificEventPage"),
-      path('Buy/<str:event_id>/',views.buyTicket,name='buyTicket'),
-      path('Myinventory/',views.renderInventory,name='renderInventory'),
-      path("Mykeys/",views.renderKeys,name="Mykeys"),
-      path("verification/<str:token_id>/",views.generate_qr_code,name="verf"),
+    path('Marketplace/', views.renderMarketplace, name="renderMarketplace"),
+    path('event/<str:event_id>/', views.renderSpecificEventPage,
+         name="renderSpecificEventPage"),
+    path('Buy/<str:event_id>/', views.buyTicket, name='buyTicket'),
+    path('Myinventory/', views.renderInventory, name='renderInventory'),
+    path("Mykeys/", views.renderKeys, name="Mykeys"),
+    path("verification/<str:token_id>/", views.generate_qr_code, name="verf"),
+
 
 ]
-
-
 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -24,13 +24,7 @@
     <link rel=" stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
     <link rel=" stylesheet" type="text/css" href="{% static '/vendors/css/vendor.bundle.base.css' %}">
     <link rel=" stylesheet" type="text/css" href="{% static '/vendors/mdi/css/materialdesignicons.min.css' %}">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style3.css' %}">
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="{% static 'analytics.css' %}">
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css">
 </head>
@@ -61,7 +55,7 @@
                 <div class="cs-main_header_in">
                     <div class="cs-main_header_left">
                         <a class="cs-site_branding cs-accent_color" href="index.html">
-                            <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
+                            <img src="{% static 'images/Haffel-full-centered.webp' %}" alt="Logo" class="cs-hide_white">
 
                         </a>
                     </div>
@@ -108,13 +102,16 @@
                 </div>
             </div>
             <div class="row">
+                {% for game in Data %}
                 <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">${{revenue}}</h3>
+                                        <h3 class="mb-0"> ${% widthratio game.current_fan_count 1 game.ticket_price %}
+                                        </h3>
+
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +125,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">{{cn}}</h3>
+                                        <h3 class="mb-0">{{game.current_fan_count}}</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -147,7 +144,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">{{pf}}</h3>
+                                        <h3 class="mb-0">200</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -160,6 +157,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
             </div>
             <div class="row ">
@@ -207,20 +205,17 @@
                                             <td> {{user.checkin}} </td>
                                             <td>
                                                 <div>
-                                                    <a href="{% url 'Club:renderAttandedEvents' guestID=user.ownerID guestName=user.ownerName %}"
+                                                    {% if user.ownerID != None %}
+                                                    <a href="{% url 'Club:renderAttendedEvents' guestID=user.ownerID guestName=user.ownerName %}"
                                                         class="btn btn-outline-success">Previou Games</a>
+                                                    {% endif %}
                                                 </div>
+
                                             </td>
                                             <td>
                                                 <div>
-                                                    <a href="{% url 'Club:getTokenOwners' TokenId=user.Token_ID %}"
+                                                    <a href="{% url 'Club:getTokenOwners' tokenId=user.Token_ID %}"
                                                         class="btn btn-outline-success">Track</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <a href="{% url 'Club:checkInGuest'  mintedID_DB=user.ticket_id %}"
-                                                        class="btn btn-outline-success">Check in</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -297,6 +292,347 @@
                 crossorigin="anonymous"></script>
             <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"
                 crossorigin="anonymous"></script>
+            <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+            <script src="{% static 'jquery.slick.min.js' %}"></script>
+
+            <script>
+                (function ($) {
+                    "use strict";
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Template Name: Multim
+                    | Author: Laralink
+                    | Version: 1.0.0
+                    |--------------------------------------------------------------------------
+                    |--------------------------------------------------------------------------
+                    | TABLE OF CONTENTS:
+                    |--------------------------------------------------------------------------
+                    |
+                    | 1. Preloader
+                    | 2. Mobile Menu
+                    | 3. Sticky Header
+                    | 4. Dynamic Background
+                    | 5. General Toggle
+                    | 6. Select 2
+                    | 7. Slick Slider
+                    | 9. Review
+                    | 11. Modal Video
+                    | 12. Hobble Effect
+                    | 13. Parallax
+                    | 14. Counter Animation
+                    | 15. Tabs
+                    | 17. Progress Bar
+                    | 18. Team Member
+                    | 20. Round Percent
+                    | 21. Range slider
+                    |
+                    */
+
+                    /*--------------------------------------------------------------
+                      Scripts initialization
+                    --------------------------------------------------------------*/
+                    $.exists = function (selector) {
+                        return $(selector).length > 0;
+                    };
+
+                    $(window).on("load", function () {
+                        $(window).trigger("scroll");
+                        $(window).trigger("resize");
+                        preloader();
+                    });
+
+                    $(function () {
+                        $(window).trigger("resize");
+                        mainNav();
+                        onePage();
+                        stickyHeader();
+                        dynamicBackground();
+                        slickInit();
+                        modal();
+                        accordian();
+                        counterInit();
+                        rippleInit();
+                        if ($.exists(".wow")) {
+                            new WOW().init();
+                        }
+                    });
+
+                    $(window).on("scroll", function () {
+                        stickyHeader();
+                        counterInit()
+                    });
+
+                    /*--------------------------------------------------------------
+                      1. Preloader
+                    --------------------------------------------------------------*/
+                    function preloader() {
+                        $(".cs-preloader_in").fadeOut();
+                        $(".cs-preloader").delay(150).fadeOut("slow");
+                    }
+
+
+                    function executeBuying() {
+                        $(".cs-preloader_in").fadeOut();
+                        $.ajax({
+                            url: "/your-view-url/",  // Replace with the actual URL of your Django view
+                            type: "POST",  // Use the appropriate HTTP method (POST, GET, etc.)
+                            data: {
+                                // Provide any data needed for your view function
+                                event_id: "your-event-id",  // Replace with the actual event ID or pass it dynamically
+                            },
+                            success: function (response) {
+                                // Handle the response from the Django view
+
+                                // Hide the loading screen
+                                $("#loading-screen").fadeOut();
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                // Handle any error that occurred during the AJAX call
+
+                                // Hide the loading screen
+                                $("#loading-screen").fadeOut();
+                            }
+                        });
+
+                    }
+                    /*--------------------------------------------------------------
+                      2. Mobile Menu
+                    --------------------------------------------------------------*/
+                    function mainNav() {
+                        $(".cs-nav").append('<span class="cs-munu_toggle"><span></span></span>');
+                        $(".menu-item-has-children").append(
+                            '<span class="cs-munu_dropdown_toggle"></span>'
+                        );
+                        $(".cs-munu_toggle").on("click", function () {
+                            $(this)
+                                .toggleClass("cs-toggle_active")
+                                .siblings(".cs-nav_list")
+                                .slideToggle();
+                        });
+                        $(".cs-munu_dropdown_toggle").on("click", function () {
+                            $(this).toggleClass("active").siblings("ul").slideToggle();
+                            $(this).parent().toggleClass("active");
+                        });
+                        // Mega Menu
+                        $(".cs-mega-wrapper>li>a").removeAttr("href");
+                        // Modal Btn
+                        $('.cs-mode_btn').on('click', function () {
+                            $(this).toggleClass('active');
+                            $('body').toggleClass('cs-dark');
+                        })
+                    }
+
+                    // Smoth Animated Scroll
+                    function onePage() {
+                        $(".cs-smoth_scroll").on("click", function () {
+                            var thisAttr = $(this).attr("href");
+                            if ($(thisAttr).length) {
+                                var scrollPoint = $(thisAttr).offset().top - 40;
+                                $("body,html").animate(
+                                    {
+                                        scrollTop: scrollPoint,
+                                    },
+                                    600
+                                );
+                            }
+                            return false;
+                        });
+                    }
+
+                    /*--------------------------------------------------------------
+                      3. Sticky Header
+                    --------------------------------------------------------------*/
+                    function stickyHeader() {
+                        var scroll = $(window).scrollTop();
+                        if (scroll >= 10) {
+                            $(".cs-sticky-header").addClass("cs-sticky-active");
+                        } else {
+                            $(".cs-sticky-header").removeClass("cs-sticky-active");
+                        }
+                    }
+
+                    /*--------------------------------------------------------------
+                      4. Dynamic Background
+                    --------------------------------------------------------------*/
+                    function dynamicBackground() {
+                        $("[data-src]").each(function () {
+                            var src = $(this).attr("data-src");
+                            $(this).css({
+                                "background-image": "url(" + src + ")",
+                            });
+                        });
+                    }
+
+                    /*--------------------------------------------------------------
+                      7. Slick Slider
+                    --------------------------------------------------------------*/
+                    function slickInit() {
+                        if ($.exists(".cs-slider")) {
+                            $(".cs-slider").each(function () {
+                                // Slick Variable
+                                var $ts = $(this).find(".cs-slider_container");
+                                var $slickActive = $(this).find(".cs-slider_wrapper");
+
+                                // Auto Play
+                                var autoPlayVar = parseInt($ts.attr("data-autoplay"), 10);
+                                // Auto Play Time Out
+                                var autoplaySpdVar = 3000;
+                                if (autoPlayVar > 1) {
+                                    autoplaySpdVar = autoPlayVar;
+                                    autoPlayVar = 1;
+                                }
+                                // Slide Change Speed
+                                var speedVar = parseInt($ts.attr("data-speed"), 10);
+                                // Slider Loop
+                                var loopVar = Boolean(parseInt($ts.attr("data-loop"), 10));
+                                // Slider Center
+                                var centerVar = Boolean(parseInt($ts.attr("data-center"), 10));
+                                // Slider Center
+                                var variableWidthVar = Boolean(
+                                    parseInt($ts.attr("data-variable-width"), 10)
+                                );
+                                // Pagination
+                                var paginaiton = $(this).find(".cs-pagination").hasClass("cs-pagination");
+                                // Slide Per View
+                                var slidesPerView = $ts.attr("data-slides-per-view");
+                                if (slidesPerView == 1) {
+                                    slidesPerView = 1;
+                                }
+                                if (slidesPerView == "responsive") {
+                                    var slidesPerView = parseInt($ts.attr("data-add-slides"), 10);
+                                    var lgPoint = parseInt($ts.attr("data-lg-slides"), 10);
+                                    var mdPoint = parseInt($ts.attr("data-md-slides"), 10);
+                                    var smPoint = parseInt($ts.attr("data-sm-slides"), 10);
+                                    var xsPoing = parseInt($ts.attr("data-xs-slides"), 10);
+                                }
+                                // Fade Slider
+                                var fadeVar = parseInt($($ts).attr("data-fade-slide"));
+                                fadeVar === 1 ? (fadeVar = true) : (fadeVar = false);
+
+                                // Slick Active Code
+                                $slickActive.slick({
+                                    autoplay: autoPlayVar,
+                                    dots: paginaiton,
+                                    centerPadding: "7%",
+                                    speed: speedVar,
+                                    infinite: loopVar,
+                                    autoplaySpeed: autoplaySpdVar,
+                                    centerMode: centerVar,
+                                    fade: fadeVar,
+                                    prevArrow: $(this).find(".cs-left_arrow"),
+                                    nextArrow: $(this).find(".cs-right_arrow"),
+                                    appendDots: $(this).find(".cs-pagination"),
+                                    slidesToShow: slidesPerView,
+                                    variableWidth: variableWidthVar,
+                                    slidesToScroll: slidesPerView,
+                                    responsive: [
+                                        {
+                                            breakpoint: 1600,
+                                            settings: {
+                                                slidesToShow: lgPoint,
+                                                slidesToScroll: lgPoint,
+                                            },
+                                        },
+                                        {
+                                            breakpoint: 1200,
+                                            settings: {
+                                                slidesToShow: mdPoint,
+                                                slidesToScroll: mdPoint,
+                                            },
+                                        },
+                                        {
+                                            breakpoint: 992,
+                                            settings: {
+                                                slidesToShow: smPoint,
+                                                slidesToScroll: smPoint,
+                                            },
+                                        },
+                                        {
+                                            breakpoint: 768,
+                                            settings: {
+                                                slidesToShow: xsPoing,
+                                                slidesToScroll: xsPoing,
+                                            },
+                                        },
+                                    ],
+                                });
+                            });
+                        }
+                    }
+
+                    /*--------------------------------------------------------------
+                      11. Modal Video
+                    --------------------------------------------------------------*/
+                    function modal() {
+                        $(".cs-modal_btn").on('click', function () {
+                            var modalData = $(this).attr("data-modal")
+                            $(`[data-modal='${modalData}']`).addClass('active')
+                        })
+                        $(".cs-close_modal").on('click', function () {
+                            var modalData = $(this).parents('.cs-modal').attr("data-modal")
+                            $(`[data-modal='${modalData}']`).removeClass('active')
+                        })
+                    }
+
+                    /*--------------------------------------------------------------
+                      16. Accordian
+                    --------------------------------------------------------------*/
+                    function accordian() {
+                        $(".cs-accordian").children(".cs-accordian-body").hide();
+                        $(".cs-accordian.active").children(".cs-accordian-body").show();
+                        $(".cs-accordian_head").on("click", function () {
+                            $(this).parent(".cs-accordian").siblings().children(".cs-accordian-body").slideUp(250);
+                            $(this).siblings().slideDown(250);
+                            $(this).parent().parent().siblings().find(".cs-accordian-body").slideUp(250);
+                            /* Accordian Active Class */
+                            $(this).parents(".cs-accordian").addClass("active");
+                            $(this).parent(".cs-accordian").siblings().removeClass("active");
+                        });
+                    }
+
+                    /*--------------------------------------------------------------
+                      14. Counter Animation
+                    --------------------------------------------------------------*/
+                    function counterInit() {
+                        if ($.exists(".odometer")) {
+                            $(window).on("scroll", function () {
+                                function winScrollPosition() {
+                                    var scrollPos = $(window).scrollTop(),
+                                        winHeight = $(window).height();
+                                    var scrollPosition = Math.round(scrollPos + winHeight / 1.2);
+                                    return scrollPosition;
+                                }
+
+                                $(".odometer").each(function () {
+                                    var elemOffset = $(this).offset().top;
+                                    if (elemOffset < winScrollPosition()) {
+                                        $(this).html($(this).data("count-to"));
+                                    }
+                                });
+                            });
+                        }
+                    }
+
+                    /*--------------------------------------------------------------
+                      20. Ripple
+                    --------------------------------------------------------------*/
+                    function rippleInit() {
+                        if ($.exists('.cs-ripple_version')) {
+                            $('.cs-ripple_version').each(function () {
+                                $('.cs-ripple_version').ripples({
+                                    resolution: 512,
+                                    dropRadius: 20,
+                                    perturbance: 0.04,
+                                });
+                            });
+                        }
+                    }
+
+
+                })(jQuery); // End of use strict
+
+            </script>
 </body>
 
 <footer class="cs-footer text-center">
@@ -366,10 +702,6 @@
         <div class="cs-height_30 cs-height_lg_30"></div>
     </div>
     <div class="cs-height_85 cs-height_lg_25"></div>
-    <div class="container">
-        <div class="cs-copyright text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">Copyright
-            © 2022.
-            All Rights Reserved by <span class="cs-primary_font cs-primary_color">AENFT</span></div>
-    </div>
+
     <div class="cs-height_25 cs-height_lg_25"></div>
 </footer>

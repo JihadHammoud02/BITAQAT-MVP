@@ -8,8 +8,6 @@ app_name = 'Fan'
 urlpatterns = [
     path('homepage/', views.renderHomepage, name="renderHomepage"),
     path('Marketplace/', views.renderMarketplace, name="renderMarketplace"),
-    path('event/<str:event_id>/', views.renderSpecificEventPage,
-         name="renderSpecificEventPage"),
     path('Buy/<str:event_id>/', views.buyTicket, name='buyTicket'),
     path('Myinventory/', views.renderInventory, name='renderInventory'),
     path("Mykeys/", views.renderKeys, name="Mykeys"),

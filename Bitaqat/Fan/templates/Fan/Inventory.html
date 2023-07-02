@@ -5309,7 +5309,7 @@
                     <!--match mdw-->
                     <div class="row" id="inventory-container">
                         <!-- inventory.html -->
-                        {% for event in collection %}
+                        {% for eve in collection %}
                         <div class="col-lg-4 mb-2">
                             <div class="bg-light p-4 rounded">
                                 <div class="widget-body">
@@ -5317,17 +5317,17 @@
                                         <div
                                             class="d-flex align-items-center justify-content-around justify-content-between w-100">
                                             <div class="team-1 text-center">
-                                                <img src="../../../media/{{ event.team1_logo }}" alt="Image" width="50%"
+                                                <img src="../../../media/{{ eve.date.logo1 }}" alt="Image" width="50%"
                                                     height="50%">
-                                                <h3>{{ event.team1_name }}</h3>
+                                                <h3>{{ eve.date.name1 }}</h3>
                                             </div>
                                             <div>
                                                 <span class="vs"><span>VS</span></span>
                                             </div>
                                             <div class="team-2 text-center">
-                                                <img src="../../../media/{{ event.team2_logo }}" alt="Image" width="50%"
+                                                <img src="../../../media/{{ eve.date.logo2 }}" alt="Image" width="50%"
                                                     height="50%">
-                                                <h3>{{ event.team2_name }}</h3>
+                                                <h3>{{ eve.date.name2 }}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -5335,12 +5335,12 @@
 
                                 <div class="text-center widget-vs-contents mb-4">
                                     <p class="mb-5" style="margin-bottom: 1rem !important;">
-                                        <span class="d-block">Date: {{ event.date }}</span>
-                                        <strong class="text-primary">Token id: {{ event.tokenid }}</strong>
+                                        <span class="d-block">Date: {{ eve.date.date }}</span>
+                                        <strong class="text-primary">Token id: {{ eve.token }}</strong>
                                     </p>
                                     <div class="cs-toolbox">
-                                        {% if event.checked == False %}
-                                        <a href="{% url 'Fan:verf' token_id=event.tokenid %}"
+                                        {% if eve.checked == False %}
+                                        <a href="{% url 'Fan:verf' token_id=eve.token %}"
                                             class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn">Check in</a>
                                         {% else %}
                                         <a class="cs-btn cs-btn_filed cs-success-btn cs-modal_btn">Already Checked

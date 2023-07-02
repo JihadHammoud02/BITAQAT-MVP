@@ -64,6 +64,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
 ]
+SILKY_PYTHON_PROFILER = True
 
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
@@ -91,6 +92,13 @@ TEMPLATES = [
         },
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 WSGI_APPLICATION = "Bitaqat.wsgi.application"
 

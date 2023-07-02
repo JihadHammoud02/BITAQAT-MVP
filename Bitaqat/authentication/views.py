@@ -1,72 +1,64 @@
-from django.shortcuts import render
-from Club.models import myClub as Club
+from django.shortcuts import render, reverse
 from django.db import IntegrityError
-from .models import myUsers
+from django.http import HttpResponseRedirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.hashers import make_password
 from eth_account import Account
 import secrets
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.contrib.auth import login, authenticate
-from django.urls import reverse
-from django.contrib.auth.hashers import make_password
+
+from Club.models import myClub as Club
+from .models import myUsers
 from Fan.models import myFan
-from compression_middleware.decorators import compress_page
 
 
-def createWallet():
+def create_wallet():
     """
-    It creates a real crypto wallet
+    Create a real crypto wallet.
+
     :return: The private key and the address of the account.
     """
     priv = secrets.token_hex(32)
     private_key = "0x" + priv
     acct = Account.from_key(private_key)
+    return private_key, acct.address
 
-    return (private_key, acct.address)
 
-
-def loginmyUsers(request):
+def login_my_users(request):
     """
-    If the request method is POST, then get the username and password from the request, 
-    authenticate the user, and if the user is authenticated, then redirect to the appropriate page.
+    Log in the user if the request method is POST and the user is authenticated.
 
-    :param request: The request object is a Django object that contains metadata about the current
-    request
-    :return: the result of the render function.
+    :param request: The request object containing metadata about the current request.
+    :return: The result of the render function.
     """
     if request.method == "POST":
         username_client = request.POST.get('username')
         password_client = request.POST.get('pswrd')
         user = authenticate(request, username=username_client,
                             password=password_client)
+
         if user is not None:
-            Upk = user.pk
-            clubModelCheck = Club.objects.filter(pk=Upk).exists()
-            fanModelCheck = myFan.objects.filter(pk=Upk).exists()
-            if clubModelCheck:
+            user_pk = user.pk
+            club_model_check = Club.objects.filter(pk=user_pk).exists()
+            fan_model_check = myFan.objects.filter(pk=user_pk).exists()
+
+            if club_model_check:
                 login(request, user)
-                return HttpResponseRedirect(
-                    reverse("Club:renderHomepage"))
+                return HttpResponseRedirect(reverse("Club:renderHomepage"))
+            elif fan_model_check:
+                login(request, user)
+                return HttpResponseRedirect(reverse("Fan:renderHomepage"))
 
-            else:
-                if fanModelCheck:
-                    login(request, user)
-                    return HttpResponseRedirect(
-                        reverse("Fan:renderHomepage"))
-
-        else:
-            return render(request, 'authentication\Login.html', {'error_msg': True})
+        return render(request, 'authentication/Login.html', {'error_msg': True})
     else:
-        return render(request, 'authentication\Login.html')
+        return render(request, 'authentication/Login.html')
 
 
-def createAccounts(request):
+def create_accounts(request):
     """
-    It creates a user account and saves it in the database.
+    Create a user account and save it in the database.
 
-    :param request: The request object is an HttpRequest object. It contains metadata about the request,
-    including the HTTP method
-    :return: the render function.
+    :param request: The request object containing metadata about the request.
+    :return: The render function.
     """
     try:
         if request.method == "POST":
@@ -77,30 +69,26 @@ def createAccounts(request):
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)
             user.save()
-            wallet = createWallet()
-            public_addresse = wallet[1]
-            private_addresse = wallet[0]
-            print(public_addresse)
-            print(private_addresse)
-            account = myFan(user=user, public_key=public_addresse,
-                            private_key=private_addresse)
-            print()
+
+            wallet = create_wallet()
+            public_address = wallet[1]
+            private_address = wallet[0]
+            account = myFan(user=user, public_key=public_address,
+                            private_key=private_address)
             account.save()
 
-            return render(request, "authentication\Login.html")
+            return render(request, "authentication/Login.html")
         else:
-            return render(request, "authentication\Registration.html")
+            return render(request, "authentication/Registration.html")
     except IntegrityError as e:
         error_msg = ''
-        print(e)
         if str(e) == "UNIQUE constraint failed: auth_user.email":
-            error_msg = "An Account with this email address already exists"
-            return render(request, "authentication\Registration.html", {"error_msg_email": error_msg})
-
+            error_msg = "An account with this email address already exists"
+            return render(request, "authentication/Registration.html", {"error_msg_email": error_msg})
         else:
-            error_msg = "An Account with this username already exists"
-            return render(request, "authentication\Registration.html", {"error_msg_username": error_msg})
+            error_msg = "An account with this username already exists"
+            return render(request, "authentication/Registration.html", {"error_msg_username": error_msg})
 
 
-def landingPage(request):
-    return render(request, 'authentication\landingPage.html')
+def landing_page(request):
+    return render(request, 'authentication/landingPage.html')

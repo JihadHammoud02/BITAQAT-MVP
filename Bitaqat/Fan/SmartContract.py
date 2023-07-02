@@ -7,9 +7,6 @@ import json
 import hashlib
 import random
 import qrcode
-from PIL import Image
-from io import BytesIO
-from django.core.files import File
 import tempfile
 # Connect to the blockchain network (e.g., Ganache local network)
 w3 = Web3(Web3.HTTPProvider(

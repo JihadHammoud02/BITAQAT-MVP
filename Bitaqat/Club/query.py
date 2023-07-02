@@ -1,39 +1,20 @@
-from authentication.models import myUsers
-from Fan.models import myFan
+from datetime import datetime
 from Club.models import Event
 from Club.models import MintedTickets
 
 
-def queryEvents(filterby=None, val=None):
+def queryEvents(filterby=None, val=None, history=False):
+    current_date = datetime.now()
     if filterby == None:
-        list_of_all_events = Event.objects.all()
+        list_of_all_events = Event.objects.filter(datetime__gt=current_date)
     else:
-        list_of_all_events = Event.objects.all().filter(**
-                                                        {filterby: val})
-    all_events = []
-    event = {}
-    for eve in list_of_all_events:
-        event['id'] = eve.pk
-        event['img'] = eve.banner
-
-        event['date'] = str(eve.datetime.date())
-        event['time'] = str(eve.datetime.time())[:5]
-        event['price'] = eve.ticket_price
-        event['maxcap'] = eve.maximum_capacity
-        event['available_places'] = eve.maximum_capacity - \
-            eve.current_fan_count
-        event['organizer'] = eve.organizer
-        event['opposite'] = eve.opposite_team
-        event['place2'] = eve.place
-        event['currentNumber'] = eve.current_fan_count
-        event['name1'] = event['organizer'].club.name
-        event['logo'] = event['organizer'].club.logo
-        event['name2'] = event['opposite'].name
-        event['banner2'] = event['opposite'].logo
-        event['name'] = str(event['name1'])+" vs "+str(event['name2'])
-        all_events.append(event)
-        event = {}
-    return (all_events, len(all_events))
+        if not history:
+            list_of_all_events = Event.objects.all().filter(**
+                                                            {filterby: val, "datetime__gt": current_date})
+        else:
+            list_of_all_events = Event.objects.all().filter(**
+                                                            {filterby: val})
+    return list_of_all_events
 
 
 def queryOrganisers(filterby=None, val=None):

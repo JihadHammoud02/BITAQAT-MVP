@@ -23,168 +23,566 @@
     <div class="cs-preloader cs-white_bg cs-center">
         <div class="cs-preloader_in">
             <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logsso">
-        </div>
-    </div>
-    <!-- Start Header Section -->
-    <header class="cs-site_header cs-style1 cs-sticky-header cs-primary_color text-uppercase cs-white_bg">
-        <div class="cs-main_header">
-            <div class="container">
-                <div class="cs-main_header_in">
-                    <div class="cs-main_header_left">
-                        <a class="cs-site_branding cs-accent_color" href="index.html">
-                            <img src="{% static 'images/Haffel-full-centered.png' %}" alt="Logo" class="cs-hide_white">
+            <header class="cs-site_header cs-style1 cs-sticky-header cs-primary_color text-uppercase cs-white_bg">
+                <div class="cs-main_header">
+                    <div class="container">
+                        <div class="cs-main_header_in">
+                            <div class="cs-main_header_left">
+                                <a class="cs-site_branding cs-accent_color" href="index.html">
+                                    <img src="{% static 'images/Haffel-full-centered.webp' %}" alt="Logo"
+                                        class="cs-hide_white">
 
-                        </a>
-                    </div>
-                    <div class="cs-main_header_center">
-                        <div class="cs-nav">
-                            <ul class="cs-nav_list">
-                                <li class="menu-item-has-children"><a href="/guest/homepage"
-                                        class="cs-smoth_scroll">Home</a>
-                                </li>
-                                <li><a href="/guest/Marketplace" class="cs-smoth_scroll">Games</a></li>
-                                <li><a href="/guest/Myinventory" class="cs-smoth_scroll">My Tickets</a></li>
-                                <li><a href="/guest/Mykeys" class="cs-smoth_scroll">My Keys</a></li>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="cs-main_header_right">
-                        <div class="cs-toolbox">
-                            <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
-                                href="{% url 'Club:logoutUser' %}">Logout
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- End Header Section -->
-    <div class="cs-height_80 cs-height_lg_80"></div>
-    <div class="cs-height_100 cs-height_lg_70"></div>
-    <!-- Start Team -->
-
-    <div class="container">
-
-        <section id="team">
-            <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"
-                data-wow-delay="0.2s">
-                <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">Qr code Check in</h3>
-                <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Scan it </h2>
-            </div>
-
-
-            <div class="match_today container" id="match_today">
-                <div class="widget-content">
-                    <div class="cs-height_80 cs-height_lg_80"></div>
-                    <!--match mdw-->
-                    <div class="row">
-                        <div class="col-lg-4 mb-2">
-                            <div class="bg-light p-4 rounded">
-                                <div class="widget-body">
-                                    <img src="../../../media/{{image}}" alt="Image" width="100%" height="100%">
+                                </a>
+                            </div>
+                            <div class="cs-main_header_center">
+                                <div class="cs-nav">
+                                    <ul class="cs-nav_list">
+                                        <li class="menu-item-has-children"><a href="/guest/homepage"
+                                                class="cs-smoth_scroll">Home</a>
+                                        </li>
+                                        <li><a href="/guest/Marketplace" class="cs-smoth_scroll">Games</a></li>
+                                        <li><a href="/guest/Myinventory" class="cs-smoth_scroll">My Tickets</a></li>
+                                        <li><a href="/guest/Mykeys" class="cs-smoth_scroll">My Keys</a></li>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="cs-main_header_right">
+                                <div class="cs-toolbox">
+                                    <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn"
+                                        href="{% url 'Club:logoutUser' %}">Logout
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </header>
+            <!-- End Header Section -->
+            <div class="cs-height_80 cs-height_lg_80"></div>
+            <div class="cs-height_100 cs-height_lg_70"></div>
+            <!-- Start Team -->
 
+            <div class="container">
 
+                <section id="team">
+                    <div class="cs-seciton_heading cs-style1 text-uppercase wow fadeInUp" data-wow-duration="1s"
+                        data-wow-delay="0.2s">
+                        <h3 class="cs-section_title cs-font_16 cs-font_14_sm cs-gradient_color">Qr code Check in</h3>
+                        <h2 class="cs-section_subtitle cs-m0 cs-font_36 cs-font_24_sm">Scan it </h2>
                     </div>
 
-                </div>
+
+                    <div class="match_today container" id="match_today">
+                        <div class="widget-content">
+                            <div class="cs-height_80 cs-height_lg_80"></div>
+                            <!--match mdw-->
+                            <div class="row">
+                                <div class="col-lg-4 mb-2">
+                                    <div class="bg-light p-4 rounded">
+                                        <div class="widget-body">
+                                            <img src="../../../media/{{image}}" alt="Image" width="100%" height="100%">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
             </div>
 
-        </section>
-    </div>
-
-    <!-- End Team -->
-    <!-- Start Footer -->
-    <footer class="cs-footer text-center">
-        <div class="container">
-            <div class="cs-height_100 cs-height_lg_70"></div>
-            <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" width="70px" height="70px">
-            </div>
-            <div class="cs-height_25 cs-height_lg_25"></div>
-            <div class="cs-social_btns cs-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
-                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                        <path fill="currentColor"
-                            d="m23.446 18l.889-5.791h-5.557V8.451c0-1.584.776-3.129 3.265-3.129h2.526V.392S22.277.001 20.085.001c-4.576 0-7.567 2.774-7.567 7.795v4.414H7.431v5.791h5.087v14h6.26v-14z" />
-                    </svg>
-                </a>
-                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
-                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578a9.3 9.3 0 0 1-2.958 1.13a4.66 4.66 0 0 0-7.938 4.25a13.229 13.229 0 0 1-9.602-4.868c-.4.69-.63 1.49-.63 2.342A4.66 4.66 0 0 0 3.96 9.824a4.647 4.647 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568a4.692 4.692 0 0 1-2.104.08a4.661 4.661 0 0 0 4.352 3.234a9.348 9.348 0 0 1-5.786 1.995a9.5 9.5 0 0 1-1.112-.065a13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254c0-.2-.005-.402-.014-.602a9.47 9.47 0 0 0 2.323-2.41l.002-.003Z" />
-                    </svg>
-                </a>
-                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
-                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 48 48">
-                        <mask id="svgIDa1">
-                            <g fill="none">
-                                <path fill="#fff" stroke="#fff" stroke-linejoin="round" stroke-width="4"
-                                    d="M34 6H14a8 8 0 0 0-8 8v20a8 8 0 0 0 8 8h20a8 8 0 0 0 8-8V14a8 8 0 0 0-8-8Z" />
-                                <path fill="#000" stroke="#000" stroke-linejoin="round" stroke-width="4"
-                                    d="M24 32a8 8 0 1 0 0-16a8 8 0 0 0 0 16Z" />
-                                <path fill="#000" d="M35 15a2 2 0 1 0 0-4a2 2 0 0 0 0 4Z" />
-                            </g>
-                        </mask>
-                        <path fill="currentColor" d="M0 0h48v48H0z" mask="url(#svgIDa1)" />
-                    </svg>
-                </a>
-                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
-                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                        <g fill="none">
-                            <g clip-path="url(#svgIDa2)">
+            <!-- End Team -->
+            <!-- Start Footer -->
+            <footer class="cs-footer text-center">
+                <div class="container">
+                    <div class="cs-height_100 cs-height_lg_70"></div>
+                    <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" width="70px" height="70px">
+                    </div>
+                    <div class="cs-height_25 cs-height_lg_25"></div>
+                    <div class="cs-social_btns cs-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <a href="#"
+                            class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                                 <path fill="currentColor"
-                                    d="M23.5 6.507a2.786 2.786 0 0 0-.766-1.27a3.05 3.05 0 0 0-1.338-.742C19.518 4 11.994 4 11.994 4a76.624 76.624 0 0 0-9.39.47a3.16 3.16 0 0 0-1.338.76c-.37.356-.638.795-.778 1.276A29.09 29.09 0 0 0 0 12c-.012 1.841.151 3.68.488 5.494c.137.479.404.916.775 1.269c.371.353.833.608 1.341.743c1.903.494 9.39.494 9.39.494a76.8 76.8 0 0 0 9.402-.47a3.05 3.05 0 0 0 1.338-.742a2.78 2.78 0 0 0 .765-1.27A28.38 28.38 0 0 0 24 12.023a26.579 26.579 0 0 0-.5-5.517ZM9.602 15.424V8.577l6.26 3.424l-6.26 3.423Z" />
-                            </g>
-                            <defs>
-                                <clipPath id="svgIDa2">
-                                    <path fill="#fff" d="M0 0h24v24H0z" />
-                                </clipPath>
-                            </defs>
-                        </g>
-                    </svg>
-                </a>
-                <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
-                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15">
-                        <path fill="currentColor"
-                            d="M5 4.768a.5.5 0 0 1 .761.34l.14.836a.5.5 0 0 1-.216.499l-.501.334A4.501 4.501 0 0 1 5 5.5v-.732ZM9.5 10a4.5 4.5 0 0 1-1.277-.184l.334-.5a.5.5 0 0 1 .499-.217l.836.14a.5.5 0 0 1 .34.761H9.5Z" />
-                        <path fill="currentColor" fill-rule="evenodd"
-                            d="M0 7.5a7.5 7.5 0 1 1 3.253 6.182l-2.53 1.265a.5.5 0 0 1-.67-.67l1.265-2.53A7.467 7.467 0 0 1 0 7.5Zm4.23-3.42l.206-.138a1.5 1.5 0 0 1 2.311 1.001l.14.837a1.5 1.5 0 0 1-.648 1.495l-.658.438A4.522 4.522 0 0 0 7.286 9.42l.44-.658a1.5 1.5 0 0 1 1.494-.648l.837.14a1.5 1.5 0 0 1 1.001 2.311l-.138.207a.5.5 0 0 1-.42.229h-1A5.5 5.5 0 0 1 4 5.5v-1a.5.5 0 0 1 .23-.42Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </a>
-            </div>
-            <div class="cs-height_30 cs-height_lg_30"></div>
+                                    d="m23.446 18l.889-5.791h-5.557V8.451c0-1.584.776-3.129 3.265-3.129h2.526V.392S22.277.001 20.085.001c-4.576 0-7.567 2.774-7.567 7.795v4.414H7.431v5.791h5.087v14h6.26v-14z" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578a9.3 9.3 0 0 1-2.958 1.13a4.66 4.66 0 0 0-7.938 4.25a13.229 13.229 0 0 1-9.602-4.868c-.4.69-.63 1.49-.63 2.342A4.66 4.66 0 0 0 3.96 9.824a4.647 4.647 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568a4.692 4.692 0 0 1-2.104.08a4.661 4.661 0 0 0 4.352 3.234a9.348 9.348 0 0 1-5.786 1.995a9.5 9.5 0 0 1-1.112-.065a13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254c0-.2-.005-.402-.014-.602a9.47 9.47 0 0 0 2.323-2.41l.002-.003Z" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 48 48">
+                                <mask id="svgIDa1">
+                                    <g fill="none">
+                                        <path fill="#fff" stroke="#fff" stroke-linejoin="round" stroke-width="4"
+                                            d="M34 6H14a8 8 0 0 0-8 8v20a8 8 0 0 0 8 8h20a8 8 0 0 0 8-8V14a8 8 0 0 0-8-8Z" />
+                                        <path fill="#000" stroke="#000" stroke-linejoin="round" stroke-width="4"
+                                            d="M24 32a8 8 0 1 0 0-16a8 8 0 0 0 0 16Z" />
+                                        <path fill="#000" d="M35 15a2 2 0 1 0 0-4a2 2 0 0 0 0 4Z" />
+                                    </g>
+                                </mask>
+                                <path fill="currentColor" d="M0 0h48v48H0z" mask="url(#svgIDa1)" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <g fill="none">
+                                    <g clip-path="url(#svgIDa2)">
+                                        <path fill="currentColor"
+                                            d="M23.5 6.507a2.786 2.786 0 0 0-.766-1.27a3.05 3.05 0 0 0-1.338-.742C19.518 4 11.994 4 11.994 4a76.624 76.624 0 0 0-9.39.47a3.16 3.16 0 0 0-1.338.76c-.37.356-.638.795-.778 1.276A29.09 29.09 0 0 0 0 12c-.012 1.841.151 3.68.488 5.494c.137.479.404.916.775 1.269c.371.353.833.608 1.341.743c1.903.494 9.39.494 9.39.494a76.8 76.8 0 0 0 9.402-.47a3.05 3.05 0 0 0 1.338-.742a2.78 2.78 0 0 0 .765-1.27A28.38 28.38 0 0 0 24 12.023a26.579 26.579 0 0 0-.5-5.517ZM9.602 15.424V8.577l6.26 3.424l-6.26 3.423Z" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="svgIDa2">
+                                            <path fill="#fff" d="M0 0h24v24H0z" />
+                                        </clipPath>
+                                    </defs>
+                                </g>
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15">
+                                <path fill="currentColor"
+                                    d="M5 4.768a.5.5 0 0 1 .761.34l.14.836a.5.5 0 0 1-.216.499l-.501.334A4.501 4.501 0 0 1 5 5.5v-.732ZM9.5 10a4.5 4.5 0 0 1-1.277-.184l.334-.5a.5.5 0 0 1 .499-.217l.836.14a.5.5 0 0 1 .34.761H9.5Z" />
+                                <path fill="currentColor" fill-rule="evenodd"
+                                    d="M0 7.5a7.5 7.5 0 1 1 3.253 6.182l-2.53 1.265a.5.5 0 0 1-.67-.67l1.265-2.53A7.467 7.467 0 0 1 0 7.5Zm4.23-3.42l.206-.138a1.5 1.5 0 0 1 2.311 1.001l.14.837a1.5 1.5 0 0 1-.648 1.495l-.658.438A4.522 4.522 0 0 0 7.286 9.42l.44-.658a1.5 1.5 0 0 1 1.494-.648l.837.14a1.5 1.5 0 0 1 1.001 2.311l-.138.207a.5.5 0 0 1-.42.229h-1A5.5 5.5 0 0 1 4 5.5v-1a.5.5 0 0 1 .23-.42Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="cs-height_30 cs-height_lg_30"></div>
+                </div>
+                <div class="cs-height_85 cs-height_lg_25"></div>
+                <div class="container">
+                    <div class="cs-copyright text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+                        Copyright ©
+                        2022.
+                        All Rights Reserved by <span class="cs-primary_font cs-primary_color">AENFT</span></div>
+                </div>
+                <div class="cs-height_25 cs-height_lg_25"></div>
+            </footer>
+            <!-- End Footer -->
         </div>
-        <div class="cs-height_85 cs-height_lg_25"></div>
-        <div class="container">
-            <div class="cs-copyright text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">Copyright ©
-                2022.
-                All Rights Reserved by <span class="cs-primary_font cs-primary_color">AENFT</span></div>
-        </div>
-        <div class="cs-height_25 cs-height_lg_25"></div>
-    </footer>
-    <!-- End Footer -->
-    </div>
+
+        <script text="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
+        <script text="text/javascript" src="{% static 'jquery.slick.min.js' %}"></script>
+
+        <script text="text/javascript">
+            (function ($) {
+                "use strict";
+
+                /*
+                |--------------------------------------------------------------------------
+                | Template Name: Multim
+                | Author: Laralink
+                | Version: 1.0.0
+                |--------------------------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | TABLE OF CONTENTS:
+                |--------------------------------------------------------------------------
+                |
+                | 1. Preloader
+                | 2. Mobile Menu
+                | 3. Sticky Header
+                | 4. Dynamic Background
+                | 5. General Toggle
+                | 6. Select 2
+                | 7. Slick Slider
+                | 9. Review
+                | 11. Modal Video
+                | 12. Hobble Effect
+                | 13. Parallax
+                | 14. Counter Animation
+                | 15. Tabs
+                | 17. Progress Bar
+                | 18. Team Member
+                | 20. Round Percent
+                | 21. Range slider
+                |
+                */
+
+                /*--------------------------------------------------------------
+                  Scripts initialization
+                --------------------------------------------------------------*/
+                $.exists = function (selector) {
+                    return $(selector).length > 0;
+                };
+
+                $(window).on("load", function () {
+                    $(window).trigger("scroll");
+                    $(window).trigger("resize");
+                    preloader();
+                });
+
+                $(function () {
+                    $(window).trigger("resize");
+                    mainNav();
+                    onePage();
+                    stickyHeader();
+                    dynamicBackground();
+                    slickInit();
+                    modal();
+                    accordian();
+                    counterInit();
+                    rippleInit();
+                    if ($.exists(".wow")) {
+                        new WOW().init();
+                    }
+                });
+
+                $(window).on("scroll", function () {
+                    stickyHeader();
+                    counterInit()
+                });
+
+                /*--------------------------------------------------------------
+                  1. Preloader
+                --------------------------------------------------------------*/
+                function preloader() {
+                    $(".cs-preloader_in").fadeOut();
+                    $(".cs-preloader").delay(150).fadeOut("slow");
+                }
+
+
+                function executeBuying() {
+                    $(".cs-preloader_in").fadeOut();
+                    $.ajax({
+                        url: "/your-view-url/",  // Replace with the actual URL of your Django view
+                        type: "POST",  // Use the appropriate HTTP method (POST, GET, etc.)
+                        data: {
+                            // Provide any data needed for your view function
+                            event_id: "your-event-id",  // Replace with the actual event ID or pass it dynamically
+                        },
+                        success: function (response) {
+                            // Handle the response from the Django view
+
+                            // Hide the loading screen
+                            $("#loading-screen").fadeOut();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            // Handle any error that occurred during the AJAX call
+
+                            // Hide the loading screen
+                            $("#loading-screen").fadeOut();
+                        }
+                    });
+
+                }
+                /*--------------------------------------------------------------
+                  2. Mobile Menu
+                --------------------------------------------------------------*/
+                function mainNav() {
+                    $(".cs-nav").append('<span class="cs-munu_toggle"><span></span></span>');
+                    $(".menu-item-has-children").append(
+                        '<span class="cs-munu_dropdown_toggle"></span>'
+                    );
+                    $(".cs-munu_toggle").on("click", function () {
+                        $(this)
+                            .toggleClass("cs-toggle_active")
+                            .siblings(".cs-nav_list")
+                            .slideToggle();
+                    });
+                    $(".cs-munu_dropdown_toggle").on("click", function () {
+                        $(this).toggleClass("active").siblings("ul").slideToggle();
+                        $(this).parent().toggleClass("active");
+                    });
+                    // Mega Menu
+                    $(".cs-mega-wrapper>li>a").removeAttr("href");
+                    // Modal Btn
+                    $('.cs-mode_btn').on('click', function () {
+                        $(this).toggleClass('active');
+                        $('body').toggleClass('cs-dark');
+                    })
+                }
+
+                // Smoth Animated Scroll
+                function onePage() {
+                    $(".cs-smoth_scroll").on("click", function () {
+                        var thisAttr = $(this).attr("href");
+                        if ($(thisAttr).length) {
+                            var scrollPoint = $(thisAttr).offset().top - 40;
+                            $("body,html").animate(
+                                {
+                                    scrollTop: scrollPoint,
+                                },
+                                600
+                            );
+                        }
+                        return false;
+                    });
+                }
+
+                /*--------------------------------------------------------------
+                  3. Sticky Header
+                --------------------------------------------------------------*/
+                function stickyHeader() {
+                    var scroll = $(window).scrollTop();
+                    if (scroll >= 10) {
+                        $(".cs-sticky-header").addClass("cs-sticky-active");
+                    } else {
+                        $(".cs-sticky-header").removeClass("cs-sticky-active");
+                    }
+                }
+
+                /*--------------------------------------------------------------
+                  4. Dynamic Background
+                --------------------------------------------------------------*/
+                function dynamicBackground() {
+                    $("[data-src]").each(function () {
+                        var src = $(this).attr("data-src");
+                        $(this).css({
+                            "background-image": "url(" + src + ")",
+                        });
+                    });
+                }
+
+                /*--------------------------------------------------------------
+                  7. Slick Slider
+                --------------------------------------------------------------*/
+                function slickInit() {
+                    if ($.exists(".cs-slider")) {
+                        $(".cs-slider").each(function () {
+                            // Slick Variable
+                            var $ts = $(this).find(".cs-slider_container");
+                            var $slickActive = $(this).find(".cs-slider_wrapper");
+
+                            // Auto Play
+                            var autoPlayVar = parseInt($ts.attr("data-autoplay"), 10);
+                            // Auto Play Time Out
+                            var autoplaySpdVar = 3000;
+                            if (autoPlayVar > 1) {
+                                autoplaySpdVar = autoPlayVar;
+                                autoPlayVar = 1;
+                            }
+                            // Slide Change Speed
+                            var speedVar = parseInt($ts.attr("data-speed"), 10);
+                            // Slider Loop
+                            var loopVar = Boolean(parseInt($ts.attr("data-loop"), 10));
+                            // Slider Center
+                            var centerVar = Boolean(parseInt($ts.attr("data-center"), 10));
+                            // Slider Center
+                            var variableWidthVar = Boolean(
+                                parseInt($ts.attr("data-variable-width"), 10)
+                            );
+                            // Pagination
+                            var paginaiton = $(this).find(".cs-pagination").hasClass("cs-pagination");
+                            // Slide Per View
+                            var slidesPerView = $ts.attr("data-slides-per-view");
+                            if (slidesPerView == 1) {
+                                slidesPerView = 1;
+                            }
+                            if (slidesPerView == "responsive") {
+                                var slidesPerView = parseInt($ts.attr("data-add-slides"), 10);
+                                var lgPoint = parseInt($ts.attr("data-lg-slides"), 10);
+                                var mdPoint = parseInt($ts.attr("data-md-slides"), 10);
+                                var smPoint = parseInt($ts.attr("data-sm-slides"), 10);
+                                var xsPoing = parseInt($ts.attr("data-xs-slides"), 10);
+                            }
+                            // Fade Slider
+                            var fadeVar = parseInt($($ts).attr("data-fade-slide"));
+                            fadeVar === 1 ? (fadeVar = true) : (fadeVar = false);
+
+                            // Slick Active Code
+                            $slickActive.slick({
+                                autoplay: autoPlayVar,
+                                dots: paginaiton,
+                                centerPadding: "7%",
+                                speed: speedVar,
+                                infinite: loopVar,
+                                autoplaySpeed: autoplaySpdVar,
+                                centerMode: centerVar,
+                                fade: fadeVar,
+                                prevArrow: $(this).find(".cs-left_arrow"),
+                                nextArrow: $(this).find(".cs-right_arrow"),
+                                appendDots: $(this).find(".cs-pagination"),
+                                slidesToShow: slidesPerView,
+                                variableWidth: variableWidthVar,
+                                slidesToScroll: slidesPerView,
+                                responsive: [
+                                    {
+                                        breakpoint: 1600,
+                                        settings: {
+                                            slidesToShow: lgPoint,
+                                            slidesToScroll: lgPoint,
+                                        },
+                                    },
+                                    {
+                                        breakpoint: 1200,
+                                        settings: {
+                                            slidesToShow: mdPoint,
+                                            slidesToScroll: mdPoint,
+                                        },
+                                    },
+                                    {
+                                        breakpoint: 992,
+                                        settings: {
+                                            slidesToShow: smPoint,
+                                            slidesToScroll: smPoint,
+                                        },
+                                    },
+                                    {
+                                        breakpoint: 768,
+                                        settings: {
+                                            slidesToShow: xsPoing,
+                                            slidesToScroll: xsPoing,
+                                        },
+                                    },
+                                ],
+                            });
+                        });
+                    }
+                }
+
+                /*--------------------------------------------------------------
+                  11. Modal Video
+                --------------------------------------------------------------*/
+                function modal() {
+                    $(".cs-modal_btn").on('click', function () {
+                        var modalData = $(this).attr("data-modal")
+                        $(`[data-modal='${modalData}']`).addClass('active')
+                    })
+                    $(".cs-close_modal").on('click', function () {
+                        var modalData = $(this).parents('.cs-modal').attr("data-modal")
+                        $(`[data-modal='${modalData}']`).removeClass('active')
+                    })
+                }
+
+                /*--------------------------------------------------------------
+                  16. Accordian
+                --------------------------------------------------------------*/
+                function accordian() {
+                    $(".cs-accordian").children(".cs-accordian-body").hide();
+                    $(".cs-accordian.active").children(".cs-accordian-body").show();
+                    $(".cs-accordian_head").on("click", function () {
+                        $(this).parent(".cs-accordian").siblings().children(".cs-accordian-body").slideUp(250);
+                        $(this).siblings().slideDown(250);
+                        $(this).parent().parent().siblings().find(".cs-accordian-body").slideUp(250);
+                        /* Accordian Active Class */
+                        $(this).parents(".cs-accordian").addClass("active");
+                        $(this).parent(".cs-accordian").siblings().removeClass("active");
+                    });
+                }
+
+                /*--------------------------------------------------------------
+                  14. Counter Animation
+                --------------------------------------------------------------*/
+                function counterInit() {
+                    if ($.exists(".odometer")) {
+                        $(window).on("scroll", function () {
+                            function winScrollPosition() {
+                                var scrollPos = $(window).scrollTop(),
+                                    winHeight = $(window).height();
+                                var scrollPosition = Math.round(scrollPos + winHeight / 1.2);
+                                return scrollPosition;
+                            }
+
+                            $(".odometer").each(function () {
+                                var elemOffset = $(this).offset().top;
+                                if (elemOffset < winScrollPosition()) {
+                                    $(this).html($(this).data("count-to"));
+                                }
+                            });
+                        });
+                    }
+                }
+
+                /*--------------------------------------------------------------
+                  20. Ripple
+                --------------------------------------------------------------*/
+                function rippleInit() {
+                    if ($.exists('.cs-ripple_version')) {
+                        $('.cs-ripple_version').each(function () {
+                            $('.cs-ripple_version').ripples({
+                                resolution: 512,
+                                dropRadius: 20,
+                                perturbance: 0.04,
+                            });
+                        });
+                    }
+                }
+
+
+            })(jQuery); // End of use strict
+
+        </script>
+        <script text="text/javascript">
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
 
 
 
-    <!-- Script -->
-    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'jquery.slick.min.js' %}"></script>
-    <script src="{% static 'jquery.counter.min.js' %}"></script>
-    <script src="{% static 'wow.min.js' %}"></script>
-    <script src="{% static 'ripples.min.js' %}"></script>
-    <script src="{% static 'main.js' %}"></script>
+            function preloader(eventid) {
+                // Show the loading screen
+                $(".cs-preloader").fadeIn();
+                $(".cs-preloader_in").delay(150).fadeIn("slow");
+                var csrfToken = getCookie('csrftoken');
+                $.ajax({
+                    url: "/guest/Buy/" + eventid + '/',  // Replace with the actual URL of your Django view
+                    type: "POST",  // Use the appropriate HTTP method (POST, GET, etc.)
+                    data: {
+                        csrfmiddlewaretoken: csrfToken,
+                    },
+                    success: function (response) {
+                        // Handle the response from the Django view
+
+                        // Hide the loading screen
+                        $(".cs-preloader_in img").attr("src", "{% static 'images/success.svg' %}");
+                        var preloaderIn = document.querySelector('.cs-preloader_in');
+                        preloaderIn.classList.add('stop-spinning');
+                        setTimeout(function () {
+                            $(".cs-preloader").fadeOut();
+                            $(".cs-preloader_in").fadeOut();
+                        }, 2000);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 500);
+
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle any error that occurred during the AJAX call
+
+                        // Hide the loading screen
+                        $("#loading-screen").fadeOut();
+                    }
+                });
+
+
+                // Make an AJAX call to the Django view or perform your job execution here
+                // ...
+
+
+                // After the job is completed, hide the loading screen
+
+            }
+        </script>
 </body>
 
 </html>

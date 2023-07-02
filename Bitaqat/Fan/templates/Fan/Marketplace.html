@@ -3906,6 +3906,8 @@
       <div class="cs-height_80 cs-height_lg_80"></div>
       <!--match mdw-->
       <div class="row">
+        {% load cache %}
+        {% cache 60 market %}
         {% for event in all_events %}
         <div class="col-lg-4 mb-2">
           <div class="bg-light p-4 rounded">
@@ -3913,15 +3915,15 @@
               <div class="widget-vs">
                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
                   <div class="team-1 text-center">
-                    <img src="../../../media/{{event.logo}}" alt="Image" width="70%" height="70%">
-                    <h3>{{event.name1}}</h3>
+                    <img src="../../../media/{{event.organizer.club.logo}}" alt="Image" width="70%" height="70%">
+                    <h3>{{event.organizer.club.name}}</h3>
                   </div>
                   <div>
                     <span class="vs"><span>VS</span></span>
                   </div>
                   <div class="team-2 text-center">
-                    <img src="../../../media/{{event.banner2}}" alt="Image" width="70%" height="70%">
-                    <h3>{{event.name2}}</h3>
+                    <img src="../../../media/{{event.opposite_team.logo}}" alt="Image" width="70%" height="70%">
+                    <h3>{{event.opposite_team.name}}</h3>
                   </div>
                 </div>
               </div>
@@ -3934,11 +3936,11 @@
                 </a>
               </div>
               <p class="mb-5" style="  margin-bottom: 1rem !important;">
-                <span class="d-block">{{event.date}} {{event.time}}</span>
-                <strong class="text-primary">{{event.place2}}</strong>
+                <span class="d-block">{{event.datetime}}</span>
+                <strong class="text-primary">{{event.place}}</strong>
 
               </p>
-              <strong class="text-success">${{event.price}}</strong>
+              <strong class="text-success">${{event.ticket_price}}</strong>
 
             </div>
 
@@ -3946,6 +3948,7 @@
         </div>
 
         {% endfor %}
+        {% endcache %}
 
 
       </div>

@@ -8,22 +8,21 @@ from Fan import views as viewsguest
 app_name = 'Club'
 urlpatterns = [
     path('homepage/', views.renderHomepage, name="renderHomepage"),
-    path('create/', views.createEvents, name='createEvents'),
-    path('Marketplace/', views.renderMarketplace, name='renderMarketplace'),
-    path('logout/', views.logoutUser, name='logoutUser'),
-    path('myEvents/', views.renderAnalytics, name='myEvents'),
-    path('MyGame/<str:eventId>/', views.eventDashboard, name='eventDashboard'),
+    path('create/',  views.createEvents, name='createEvents'),
+    path('Marketplace/',  views.renderMarketplace, name='renderMarketplace'),
+    path('logout/',  views.logoutUser, name='logoutUser'),
+    path('myEvents/',  views.renderAnalytics, name='myEvents'),
+    path('MyGame/<str:eventId>/',  views.eventDashboard, name='eventDashboard'),
     path('userData/<str:guestID>/<str:guestName>/',
-         views.renderAttandedEvents, name='renderAttandedEvents'),
-    path('checkIn/<str:mintedID_DB>/', views.checkInGuest, name='checkInGuest'),
-    path('getTokenOwners/<str:TokenId>/',
+         views.renderAttendedEvents, name='renderAttendedEvents'),
+    path('getTokenOwners/<str:tokenId>/',
          views.getTokenOwners, name='getTokenOwners'),
-    path('scan-qr-code/', views.qr_ccode_scan_view, name='scan-qr-code'),
-    path('check-qr-code/', views.check_qr_code, name='check-qr-code'),
-    path('balance/<str:userid>/', views.Royalty_Calc, name='balance'),
-    path('volume/<str:userid>/', views.Volume_Traded_Calc, name='volume'),
-
-
+    path('scan-qr-code/',  views.qrCodeScanView, name='qrCodeScanView'),
+    path('check-qr-code/',  views.checkQRCode, name='checkQRCode'),
+    path('calculateRoyalty/<int:userId>/',
+         views.calculateRoyalty, name='calculateRoyalty'),
+    path('calculateVolumeTraded/<int:userId>/',
+         views.calculateVolumeTraded, name='calculateVolumeTraded'),
 ]
 
 

@@ -3,6 +3,8 @@ from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.hashers import make_password
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from eth_account import Account
 import secrets
 
@@ -66,6 +68,13 @@ def create_accounts(request):
             username_client = request.POST.get('username')
             password_client = request.POST.get('pswrd')
             password_client_hashed = make_password(password_client)
+            try:
+                validate_email(email_client)
+                print(validate_email(email_client))
+            except ValidationError:
+                error_msg = "Invalid email address"
+                return render(request, "authentication/Registration.html", {"error_msg_valid": error_msg})
+
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)
             user.save()
@@ -92,3 +101,7 @@ def create_accounts(request):
 
 def landing_page(request):
     return render(request, 'authentication/landingPage.html')
+
+
+def password_reset_complete(request):
+    return render(request, 'authentication/resetdone.html')

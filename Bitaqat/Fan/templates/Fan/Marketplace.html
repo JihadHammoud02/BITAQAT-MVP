@@ -3930,30 +3930,35 @@
             </div>
 
             <div class="text-center widget-vs-contents mb-4">
-              <div class="cs-toolbox">
+              {% if event.current_fan_count < event.maximum_capacity %} <div class="cs-toolbox">
                 <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn" onclick="preloader('{{event.id}}')">Buy
                   Tickets
                 </a>
-              </div>
-              <p class="mb-5" style="  margin-bottom: 1rem !important;">
-                <span class="d-block">{{event.datetime}}</span>
-                <strong class="text-primary">{{event.place}}</strong>
-
-              </p>
-              <strong class="text-success">${{event.ticket_price}}</strong>
-
+                {% else %}
+                <a class="cs-btn cs-btn_filed cs-accent_btn cs-modal_btn" style="pointer-events: none;">Sold
+                  out
+                </a>
+                {% endif %}
             </div>
+            <p class="mb-5" style="  margin-bottom: 1rem !important;">
+              <span class="d-block">{{event.datetime}}</span>
+              <strong class="text-primary">{{event.place}}</strong>
+
+            </p>
+            <strong class="text-success">${{event.ticket_price}}</strong>
 
           </div>
+
         </div>
-
-        {% endfor %}
-        {% endcache %}
-
-
       </div>
 
+      {% endfor %}
+      {% endcache %}
+
+
     </div>
+
+  </div>
   </div>
   <!-- End Team -->
   <!-- Start Footer -->

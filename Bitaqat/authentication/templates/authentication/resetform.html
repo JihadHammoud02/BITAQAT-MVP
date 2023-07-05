@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% load static %}
+	<meta charset="utf-8">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap"
+		rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<title>CreateAccount</title>
+</head>
+
+<body>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+
+		body {
+
+			font-size: 16px;
+			background-color: #06182c !important;
+			color: #fff !important;
+			margin: 25px;
+		}
+
+		.login-container {
+			height: 100vh;
+			width: 100%;
+
+		}
+
+		.text-color {
+			font-family: 'Russo One', sans-serif !important;
+			color: #fff !important
+		}
+
+		.login-form {
+			margin: auto;
+			width: 370px;
+			padding: 15px;
+			max-width: 100%;
+		}
+
+		.login-form .form-control {
+			font-size: 19px;
+			min-height: 48px;
+			font-weight: 500;
+		}
+
+		.login-form a {
+			text-decoration: none;
+			color: #666;
+		}
+
+		.login-form a:hover {
+			color: #723dbe;
+		}
+
+		.forgot-link {
+			font-size: 15px;
+		}
+
+		.form-control:focus {
+			border-color: #723dbe;
+			box-shadow: 0 0 0 0.2rem rgba(114, 61, 190, .25);
+		}
+
+
+		.btn-color {
+			margin-top: 10px;
+			background-color: #0052ff !important;
+			border-color: rgb(0, 0, 0);
+			color: #fff !important;
+			font-family: 'Russo One', sans-serif !important;
+		}
+
+		.form-check-label {
+			font-size: 17px;
+		}
+
+		.img-placer {
+			margin-top: 40px;
+		}
+	</style>
+
+
+
+	<div class="login-container d-flex align-items-center justify-content-center ">
+		<form class="login-form text-center" method="post">
+			{% csrf_token %}
+			<h1 class="mb-5 font-weight-light text-uppercase text-color">Reset password</h1>
+
+			<div class="form-group">
+				{{form}}
+				<button type="submit" class="btn btn-color btn-block rounded-pill btn-lg ">change password</button>
+
+			</div>
+			<img src="{% static 'images/IconLogin.svg' %}" class="img-placer" height="200px">
+	</div>
+
+
+
+
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

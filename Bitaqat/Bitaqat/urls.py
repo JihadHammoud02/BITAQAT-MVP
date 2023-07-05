@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('org/', include('Club.urls')),
     path('guest/', include('Fan.urls')),
+    path('', include('django.contrib.auth.urls'))
     # path("debug/", include(debug_toolbar.urls)),
 
 

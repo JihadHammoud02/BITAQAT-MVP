@@ -1,3 +1,5 @@
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 import io
 import requests
 import random
@@ -53,21 +55,21 @@ def buyTicket(request, event_id):
     if request.method == "POST":
         user_db = myFan.objects.get(pk=request.user.pk)
         query = Event.objects.get(pk=event_id)
-        buyer_crypto_address = user_db.public_key
-        tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
-                                  str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.organizer.club.logo.path)
-        response = requests.get(tokenuri)
-        if response.status_code == 200:
-            token_id = main(buyer_crypto_address, query.royalty_rate*1000,
-                            "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
+        if query.current_fan_count < query.maximum_capacity:
+            buyer_crypto_address = user_db.public_key
+            tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
+                                      str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.organizer.club.logo.path)
+            response = requests.get(tokenuri)
+            if response.status_code == 200:
+                token_id = main(buyer_crypto_address, query.royalty_rate*1000,
+                                "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
 
-        query.current_fan_count += 1
-        query.save()
-        ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
-            buyer_crypto_address), token_id=token_id, organizer=query.organizer)
-        ticket_query_to_db.save()
-        return JsonResponse({"status": "success"})
-
+            query.current_fan_count += 1
+            query.save()
+            ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
+                buyer_crypto_address), token_id=token_id, organizer=query.organizer)
+            ticket_query_to_db.save()
+            return JsonResponse({"status": "success"})
     return HttpResponseRedirect(reverse('Fan:renderMarketplace'))
 
 

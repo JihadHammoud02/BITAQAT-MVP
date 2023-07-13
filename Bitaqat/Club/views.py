@@ -49,7 +49,9 @@ def createEvents(request):
         game_ticket_price_client = request.POST.get('price')
         game_place_client = request.POST.get('city')
         royalty = request.POST.get('royap')
-        banner = request.POST.get('banner')
+        datetime = request.POST.get('date')
+        banner = request.FILES['banner']
+        maximum_ticket_per_account = request.POST.get('maxnumberticket')
         opposite_club = ClubsData.objects.get(name=team2_name2)
         event_created = Event(
             organizer=current_club,
@@ -59,7 +61,9 @@ def createEvents(request):
             place=game_place_client,
             current_fan_count=0,
             royalty_rate=royalty,
-            banner=banner
+            banner=banner,
+            datetime=datetime,
+            maximum_ticket_per_account=maximum_ticket_per_account
         )
         event_created.save()
 
@@ -178,7 +182,10 @@ def calculateRevenue():
 
     alpha = ((current_month_revenue - previous_month_revenue) /
              previous_month_revenue) * 100
-    return (round(alpha, 2), current_month_revenue)
+    totalrevenue = Event.objects.all().aggregate(
+        revenue=Sum(F('current_fan_count') * F('ticket_price'))
+    )['revenue']
+    return (round(alpha, 2), current_month_revenue, totalrevenue)
 
 
 def calculateRoyalty(request, userId):
@@ -303,6 +310,7 @@ def renderAnalytics(request):
     revenue = calculateRevenue()
     rev_from_ticket = revenue[1]
     deltaRevenue = revenue[0]
+    totalrevenue = revenue[2]
     attendanceRate = calculateAttendanceRate(NotLazyQuery)
 
     if deltaRevenue < 0:
@@ -326,7 +334,8 @@ def renderAnalytics(request):
         "numberoftickets": totalTickets,
         "games": allGames,  # expensive (3-4 queries per game)
         "user_id": user_pk,
-        "org": organizer_name
+        "org": organizer_name,
+        "totalrevenue": totalrevenue
     })
 
 
@@ -338,6 +347,9 @@ def eventDashboard(request, eventId):
     ticketsQuery = MintedTickets.objects.filter(event_id=eventId)
 
     eventQuery = queryEvents("id", eventId, history=True)
+    Nof = 0
+    for info in eventQuery:
+        Nof = info.maximum_capacity-info.current_fan_count
 
     eventData = []
     for ticket in ticketsQuery:
@@ -358,5 +370,6 @@ def eventDashboard(request, eventId):
         })
     return render(request, "Club\MyGame.html", {
         "eventData": eventData,
-        "Data": eventQuery
+        "Data": eventQuery,
+        "nof": Nof
     })

@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Laralink">
-    <title>Vesperi</title>
+    <title>Create</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
         integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -4148,6 +4148,15 @@
             </div>
             <div class="input my-5">
                 <div class="container-fluid div-height">
+                    <p class="titles">Date</p>
+                </div>
+                <center>
+                    <div class="container-fluid"><input type="datetime-local" name="date" class="title input-form"
+                            id="inputDate" placeholder="Choose date and time"></div>
+                </center>
+            </div>
+            <div class="input my-5">
+                <div class="container-fluid div-height">
                     <p class="titles">Price per ticket in USD</p>
                 </div>
                 <center>
@@ -4162,6 +4171,15 @@
                 <center>
                     <div class="container-fluid"><input type="number" name="royap" min="0.00" max="10000.00" step="0.01"
                             id="royl" class="title input-form" placeholder="10%"></div>
+                </center>
+            </div>
+            <div class="input my-5">
+                <div class="container-fluid div-height">
+                    <p class="titles">Max tickets per account</p>
+                </div>
+                <center>
+                    <div class="container-fluid"><input type="number" name="maxnumberticket" min="0.00"
+                            class="title input-form" id="maxticketnum" placeholder="  Enter number of tickets "></div>
                 </center>
             </div>
             <center>
@@ -4293,9 +4311,6 @@
             accordian();
             counterInit();
             rippleInit();
-            if ($.exists(".wow")) {
-                new WOW().init();
-            }
         });
 
         $(window).on("scroll", function () {

@@ -1,10 +1,10 @@
 from datetime import datetime
 from Club.models import Event
-from Club.models import MintedTickets
+from django.utils import timezone
 
 
 def queryEvents(filterby=None, val=None, history=False):
-    current_date = datetime.now()
+    current_date = datetime.now(tz=timezone.utc)
     if filterby == None:
         list_of_all_events = Event.objects.filter(datetime__gt=current_date)
     else:

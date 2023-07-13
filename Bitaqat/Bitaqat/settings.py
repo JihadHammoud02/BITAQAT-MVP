@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+env = environ.Env()
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-uycj5#9dne3y-166-flpeuptz0silcyao89v9v8k()wl3y_h7)"
+SECRET_KEY = env("DJANGO_SK")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'False'
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", "192.168.0.111"]
 
 
 # Application definition
@@ -42,8 +46,8 @@ INSTALLED_APPS = [
     "Club",
     "Fan",
     'silk',
-    "debug_toolbar",
-    "compressor"
+    "compressor",
+    "django_extensions",
 ]
 
 STATICFILES_FINDERS = (
@@ -64,7 +68,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
 ]
-SILKY_PYTHON_PROFILER = True
 
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True

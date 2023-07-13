@@ -12,7 +12,7 @@
         integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>Vesperi</title>
+    <title>Marketplace</title>
 </head>
 
 <body class="cs-dark">
@@ -3780,7 +3780,6 @@
             color: gray;
             font-weight: 300;
             background-color: #222831;
-            font-size: 16px;
         }
 
 
@@ -3843,6 +3842,8 @@
         }
     </style>
 
+
+
     <div class="cs-preloader cs-white_bg cs-center">
         <div class="cs-preloader_in">
             <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logsso" width="100%" height="100%">
@@ -3861,8 +3862,7 @@
                     <div class="cs-main_header_center">
                         <div class="cs-nav">
                             <ul class="cs-nav_list">
-                                <li class="menu-item-has-children"><a href="/org/homepage"
-                                        class="cs-smoth_scroll">Home</a>
+                                <li><a href="/org/homepage" class="cs-smoth_scroll">Home</a>
                                 </li>
                                 <li><a href="/org/Marketplace" class="cs-smoth_scroll">Games</a></li>
                                 <li><a href="/org/create" class="cs-smoth_scroll">Create</a></li>
@@ -3887,27 +3887,22 @@
     <div class="cs-height_80 cs-height_lg_80"></div>
     <!-- Start Team -->
 
-    <section class="cs-hero cs-style1 cs-bg" data-src="{% static 'images/hero2_bg.webp' %}" id="home">
+    <div class="cs-hero cs-style1 cs-type2 cs-bg text-center" data-src="{% static 'images/hero2_bg.webp' %}" id="home">
         <div class="cs-dark_overlay"></div>
         <div class="container">
             <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
-                <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Buy Tickets for<br>Upcoming
+                <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Browse<br>Upcoming
                     Games
                 </h1>
             </div>
-            <div class="cs-hero_img wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-                <img src="{% static 'images/hero_cr.webp' %}" width="80%" height="80%">
-            </div>
         </div>
-    </section>
+    </div>
 
     <div class="match_today container" id="match_today">
         <div class="widget-content">
             <div class="cs-height_80 cs-height_lg_80"></div>
             <!--match mdw-->
             <div class="row">
-                {% load cache %}
-                {% cache 900 marketplace %}
                 {% for event in all_events %}
                 <div class="col-lg-4 mb-2">
                     <div class="bg-light p-4 rounded">
@@ -3944,7 +3939,6 @@
                 </div>
 
                 {% endfor %}
-                {% endcache %}
 
 
 

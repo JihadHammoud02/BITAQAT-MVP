@@ -11,7 +11,7 @@
     <!-- Favicon Icon -->
     <link rel="icon" href="assets/img/favicon.png" />
     <!-- Site Title -->
-    <title>Vesperi</title>
+    <title>Analytics</title>
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
@@ -114,7 +114,13 @@
 
                                     </div>
                                 </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-success">
+                                        <span class="  mdi mdi-cash-multiple    "></span>
+                                    </div>
+                                </div>
                             </div>
+
                             <h6 class="text-muted font-weight-normal">Revenue</h6>
                         </div>
                     </div>
@@ -144,15 +150,16 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">200</h3>
+                                        <h3 class="mb-0">{{nof}}</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <div class="icon icon-box-success">
-                                        <span class="  mdi mdi-cash-multiple    "></span>
+                                    <div class="icon icon-box-primary">
+                                        <span class="  mdi mdi-account-multiple     "></span>
                                     </div>
                                 </div>
                             </div>
+
                             <h6 class="text-muted font-weight-normal">available places</h6>
                         </div>
                     </div>
@@ -183,7 +190,6 @@
                                             <th> Checked-in </th>
                                             <th> Previous Games</th>
                                             <th> Track Owners </th>
-                                            <th>Check in</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -353,9 +359,6 @@
                         accordian();
                         counterInit();
                         rippleInit();
-                        if ($.exists(".wow")) {
-                            new WOW().init();
-                        }
                     });
 
                     $(window).on("scroll", function () {

@@ -19,9 +19,10 @@ class myClub(models.Model):
 
 class Event(models.Model):
     organizer = models.ForeignKey(myClub, on_delete=models.CASCADE)
-    datetime = models.DateTimeField(default="2023-06-30 23:02")
+    datetime = models.DateTimeField(default="2023-09-30 23:02")
     place = models.CharField(max_length=500)
     maximum_capacity = models.PositiveIntegerField()
+    maximum_ticket_per_account = models.PositiveIntegerField(default=None)
     ticket_price = models.FloatField()
     current_fan_count = models.PositiveIntegerField()
     royalty_rate = models.PositiveIntegerField(default=None)

@@ -10,7 +10,7 @@
   <meta name="author" content="Laralink">
   <!-- Favicon Icon -->
   <!-- Site Title -->
-  <title>Vesperi</title>
+  <title>Browse games</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
     integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -3887,27 +3887,23 @@
   <div class="cs-height_80 cs-height_lg_80"></div>
   <!-- Start Team -->
 
-  <section class="cs-hero cs-style1 cs-bg" data-src="{% static 'images/hero2_bg.webp' %}" id="home">
+
+  <div class="cs-hero cs-style1 cs-type2 cs-bg text-center" data-src="{% static 'images/hero2_bg.webp' %}" id="home">
     <div class="cs-dark_overlay"></div>
     <div class="container">
       <div class="cs-hero_text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.35s">
-        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Buy Tickets for<br>Upcoming
+        <h1 class="cs-hero_title text-uppercase cs-font_60 cs-font_36_sm cs-bold">Buy Tickets for <br>Upcoming
           Games
         </h1>
       </div>
-      <div class="cs-hero_img wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-        <img src="{% static 'images/hero_cr.webp' %}">
-      </div>
     </div>
-  </section>
+  </div>
 
   <div class="match_today container" id="match_today">
     <div class="widget-content">
       <div class="cs-height_80 cs-height_lg_80"></div>
       <!--match mdw-->
       <div class="row">
-        {% load cache %}
-        {% cache 60 market %}
         {% for event in all_events %}
         <div class="col-lg-4 mb-2">
           <div class="bg-light p-4 rounded">
@@ -3947,14 +3943,16 @@
             </p>
             <strong class="text-success">${{event.ticket_price}}</strong>
 
+
+
           </div>
 
         </div>
       </div>
 
       {% endfor %}
-      {% endcache %}
 
+      <strong class="text-danger">{{msg1}}</strong>
 
     </div>
 
@@ -4099,9 +4097,6 @@
         accordian();
         counterInit();
         rippleInit();
-        if ($.exists(".wow")) {
-          new WOW().init();
-        }
       });
 
       $(window).on("scroll", function () {
@@ -4118,30 +4113,6 @@
       }
 
 
-      function executeBuying() {
-        $(".cs-preloader_in").fadeOut();
-        $.ajax({
-          url: "/your-view-url/",  // Replace with the actual URL of your Django view
-          type: "POST",  // Use the appropriate HTTP method (POST, GET, etc.)
-          data: {
-            // Provide any data needed for your view function
-            event_id: "your-event-id",  // Replace with the actual event ID or pass it dynamically
-          },
-          success: function (response) {
-            // Handle the response from the Django view
-
-            // Hide the loading screen
-            $("#loading-screen").fadeOut();
-          },
-          error: function (xhr, textStatus, errorThrown) {
-            // Handle any error that occurred during the AJAX call
-
-            // Hide the loading screen
-            $("#loading-screen").fadeOut();
-          }
-        });
-
-      }
       /*--------------------------------------------------------------
         2. Mobile Menu
       --------------------------------------------------------------*/
@@ -4412,16 +4383,32 @@
           // Handle the response from the Django view
 
           // Hide the loading screen
-          $(".cs-preloader_in img").attr("src", "{% static 'images/success.svg' %}");
-          var preloaderIn = document.querySelector('.cs-preloader_in');
-          preloaderIn.classList.add('stop-spinning');
-          setTimeout(function () {
-            $(".cs-preloader").fadeOut();
-            $(".cs-preloader_in").fadeOut();
-          }, 2000);
-          setTimeout(function () {
-            location.reload();
-          }, 500);
+          if (response.status == "success") {
+            $(".cs-preloader_in img").attr("src", "{% static 'images/success.svg' %}");
+            var preloaderIn = document.querySelector('.cs-preloader_in');
+            preloaderIn.classList.add('stop-spinning');
+            setTimeout(function () {
+              $(".cs-preloader").fadeOut();
+              $(".cs-preloader_in").fadeOut();
+            }, 2000);
+            setTimeout(function () {
+              location.reload();
+            }, 500);
+          }
+          else if (response.status == "failure") {
+            alert("Cannot buy tickets for this match anymore Maxium reached")
+            location.reload()
+            $.ajax({
+              url: "/guest/Marketplace/",  // Replace with the actual URL of your Django view
+              type: "GET",  // Use the appropriate HTTP method (GET, POST, etc.)
+              success: function (response) {
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                // Handle any error that occurred during the AJAX call
+              }
+            });
+          }
+
 
         },
         error: function (xhr, textStatus, errorThrown) {
@@ -4429,7 +4416,8 @@
 
           // Hide the loading screen
           $("#loading-screen").fadeOut();
-        }
+        },
+
       });
 
 

@@ -13,7 +13,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon Icon -->
     <!-- Site Title -->
-    <title>Vesperi</title>
+    <title>Inventory</title>
 
 <body class="cs-dark">
 
@@ -5362,15 +5362,12 @@
     </div>
 
     <!-- End Team -->
-    <!-- Start Footer -->
-    <footer class="cs-footer text-center">
+    <footer class="cs-footer text-center" style="margin-top: 180px;">
         <div class="container">
             <div class="cs-height_100 cs-height_lg_70"></div>
-            <center>
-                <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                    <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" width="70px" height="70px">
-                </div>
-            </center>
+            <div class="cs-footer_logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                <img src="{% static 'images/Haffel-ticket.svg' %}" alt="Logo" width="70px" height="70px">
+            </div>
             <div class="cs-height_25 cs-height_lg_25"></div>
             <div class="cs-social_btns cs-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                 <a href="#" class="cs-center cs-primary_color cs-accent_bg_hover cs-white_bg cs-white_color_hover">
@@ -5432,6 +5429,7 @@
             <div class="cs-height_30 cs-height_lg_30"></div>
         </div>
         <div class="cs-height_85 cs-height_lg_25"></div>
+        <div class="cs-height_25 cs-height_lg_25"></div>
     </footer>
     <!-- End Footer -->
     </div>
@@ -5498,9 +5496,6 @@
                 accordian();
                 counterInit();
                 rippleInit();
-                if ($.exists(".wow")) {
-                    new WOW().init();
-                }
             });
 
             $(window).on("scroll", function () {

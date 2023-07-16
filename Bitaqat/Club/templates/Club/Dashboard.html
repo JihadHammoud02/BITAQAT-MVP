@@ -260,15 +260,25 @@
                             <div class="row">
                                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                                     <div class="d-flex d-sm-block d-md-flex align-items-center mb-3">
+                                        {% if bestevent != None %}
                                         <h2 class="mb-0 text-success ms-2 mb-0 font-weight-medium">
                                             ${{bestevent.revenue}}</h2>
+
+                                        {% else %}
+                                        <h2 class="mb-0 text-danger ms-2 mb-0 font-weight-medium">
+                                            No games</h2>
+                                        {% endif %}
                                     </div>
+                                    {% if bestevent != None %}
                                     <h6 class=" text-muted font-weight-normal">vs {{bestevent.name}}<br> on
                                         {{bestevent.date}}</h6>
+                                    {% endif %}
                                 </div>
                                 <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                    {% if bestevent != None %}
                                     <img src="../../../media/{{bestevent.img}}" alt="Image"
                                         style="height: 4rem !important;width: 3.5rem !important; max-height: 65px !important; max-width: 65px !important;">
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -280,8 +290,13 @@
                             <h5>Total Tickets sold</h5>
                             <div class="row">
                                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
+
                                     <div class="d-flex d-sm-block d-md-flex align-items-center ">
+                                        {% if numberoftickets != None %}
                                         <h2 class="mb-0">{{numberoftickets}}</h2>
+                                        {% else %}
+                                        <h2 class="mb-0">0</h2>
+                                        {% endif %}
                                     </div>
                                     <h6 class=" text-muted font-weight-normal">Ticket sold on Bitaqat</h6>
 

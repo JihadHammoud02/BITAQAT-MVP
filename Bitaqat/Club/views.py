@@ -15,6 +15,8 @@ from Fan.models import QrCodeChecking
 
 @login_required(login_url='/login/')
 def renderHomepage(request):
+    current_user = request.user
+    current_club = myClub.objects.get(pk=current_user)
     """
     Render the homepage view for the authenticated user.
     """
@@ -23,6 +25,8 @@ def renderHomepage(request):
 
 @login_required(login_url='/login/')
 def renderMarketplace(request):
+    current_user = request.user
+    current_club = myClub.objects.get(pk=current_user)
     """
     Render the marketplace view for the authenticated user.
     """
@@ -50,7 +54,7 @@ def createEvents(request):
         game_place_client = request.POST.get('city')
         royalty = request.POST.get('royap')
         datetime = request.POST.get('date')
-        banner = request.FILES['banner']
+        banner = ''
         maximum_ticket_per_account = request.POST.get('maxnumberticket')
         opposite_club = ClubsData.objects.get(name=team2_name2)
         event_created = Event(
@@ -172,19 +176,31 @@ def calculateRevenue():
         revenue=Sum(F('current_fan_count') * F('ticket_price'))
     )['revenue']
 
+    if current_month_revenue == None:
+        current_month_revenue = 0
+
     # Get the previous month's revenue
     previous_month_revenue = Event.objects.filter(
         datetime__month=timezone.now().month - 1
     ).aggregate(
         revenue=Sum(F('current_fan_count') * F('ticket_price'))
     )['revenue']
-    previous_month_revenue = 1
-
-    alpha = ((current_month_revenue - previous_month_revenue) /
-             previous_month_revenue) * 100
+    if previous_month_revenue == None:
+        previous_month_revenue = 0
+    if previous_month_revenue == 0 and current_month_revenue == 0:
+        alpha = 0
+    else:
+        if previous_month_revenue == 0:
+            alpha = current_month_revenue
+        else:
+            alpha = ((current_month_revenue - previous_month_revenue) /
+                     previous_month_revenue) * 100
     totalrevenue = Event.objects.all().aggregate(
         revenue=Sum(F('current_fan_count') * F('ticket_price'))
     )['revenue']
+    if totalrevenue == None:
+        totalrevenue = 0
+
     return (round(alpha, 2), current_month_revenue, totalrevenue)
 
 
@@ -214,10 +230,12 @@ def calculateAttendanceRate(queryObject):
     Calculate the attendance rate for the specified queryObject.
     """
     attendanceRate = 0
+    counter = 0
     for event in queryObject:
         attendanceRate += event["current_fan_count"] / \
             event["maximum_capacity"]
-    return round(attendanceRate * 100, 2)
+        counter += 1
+    return round(attendanceRate/counter * 100, 2)
 
 
 def getLatestTransactions(query):
@@ -227,6 +245,16 @@ def getLatestTransactions(query):
     ticket_data = {}
     tickets = []
     breaker = 0
+    if len(query) == 0:
+        return tickets
+    else:
+        if len(query) == 1:
+            ticket_data['username'] = query.owner_account.username
+            ticket_data['name'] = query.event.opposite_team.name
+            ticket_data['token_id'] = query.token_id
+            tickets.append(ticket_data)
+            return tickets
+
     for ticket in query[len(query)-2:len(query)]:
         if breaker == 2:
             break
@@ -258,13 +286,14 @@ def getBestRevenueEvent(queryEvents):
     """
     result = queryEvents.annotate(
         product=F('ticket_price') * F('current_fan_count')).order_by('-product').first()
-
-    return {
-        "name": result.opposite_team.name,
-        "date": result.datetime.date(),
-        "revenue": result.ticket_price * result.current_fan_count,
-        "img": result.opposite_team.logo
-    }
+    if result != None:
+        return {
+            "name": result.opposite_team.name,
+            "date": result.datetime.date(),
+            "revenue": result.ticket_price * result.current_fan_count,
+            "img": result.opposite_team.logo
+        }
+    return None
 
 
 def getTotalTicketsSold(queryEvents):
@@ -289,24 +318,38 @@ def renderAnalytics(request):
     """
     Render the analytics dashboard page.
     """
+
     user_pk = request.user.pk
+
     NotLazyQuery = []
     query = {}
     queryObjectRevenue = Event.objects.filter(organizer=user_pk)
-    organizer_name = queryObjectRevenue[0].organizer.club.name
+
+    organizer_name = myClub.objects.get(user_id=user_pk).club.name
     queryObjectsTickets = MintedTickets.objects.filter(organizer_id=user_pk)
+
     for obj in queryObjectRevenue:
+
         query['organizer'] = organizer_name
         query['datetime'] = obj.datetime
+
         query['place'] = obj.place
+
         query['maximum_capacity'] = obj.maximum_capacity
+
         query['ticket_price'] = obj.ticket_price
+
         query['current_fan_count'] = obj.current_fan_count
+
         query['royalty_rate'] = obj.royalty_rate
+        # CHANGE obj.opposite_team.logo to obj.opposite_team.logo.path
         query['opposite_team'] = {
-            "name": obj.opposite_team.name, "logo": obj.opposite_team.logo.path}
+
+            "name": obj.opposite_team.name, "logo": obj.opposite_team.logo}
+
         NotLazyQuery.append(query)
         query = {}
+
     revenue = calculateRevenue()
     rev_from_ticket = revenue[1]
     deltaRevenue = revenue[0]
@@ -344,7 +387,7 @@ def eventDashboard(request, eventId):
     """
     Render the event dashboard page for the specified eventId.
     """
-    ticketsQuery = MintedTickets.objects.filter(event_id=eventId)
+    ticketsQuery = MintedTickets.objects.filter(event=eventId)
 
     eventQuery = queryEvents("id", eventId, history=True)
     Nof = 0
@@ -368,6 +411,7 @@ def eventDashboard(request, eventId):
             "Token_ID": ticket.token_id,
             "ownerID": ownerID
         })
+
     return render(request, "Club\MyGame.html", {
         "eventData": eventData,
         "Data": eventQuery,

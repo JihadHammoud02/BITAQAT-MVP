@@ -5,7 +5,7 @@ from authentication.models import myUsers
 class ClubsData(models.Model):
     name = models.CharField(max_length=500, default=None)
     logo = models.ImageField(
-        upload_to='ClubsData', default=None, null=True, blank=True)
+        upload_to='ClubsData', max_length=600, default=None, null=True, blank=True)
 
 
 class myClub(models.Model):
@@ -27,7 +27,7 @@ class Event(models.Model):
     current_fan_count = models.PositiveIntegerField()
     royalty_rate = models.PositiveIntegerField(default=None)
     banner = models.ImageField(
-        upload_to='', default=None, null=True, blank=True)
+        upload_to='', default="None", null=True, blank=True)
     opposite_team = models.ForeignKey(ClubsData, on_delete=models.CASCADE)
 
 

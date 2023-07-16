@@ -64,10 +64,12 @@ def create_accounts(request):
     """
     try:
         if request.method == "POST":
+
             email_client = request.POST.get('emailadd')
             username_client = request.POST.get('username')
             password_client = request.POST.get('pswrd')
             password_client_hashed = make_password(password_client)
+
             try:
                 validate_email(email_client)
                 print(validate_email(email_client))

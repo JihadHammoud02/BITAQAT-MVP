@@ -105,7 +105,8 @@ CACHES = {
 
 WSGI_APPLICATION = "Bitaqat.wsgi.application"
 
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 60*60
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -163,7 +164,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "Club\static"),
     os.path.join(BASE_DIR, "Fan\static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets2')
+STATIC_ROOT = os.path.join(BASE_DIR, 'assetsfinal')
 
 
 MEDIA_URL = '/media/'
@@ -171,7 +172,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 INTERNAL_IPS = [
     '127.0.0.1'

@@ -34,9 +34,15 @@ def renderMarketplace(request):
     Renders the marketplace view for an authenticated user and retrieves all available events.
     """
     current_datetime = timezone.now()
+    added_money = 0
+
     all_events = Event.objects.select_related('organizer__club').select_related(
         'opposite_team').filter(datetime__gt=current_datetime)
-    return render(request, 'Fan\Marketplace.html', {'all_events': all_events})
+
+    if not myFan.objects.get(user_id=request.user.pk).has_Payed:
+        for event in all_events:
+            event.ticket_price += 0.134
+    return render(request, 'Fan\Marketplace.html', {'all_events': all_events, "money": added_money})
 
 
 def match_address_with_account(ownedPublicAddress):
@@ -66,31 +72,26 @@ def buyTicket(request, event_id):
         if query.current_fan_count < query.maximum_capacity:
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:
                 buyer_crypto_address = user_db.public_key
-                global error
-                error = "{'code': -32000, 'message': 'replacement transaction underpriced'}"
-                while error == "{'code': -32000, 'message': 'replacement transaction underpriced'}":
-                    print(1)
-                    try:
-                        tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
-                                                  str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
+                try:
+                    tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
+                                              str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
 
-                        response = requests.get(tokenuri)
-                        if response.status_code == 200:
-                            activate_buying = main(buyer_crypto_address, query.royalty_rate*1000,
-                                                   "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
-                            token_id = activate_buying[0]
+                    response = requests.get(tokenuri)
+                    if response.status_code == 200:
+                        activate_buying = main(buyer_crypto_address, query.royalty_rate*1000,
+                                               "0x074C6794461525243043377094DbA36eed0A951B", tokenuri, user_db)
+                        token_id = activate_buying[0]
 
-                            query.current_fan_count += 1
-                            query.save()
-                            ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
-                                buyer_crypto_address), token_id=token_id, organizer=query.organizer)
-                            ticket_query_to_db.save()
-                            error = ""
-                            print("ok")
-                            return JsonResponse({"status": "success"})
-                    except Exception as error2:
-                        error = "{'code': -32000, 'message': 'replacement transaction underpriced'}"
-                        print(error)
+                        query.current_fan_count += 1
+                        query.save()
+                        ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
+                            buyer_crypto_address), token_id=token_id, organizer=query.organizer)
+                        ticket_query_to_db.save()
+                        user_db.has_Payed = True
+                        user_db.save()
+                        return JsonResponse({"status": "success"})
+                except Exception as error2:
+                    print(error2)
             else:
                 return JsonResponse({"status": "failure"})
     return render(request, "Fan/Marketplace.html")

@@ -7,6 +7,7 @@ class myFan(models.Model):
                                 primary_key=True, default=None)
     public_key = models.CharField(max_length=600, default=None)
     private_key = models.CharField(max_length=600, default=None)
+    has_Payed = models.BooleanField(default=False)
 
 
 class QrCodeChecking(models.Model):

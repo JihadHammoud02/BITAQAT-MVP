@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "compressor",
     "django_extensions",
 ]
+SILKY_PYTHON_PROFILER = True
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

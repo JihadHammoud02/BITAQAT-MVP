@@ -1,5 +1,7 @@
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
+from Club.models import MintedTickets
+from Fan.SmartContract import mainQrcode
+import json
+from django.views.decorators.csrf import csrf_exempt
 import io
 import requests
 import random
@@ -7,17 +9,15 @@ import qrcode
 import hashlib
 import time
 from threading import Timer
-from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
 from .SmartContract import main, upload_to_ipfs
-from Club.query import queryEvents
 from Club.models import Event, MintedTickets
 from Fan.models import QrCodeChecking, myFan
 from authentication.models import myUsers
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
+from django.utils import timezone
 
 
 @login_required(login_url='/login/')
@@ -33,7 +33,9 @@ def renderMarketplace(request):
     """
     Renders the marketplace view for an authenticated user and retrieves all available events.
     """
-    all_events = queryEvents()
+    current_datetime = timezone.now()
+    all_events = Event.objects.select_related('organizer__club').select_related(
+        'opposite_team').filter(datetime__gt=current_datetime)
     return render(request, 'Fan\Marketplace.html', {'all_events': all_events})
 
 
@@ -58,57 +60,53 @@ def buyTicket(request, event_id):
     Handles the purchase of a ticket for a specific event.
     """
     if request.method == "POST":
-        user_db = myFan.objects.get(pk=request.user.pk)
-        query = Event.objects.get(pk=event_id)
+        user_db = myFan.objects.select_related('user').get(pk=request.user.pk)
+        query = Event.objects.select_related(
+            'organizer__club').select_related('opposite_team').get(pk=event_id)
         if query.current_fan_count < query.maximum_capacity:
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:
                 buyer_crypto_address = user_db.public_key
-                tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
-                                          str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
-                response = requests.get(tokenuri)
-                if response.status_code == 200:
-                    token_id = main(buyer_crypto_address, query.royalty_rate*1000,
-                                    "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
+                global error
+                error = "{'code': -32000, 'message': 'replacement transaction underpriced'}"
+                while error == "{'code': -32000, 'message': 'replacement transaction underpriced'}":
+                    print(1)
+                    try:
+                        tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
+                                                  str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
 
-                query.current_fan_count += 1
-                query.save()
-                ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
-                    buyer_crypto_address), token_id=token_id, organizer=query.organizer)
-                ticket_query_to_db.save()
-                return JsonResponse({"status": "success"})
+                        response = requests.get(tokenuri)
+                        if response.status_code == 200:
+                            activate_buying = main(buyer_crypto_address, query.royalty_rate*1000,
+                                                   "0x074C6794461525243043377094DbA36eed0A951B", tokenuri)
+                            token_id = activate_buying[0]
+
+                            query.current_fan_count += 1
+                            query.save()
+                            ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
+                                buyer_crypto_address), token_id=token_id, organizer=query.organizer)
+                            ticket_query_to_db.save()
+                            error = ""
+                            print("ok")
+                            return JsonResponse({"status": "success"})
+                    except Exception as error2:
+                        error = "{'code': -32000, 'message': 'replacement transaction underpriced'}"
+                        print(error)
             else:
                 return JsonResponse({"status": "failure"})
     return render(request, "Fan/Marketplace.html")
 
 
 @login_required(login_url='/login/')
-@cache_page(120)
 def renderInventory(request):
     """
     Renders the inventory view for an authenticated user and retrieves their ticket collection.
     """
 
-    cache_key = request.user.pk
-    inventory = cache.get(cache_key)
-    if inventory is None:
-        events = []
-        event_data = {}
-        inventory = []
-        collection = MintedTickets.objects.filter(
-            owner_account=request.user.pk)
-        for tix in collection:
-            event_id = tix.event.pk
-            if event_id in events:
-                inventory.append(
-                    {"date": event_data[str(event_id)], "token": tix.token_id, "checked": tix.checked})
-            else:
-                event_data[str(event_id)] = {"logo1": tix.organizer.club.logo, "name1": tix.organizer.club.name, "logo2": tix.event.opposite_team.logo,
-                                             "name2": tix.event.opposite_team.name, "date": tix.event.datetime, "place": tix.event.place}
-                inventory.append(
-                    {"date": event_data[str(event_id)], "token": tix.token_id, "checked": tix.checked})
+    minted_tickets_with_related_info = MintedTickets.objects.select_related(
+        'event__organizer__club', 'event__opposite_team'
+    ).filter(owner_account=request.user.pk)
 
-        cache.set(cache_key, inventory)
-    return render(request, 'Fan\Inventory.html', {'collection': inventory})
+    return render(request, 'Fan\Inventory.html', {'collection': minted_tickets_with_related_info})
 
 
 @login_required(login_url='/login/')
@@ -186,3 +184,48 @@ def verify_qr_code(token_id):
         return  # QR code already verified, handle accordingly
 
     qr_code.delete()
+
+
+def Fan_to_address_Mapping(address):
+    try:
+        fan = myFan.objects.get(public_key=address)
+        return fan.user
+    except:
+        return None
+
+
+@csrf_exempt
+def ReceiverContractEvents(request):
+    print("yes")
+    if request.method == 'POST':
+        # Access the raw body of the request
+        response_data = request.body.decode('utf-8')
+        response_data = json.loads(response_data)
+        print(response_data)
+        # Parse the raw body JSON data into a Python dictionary
+        if response_data['confirmed'] == True:
+            from_address = response_data['txs'][0]['fromAddress']
+            to_address = response_data['nftTransfers'][0]['to']
+            token_id = response_data['nftTransfers'][0]['tokenId']
+            block_number = response_data['block']['number']
+
+            if from_address != "0x0000000000000000000000000000000000000000":
+                user_hash = mainQrcode(
+                    to_address, token_id)
+                event_object = QrCodeChecking(name="QrCode", description="This is a Qr code",
+                                              hash=user_hash, BlockNumber=block_number, token_id=token_id)
+                event_object.save()
+                token_id_query_info = MintedTickets.objects.get(
+                    token_id=token_id)
+                token_id_query_info.owner_crypto_address = to_address
+                mappingfan = Fan_to_address_Mapping(to_address)
+                token_id_query_info.owner_account = mappingfan
+                token_id_query_info.save()
+
+        # Print the extracted data
+
+            print("From Address:", from_address)
+            print("To Address:", to_address)
+            print("Token ID:", token_id)
+            print("Block Number:", block_number)
+        return JsonResponse({"success": False}, status=200)

@@ -4408,15 +4408,22 @@
               }
             });
           }
+          else if (response.status == "error") {
+            alert("An error occured, please try again shortly")
+            location.reload()
+            $.ajax({
+              url: "/guest/Marketplace/",  // Replace with the actual URL of your Django view
+              type: "GET",  // Use the appropriate HTTP method (GET, POST, etc.)
+              success: function (response) {
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                // Handle any error that occurred during the AJAX call
+              }
+            });
+          }
 
 
-        },
-        error: function (xhr, textStatus, errorThrown) {
-          // Handle any error that occurred during the AJAX call
-
-          // Hide the loading screen
-          $("#loading-screen").fadeOut();
-        },
+        }
 
       });
 

@@ -5310,7 +5310,7 @@
                     <!--match mdw-->
                     <div class="row" id="inventory-container">
                         <!-- inventory.html -->
-                        {% for events in attendedEvents %}
+                        {% for eve in collection %}
                         <div class="col-lg-4 mb-2">
                             <div class="bg-light p-4 rounded">
                                 <div class="widget-body">
@@ -5318,17 +5318,17 @@
                                         <div
                                             class="d-flex align-items-center justify-content-around justify-content-between w-100">
                                             <div class="team-1 text-center">
-                                                <img src="../../../media/{{ events.organizer.club.logo }}" alt="Image"
-                                                    width="50%" height="50%">
-                                                <h3>{{ events.organizer.club.name }}</h3>
+                                                <img src="../../../media/{{ eve.event.organizer.club.logo }}"
+                                                    alt="Image" width="50%" height="50%">
+                                                <h3>{{ eve.event.organizer.club.name }}</h3>
                                             </div>
                                             <div>
                                                 <span class="vs"><span>VS</span></span>
                                             </div>
                                             <div class="team-2 text-center">
-                                                <img src="../../../media/{{ events.event.opposite_team.logo }}"
-                                                    alt="Image" width="50%" height="50%">
-                                                <h3>{{ events.event.opposite_team.name }}</h3>
+                                                <img src="../../../media/{{ eve.event.opposite_team.logo }}" alt="Image"
+                                                    width="50%" height="50%">
+                                                <h3>{{ eve.event.opposite_team.name }}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -5336,8 +5336,8 @@
 
                                 <div class="text-center widget-vs-contents mb-4">
                                     <p class="mb-5" style="margin-bottom: 1rem !important;">
-                                        <span class="d-block">Date: {{ events.event.datetime }}</span>
-                                        <strong class="text-primary">Token id: {{ events.token_id }}</strong>
+                                        <span class="d-block">Date: {{ eve.event.datetime }}</span>
+                                        <strong class="text-primary">Token id: {{ eve.token_id }}</strong>
                                     </p>
                                 </div>
                             </div>

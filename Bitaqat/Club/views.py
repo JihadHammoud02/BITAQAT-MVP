@@ -1,3 +1,4 @@
+from silk.profiling.profiler import silk_profile
 from django.utils import timezone
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
@@ -25,12 +26,12 @@ def renderHomepage(request):
 
 @login_required(login_url='/login/')
 def renderMarketplace(request):
-    current_user = request.user
-    current_club = myClub.objects.get(pk=current_user)
     """
     Render the marketplace view for the authenticated user.
     """
-    all_events = queryEvents()
+    current_datetime = timezone.now()
+    all_events = Event.objects.select_related(
+        'organizer__club').select_related('opposite_team').filter(datetime__gt=current_datetime)
     return render(request, 'Club/Marketplace.html', {'all_events': all_events})
 
 
@@ -54,7 +55,7 @@ def createEvents(request):
         game_place_client = request.POST.get('city')
         royalty = request.POST.get('royap')
         datetime = request.POST.get('date')
-        banner = ''
+        banner = request.FILES['banner']
         maximum_ticket_per_account = request.POST.get('maxnumberticket')
         opposite_club = ClubsData.objects.get(name=team2_name2)
         event_created = Event(
@@ -90,11 +91,11 @@ def renderAttendedEvents(request, guestID, guestName):
     """
     Render the attended events view for the specified guest.
     """
-    organizer = myClub.objects.get(pk=request.user)
-    ticketsQuery = MintedTickets.objects.filter(
-        owner_account=guestID, organizer=organizer.pk
-    )
-    return render(request, 'Club/AttandedEvents.html', {"attendedEvents": ticketsQuery, "guestName": guestName})
+
+    ticketsQuery = MintedTickets.objects.select_related(
+        'event__organizer__club', 'event__opposite_team', 'owner_account__myfan'
+    ).filter(owner_account=guestID)
+    return render(request, 'Club/AttandedEvents.html', {"collection": ticketsQuery, "guestName": guestName})
 
 
 @login_required(login_url='/login/')
@@ -165,12 +166,15 @@ def checkQRCode(request):
 """
 
 
-def calculateRevenue():
+def calculateRevenue(pk):
     """
     Calculate revenue and delta revenue for the specified queryObject.
     """
     # Get the current month's revenue
-    current_month_revenue = Event.objects.filter(
+    queryObjectRevenue = Event.objects.select_related(
+        'organizer__club').select_related('opposite_team').filter(organizer=pk)
+
+    current_month_revenue = queryObjectRevenue.filter(
         datetime__month=timezone.now().month
     ).aggregate(
         revenue=Sum(F('current_fan_count') * F('ticket_price'))
@@ -180,7 +184,7 @@ def calculateRevenue():
         current_month_revenue = 0
 
     # Get the previous month's revenue
-    previous_month_revenue = Event.objects.filter(
+    previous_month_revenue = queryObjectRevenue.filter(
         datetime__month=timezone.now().month - 1
     ).aggregate(
         revenue=Sum(F('current_fan_count') * F('ticket_price'))
@@ -195,7 +199,7 @@ def calculateRevenue():
         else:
             alpha = ((current_month_revenue - previous_month_revenue) /
                      previous_month_revenue) * 100
-    totalrevenue = Event.objects.all().aggregate(
+    totalrevenue = queryObjectRevenue.all().aggregate(
         revenue=Sum(F('current_fan_count') * F('ticket_price'))
     )['revenue']
     if totalrevenue == None:
@@ -208,7 +212,7 @@ def calculateRoyalty(request, userId):
     """
     Calculate the royalty balance for the specified userId.
     """
-    club_query = myClub.objects.get(pk=userId)
+    club_query = myClub.objects.select_related().get(pk=userId)
     wallet_address = club_query.RoyaltyReceiverAddresse
     balance = get_balance(wallet_address)
     return JsonResponse({'balance': balance})
@@ -218,7 +222,8 @@ def calculateVolumeTraded(request, userId):
     """
     Calculate the volume traded for the specified userId.
     """
-    query = MintedTickets.objects.filter(organizer_id=userId)
+    query = MintedTickets.objects.select_related(
+        "owner_account").filter(organizer_id=userId)
     volume = 0
     for row in query:
         volume += VolumneTraded(str(row.token_id))
@@ -232,8 +237,9 @@ def calculateAttendanceRate(queryObject):
     attendanceRate = 0
     counter = 0
     for event in queryObject:
-        attendanceRate += event["current_fan_count"] / \
-            event["maximum_capacity"]
+        print(event)
+        attendanceRate += event.current_fan_count / \
+            event.maximum_capacity
         counter += 1
     return round(attendanceRate/counter * 100, 2)
 
@@ -276,7 +282,7 @@ def getMostPopularGames(query):
     Retrieve the most popular games based on revenue for the specified queryObject.
     """
     sorted_data = sorted(
-        query, key=lambda x: x['current_fan_count'] * x['ticket_price'], reverse=True)
+        query, key=lambda x: x.current_fan_count * x.ticket_price, reverse=True)
     return sorted_data[0:3]
 
 
@@ -305,15 +311,8 @@ def getTotalTicketsSold(queryEvents):
     return total_sum
 
 
-def renderGames(pk):
-    """
-    Render the games page for the specified queryEvents.
-    """
-    query = Event.objects.filter(organizer=pk)
-    return query
-
-
 @login_required(login_url='/login/')
+@silk_profile(name='revenue')
 def renderAnalytics(request):
     """
     Render the analytics dashboard page.
@@ -321,50 +320,30 @@ def renderAnalytics(request):
 
     user_pk = request.user.pk
 
-    NotLazyQuery = []
-    query = {}
-    queryObjectRevenue = Event.objects.filter(organizer=user_pk)
+    queryEvents = Event.objects.select_related(
+        'organizer__club').select_related('opposite_team').filter(organizer=user_pk)
 
-    organizer_name = myClub.objects.get(user_id=user_pk).club.name
-    queryObjectsTickets = MintedTickets.objects.filter(organizer_id=user_pk)
+    organizer_name = queryEvents[0].organizer.club.name
 
-    for obj in queryObjectRevenue:
+    queryObjectsTickets = MintedTickets.objects.select_related(
+        'event__organizer__club', 'event__opposite_team'
+    ).filter(organizer_id=user_pk)
 
-        query['organizer'] = organizer_name
-        query['datetime'] = obj.datetime
-
-        query['place'] = obj.place
-
-        query['maximum_capacity'] = obj.maximum_capacity
-
-        query['ticket_price'] = obj.ticket_price
-
-        query['current_fan_count'] = obj.current_fan_count
-
-        query['royalty_rate'] = obj.royalty_rate
-        # CHANGE obj.opposite_team.logo to obj.opposite_team.logo.path
-        query['opposite_team'] = {
-
-            "name": obj.opposite_team.name, "logo": obj.opposite_team.logo}
-
-        NotLazyQuery.append(query)
-        query = {}
-
-    revenue = calculateRevenue()
+    revenue = calculateRevenue(user_pk)
     rev_from_ticket = revenue[1]
     deltaRevenue = revenue[0]
     totalrevenue = revenue[2]
-    attendanceRate = calculateAttendanceRate(NotLazyQuery)
+    attendanceRate = calculateAttendanceRate(queryEvents)
 
     if deltaRevenue < 0:
         indicator = 0
     else:
         indicator = 1
     latestTransactionsList = getLatestTransactions(queryObjectsTickets)
-    popularGames = getMostPopularGames(NotLazyQuery)
-    bestEvent = getBestRevenueEvent(queryObjectRevenue)
-    totalTickets = getTotalTicketsSold(queryObjectRevenue)
-    allGames = renderGames(user_pk)
+    popularGames = getMostPopularGames(queryEvents)
+    bestEvent = getBestRevenueEvent(queryEvents)
+    totalTickets = getTotalTicketsSold(queryEvents)
+    allGames = queryEvents
 
     return render(request, 'Club\Dashboard.html', {
         "rev": rev_from_ticket,
@@ -387,9 +366,13 @@ def eventDashboard(request, eventId):
     """
     Render the event dashboard page for the specified eventId.
     """
-    ticketsQuery = MintedTickets.objects.filter(event=eventId)
+    ticketsQuery = MintedTickets.objects.select_related(
+        'event__organizer__club', 'owner_account'
+    ).filter(event=eventId)
 
-    eventQuery = queryEvents("id", eventId, history=True)
+    eventQuery = Event.objects.select_related(
+        'organizer__club').select_related('opposite_team').filter(id=eventId
+                                                                  )
     Nof = 0
     for info in eventQuery:
         Nof = info.maximum_capacity-info.current_fan_count
@@ -409,7 +392,8 @@ def eventDashboard(request, eventId):
             "ownerName": username,
             "ownerEmail": email,
             "Token_ID": ticket.token_id,
-            "ownerID": ownerID
+            "ownerID": ownerID,
+            "checkin": ticket.checked
         })
 
     return render(request, "Club\MyGame.html", {

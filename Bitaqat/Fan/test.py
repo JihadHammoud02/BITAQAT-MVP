@@ -10,7 +10,6 @@ import time
 from Fan.views import match_address_with_account, count_tickets_in_accounts
 
 
-
 def create_wallet():
     """
     Create a real crypto wallet.
@@ -212,7 +211,7 @@ class FanBrowsingPageTest(TestCase):
     def test_view_url_exists_at_desired_location_homepage(self):
         login = self.client.login(
             username=self.user.username, password=self.pwd)
-        response = self.client.get("/guest/homepage/")
+        response = self.client.get("/guest/Marketplace/")
         self.assertEqual(response.status_code, 200)
 
     def test_views_uses_correct_template_homepage(self):
@@ -220,7 +219,7 @@ class FanBrowsingPageTest(TestCase):
             username=self.user.username, password=self.pwd)
         response = self.client.get(reverse("Fan:renderHomepage"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'Fan/homepage.html')
+        self.assertTemplateUsed(response, 'Fan/HOME.html')
 
     def test_view_url_exists_at_desired_location_marketplace(self):
         login = self.client.login(
@@ -233,7 +232,7 @@ class FanBrowsingPageTest(TestCase):
             username=self.user.username, password=self.pwd)
         response = self.client.get(reverse("Fan:renderMarketplace"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'Fan\Marketplace.html')
+        self.assertTemplateUsed(response, 'Fan\GAMES.html')
 
     def test_render_Marketplace(self):
         login = self.client.login(

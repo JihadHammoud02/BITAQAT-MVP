@@ -7,7 +7,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from eth_account import Account
 import secrets
-from Fan.SmartContract import sendFromMother
+
 
 from Club.models import myClub as Club
 from .models import myUsers
@@ -88,7 +88,6 @@ def create_accounts(request):
             account = myFan(user=user, public_key=public_address,
                             private_key=private_address)
             account.save()
-            sendFromMother(public_address, 0.2)
 
             return render(request, "authentication/Login.html")
         else:

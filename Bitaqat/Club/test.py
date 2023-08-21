@@ -69,7 +69,7 @@ class ClubBrowsingPageTest(TestCase):
             username=self.user.username, password=self.pwd)
         response = self.client.get(reverse("Club:renderHomepage"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'Club/homepage.html')
+        self.assertTemplateUsed(response, 'Club/HOME.html')
 
     def test_view_url_accessible_by_name_homepage(self):
         login = self.client.login(

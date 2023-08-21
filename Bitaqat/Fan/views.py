@@ -18,6 +18,7 @@ from Club.models import Event, MintedTickets
 from Fan.models import QrCodeChecking, myFan
 from authentication.models import myUsers
 from django.utils import timezone
+from Fan.SmartContract import sendFromMother
 
 
 @login_required(login_url='/login/')
@@ -25,7 +26,7 @@ def renderHomepage(request):
     """
     Renders the homepage view for an authenticated user.
     """
-    return render(request, 'Fan\homepage.html')
+    return render(request, 'Fan\HOME.html')
 
 
 @login_required(login_url='/login/')
@@ -34,15 +35,9 @@ def renderMarketplace(request):
     Renders the marketplace view for an authenticated user and retrieves all available events.
     """
     current_datetime = timezone.now()
-    added_money = 0
-
     all_events = Event.objects.select_related('organizer__club').select_related(
         'opposite_team').filter(datetime__gt=current_datetime)
-
-    if not myFan.objects.get(user_id=request.user.pk).has_Payed:
-        for event in all_events:
-            event.ticket_price += 0.134
-    return render(request, 'Fan\Marketplace.html', {'all_events': all_events, "money": added_money})
+    return render(request, 'Fan\GAMES.html', {'all_events': all_events})
 
 
 def match_address_with_account(ownedPublicAddress):
@@ -73,6 +68,10 @@ def buyTicket(request, event_id):
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:
                 buyer_crypto_address = user_db.public_key
                 try:
+                    if not user_db.has_received_matic:
+                        sendFromMother(buyer_crypto_address, 0.2)
+                        user_db.has_received_matic = True
+                        user_db.save()
                     tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
                                               str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
 
@@ -87,14 +86,13 @@ def buyTicket(request, event_id):
                         ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
                             buyer_crypto_address), token_id=token_id, organizer=query.organizer)
                         ticket_query_to_db.save()
-                        user_db.has_Payed = True
-                        user_db.save()
                         return JsonResponse({"status": "success"})
                 except Exception as error2:
                     print(error2)
+                    return JsonResponse({"status": "error"})
             else:
                 return JsonResponse({"status": "failure"})
-    return render(request, "Fan/Marketplace.html")
+    return render(request, "Fan/GAMES.html")
 
 
 @login_required(login_url='/login/')
@@ -107,7 +105,7 @@ def renderInventory(request):
         'event__organizer__club', 'event__opposite_team'
     ).filter(owner_account=request.user.pk)
 
-    return render(request, 'Fan\Inventory.html', {'collection': minted_tickets_with_related_info})
+    return render(request, 'Fan\MYTICKETS.html', {'collection': minted_tickets_with_related_info})
 
 
 @login_required(login_url='/login/')
@@ -119,7 +117,7 @@ def renderKeys(request):
     query_object = myFan.objects.get(pk=user)
     public_key = query_object.public_key
     private_key = query_object.private_key
-    return render(request, "Fan\Keys.html", {"pk": private_key, "publickey": public_key})
+    return render(request, "Fan\KEYS.html", {"pk": private_key, "publickey": public_key})
 
 
 def hashData(receiver_address, token_id):

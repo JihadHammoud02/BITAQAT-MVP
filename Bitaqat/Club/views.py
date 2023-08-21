@@ -21,7 +21,7 @@ def renderHomepage(request):
     """
     Render the homepage view for the authenticated user.
     """
-    return render(request, 'Club/homepage.html')
+    return render(request, 'Club/HOME.html')
 
 
 @login_required(login_url='/login/')
@@ -32,7 +32,7 @@ def renderMarketplace(request):
     current_datetime = timezone.now()
     all_events = Event.objects.select_related(
         'organizer__club').select_related('opposite_team').filter(datetime__gt=current_datetime)
-    return render(request, 'Club/Marketplace.html', {'all_events': all_events})
+    return render(request, 'Club/GAMES.html', {'all_events': all_events})
 
 
 @login_required(login_url='/login/')

@@ -29,7 +29,7 @@ def VolumneTraded(TokenID):
     params = {
         "chain": "mumbai",
         "format": "decimal",
-        "address": "0x44872B49d25c1A3A22C432b3e42290dE9103e53b",
+        "address": "0xE886d763A55575c533123c621C29D9E286D60631",
         "token_id": TokenID
     }
 
@@ -38,7 +38,8 @@ def VolumneTraded(TokenID):
         params=params,
 
     )
-    if result['result'][0]['from_address'] != "0x0000000000000000000000000000000000000000":
-        count = count+1
+    if len(result['result']) > 0:
+        if result['result'][0]['from_address'] != "0x0000000000000000000000000000000000000000":
+            count = count+1
 
     return count

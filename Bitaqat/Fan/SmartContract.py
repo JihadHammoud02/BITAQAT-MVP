@@ -67,6 +67,7 @@ def main(recipient_address, quantity, royaltyrec, tokenuri, user_db):
     print('Transaction sent. Hash:', transaction_hash)
     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
     token_id = w3.to_int(tx_receipt['logs'][0]['topics'][3])
+
     return (token_id, tx_receipt)
 
 

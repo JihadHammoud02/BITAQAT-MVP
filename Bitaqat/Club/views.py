@@ -41,7 +41,7 @@ def createEvents(request):
     Create events view for the authenticated user.
     """
     current_user = request.user
-    current_club = myClub.objects.get(pk=current_user)
+    current_club = myClub.objects.select_related("club").get(pk=current_user)
     query_clubs = ClubsData.objects.all()
     clubs = []
     for club in query_clubs:
@@ -166,46 +166,21 @@ def checkQRCode(request):
 """
 
 
-def calculateRevenue(pk):
+def calculateRevenue(pk, query):
     """
     Calculate revenue and delta revenue for the specified queryObject.
     """
     # Get the current month's revenue
-    queryObjectRevenue = Event.objects.select_related(
-        'organizer__club').select_related('opposite_team').filter(organizer=pk)
+    timezone_now = timezone.now().month
+    queryObjectRevenue = query
+    current_month_revenue = 0
+    totalrevenue = 0
+    for event in queryObjectRevenue:
+        if event.datetime.month == timezone_now:
+            current_month_revenue += event.current_fan_count * event.ticket_price
+        totalrevenue = event.current_fan_count * event.ticket_price
 
-    current_month_revenue = queryObjectRevenue.filter(
-        datetime__month=timezone.now().month
-    ).aggregate(
-        revenue=Sum(F('current_fan_count') * F('ticket_price'))
-    )['revenue']
-
-    if current_month_revenue == None:
-        current_month_revenue = 0
-
-    # Get the previous month's revenue
-    previous_month_revenue = queryObjectRevenue.filter(
-        datetime__month=timezone.now().month - 1
-    ).aggregate(
-        revenue=Sum(F('current_fan_count') * F('ticket_price'))
-    )['revenue']
-    if previous_month_revenue == None:
-        previous_month_revenue = 0
-    if previous_month_revenue == 0 and current_month_revenue == 0:
-        alpha = 0
-    else:
-        if previous_month_revenue == 0:
-            alpha = current_month_revenue
-        else:
-            alpha = ((current_month_revenue - previous_month_revenue) /
-                     previous_month_revenue) * 100
-    totalrevenue = queryObjectRevenue.all().aggregate(
-        revenue=Sum(F('current_fan_count') * F('ticket_price'))
-    )['revenue']
-    if totalrevenue == None:
-        totalrevenue = 0
-
-    return (round(alpha, 2), current_month_revenue, totalrevenue)
+    return (current_month_revenue, totalrevenue)
 
 
 def calculateRoyalty(request, userId):
@@ -242,39 +217,6 @@ def calculateAttendanceRate(queryObject):
             event.maximum_capacity
         counter += 1
     return round(attendanceRate/counter * 100, 2)
-
-
-def getLatestTransactions(query):
-    """
-    Retrieve the latest transactions for the specified query.
-    """
-    ticket_data = {}
-    tickets = []
-    breaker = 0
-    if len(query) == 0:
-        return tickets
-    else:
-        if len(query) == 1:
-            ticket_data['username'] = query.owner_account.username
-            ticket_data['name'] = query.event.opposite_team.name
-            ticket_data['token_id'] = query.token_id
-            tickets.append(ticket_data)
-            return tickets
-
-    for ticket in query[len(query)-2:len(query)]:
-        if breaker == 2:
-            break
-        try:
-            ticket_data['username'] = ticket.owner_account.username
-            ticket_data['name'] = ticket.event.opposite_team.name
-            ticket_data['token_id'] = ticket.token_id
-            tickets.append(ticket_data)
-            breaker += 1
-            ticket_data = {}
-        except:
-            pass
-
-    return tickets
 
 
 def getMostPopularGames(query):
@@ -317,6 +259,12 @@ def renderAnalytics(request):
     """
     Render the analytics dashboard page.
     """
+    attendanceRate = 0
+    counter = 0
+    current_month_revenue = 0
+    totalrevenue = 0
+
+    timezone_now = timezone.now().month
 
     user_pk = request.user.pk
 
@@ -329,17 +277,23 @@ def renderAnalytics(request):
         'event__organizer__club', 'event__opposite_team'
     ).filter(organizer_id=user_pk)
 
-    revenue = calculateRevenue(user_pk)
-    rev_from_ticket = revenue[1]
-    deltaRevenue = revenue[0]
-    totalrevenue = revenue[2]
-    attendanceRate = calculateAttendanceRate(queryEvents)
+    # Calculate revenue
+    for event in queryEvents:
+        if event.datetime.month == timezone_now:
+            current_month_revenue += event.current_fan_count * event.ticket_price
+        totalrevenue += event.current_fan_count * event.ticket_price
 
-    if deltaRevenue < 0:
-        indicator = 0
-    else:
-        indicator = 1
-    latestTransactionsList = getLatestTransactions(queryObjectsTickets)
+    rev_from_ticket = current_month_revenue
+    # end of Revenue calculations
+
+    # Calculate attendance rate
+    for event in queryEvents:
+        attendanceRate += event.current_fan_count / \
+            event.maximum_capacity
+        counter += 1
+    attendanceRate = round(attendanceRate/counter * 100, 2)
+    # end of attendancy rate calculations
+
     popularGames = getMostPopularGames(queryEvents)
     bestEvent = getBestRevenueEvent(queryEvents)
     totalTickets = getTotalTicketsSold(queryEvents)
@@ -347,11 +301,8 @@ def renderAnalytics(request):
 
     return render(request, 'Club\Dashboard.html', {
         "rev": rev_from_ticket,
-        "delta": deltaRevenue,
         "att": attendanceRate,
-        "ind": indicator,
-        "pg": popularGames,
-        "transaction": latestTransactionsList,  # 6
+        "pg": popularGames,  # 6
         "bestevent": bestEvent,
         "numberoftickets": totalTickets,
         "games": allGames,  # expensive (3-4 queries per game)

@@ -113,23 +113,12 @@
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
                                         <h3 class="mb-0">${{rev}}</h3>
-                                        {% if ind == 0 %}
-                                        <p class="text-danger ms-2 mb-0 font-weight-medium">{{delta}}%</p>
-                                        {% elif ind == 1 %}
-                                        <p class="text-success ms-2 mb-0 font-weight-medium">{{delta}}%</p>
-                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    {% if ind == 0 %}
-                                    <div class="icon icon-box-danger ">
-                                        <span class="mdi mdi-arrow-bottom-right icon-item"></span>
+                                    <div class="icon icon-box-success">
+                                        <span class="  mdi mdi-cash-multiple    "></span>
                                     </div>
-                                    {% elif ind == 1 %}
-                                    <div class="icon icon-box-success ">
-                                        <span class="mdi mdi-arrow-top-right icon-item"></span>
-                                    </div>
-                                    {% endif %}
                                 </div>
                             </div>
                             <h6 class="text-muted font-weight-normal">Current Month Revenue</h6>
@@ -195,27 +184,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Transaction History</h4>
-                            {% for tr in transaction %}
-                            <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row px-4 px-md-3 px-xl-4 rounded mt-3"
-                                style="background-color:#1e2c3c; margin-top: 3rem !important;">
-                                <div _ngcontent-eqf-c7="" class="text-md-center text-xl-left">
-                                    <h6 _ngcontent-eqf-c7="" class="mb-1">{{org}} vs
-                                        {{tr.name}}</h6>
-                                    <p _ngcontent-eqf-c7="" class="text-muted mb-0">by {{tr.username}}
-                                        with token id :
-                                        {{tr.token_id}}</p>
-                                </div>
-
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 grid-margin stretch-card">
+                <div class="col grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-row justify-content-between">

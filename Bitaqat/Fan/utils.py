@@ -25,6 +25,7 @@ def getOwners(ContractAddress, TokenID):
 
 def VolumneTraded(TokenID):
     count = 0
+    print(TokenID)
     api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
     params = {
         "chain": "mumbai",
@@ -33,13 +34,19 @@ def VolumneTraded(TokenID):
         "token_id": TokenID
     }
 
-    result = evm_api.nft.get_nft_transfers(
-        api_key=api_key,
-        params=params,
+    try:
 
-    )
-    if len(result['result']) > 0:
-        if result['result'][0]['from_address'] != "0x0000000000000000000000000000000000000000":
-            count = count+1
+        result = evm_api.nft.get_nft_transfers(
+            api_key=api_key,
+            params=params,
+
+        )
+
+        if len(result['result']) > 0:
+            if result['result'][0]['from_address'] != "0x0000000000000000000000000000000000000000":
+                count = count+1
+
+    except:
+        pass
 
     return count

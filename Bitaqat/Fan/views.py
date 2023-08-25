@@ -83,8 +83,8 @@ def buyTicket(request, event_id):
 
                         query.current_fan_count += 1
                         query.save()
-                        ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(buyer_crypto_address), owner_account=match_address_with_account(
-                            buyer_crypto_address), token_id=token_id, organizer=query.organizer)
+                        ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(
+                            buyer_crypto_address), owner_account=request.user, token_id=token_id, organizer=query.organizer)
                         ticket_query_to_db.save()
                         return JsonResponse({"status": "success"})
                 except Exception as error2:

@@ -17,11 +17,11 @@ w3 = Web3(Web3.HTTPProvider(
     env("WEB3PROVIDER")))
 w3.middleware_onion.inject(geth_poa.geth_poa_middleware, layer=0)
 
-abi = [{"inputs": [], "stateMutability":"nonpayable", "type":"constructor"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "owner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "approved", "type": "address"}, {"indexed": True, "internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "Approval", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "owner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "operator", "type": "address"}, {"indexed": False, "internalType": "bool", "name": "approved", "type": "bool"}], "name": "ApprovalForAll", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "uint256", "name": "_fromTokenId", "type": "uint256"}, {"indexed": False, "internalType": "uint256", "name": "_toTokenId", "type": "uint256"}], "name": "BatchMetadataUpdate", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "uint256", "name": "_tokenId", "type": "uint256"}], "name": "MetadataUpdate", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "address", "name": "account", "type": "address"}], "name": "Paused", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "from", "type": "address"}, {"indexed": True, "internalType": "address", "name": "to", "type": "address"}, {"indexed": True, "internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "Transfer", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "address", "name": "account", "type": "address"}], "name": "Unpaused", "type": "event"}, {"inputs": [{"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "approve", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "owner", "type": "address"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "getApproved", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "owner", "type": "address"}, {"internalType": "address", "name": "operator", "type": "address"}], "name": "isApprovedForAll", "outputs": [{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"name", "outputs":[{"internalType": "string", "name": "", "type": "string"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "ownerOf",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"pause", "outputs":[], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [], "name":"paused", "outputs":[{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}, {"internalType": "uint256", "name": "salePrice", "type": "uint256"}], "name": "royaltyInfo", "outputs": [{"internalType": "address", "name": "", "type": "address"}, {"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint96", "name": "RoyaltyRate", "type": "uint96"}, {"internalType": "address", "name": "RoyaltyReceiver", "type": "address"}, {"internalType": "string", "name": "uri", "type": "string"}], "name": "safeMint", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "from", "type": "address"}, {"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "safeTransferFrom", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "from", "type": "address"}, {"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}, {"internalType": "bytes", "name": "data", "type": "bytes"}], "name": "safeTransferFrom", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "operator", "type": "address"}, {"internalType": "bool", "name": "approved", "type": "bool"}], "name": "setApprovalForAll", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "bytes4", "name": "interfaceId", "type": "bytes4"}], "name": "supportsInterface", "outputs": [{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"symbol", "outputs":[{"internalType": "string", "name": "", "type": "string"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "tokenURI", "outputs": [{"internalType": "string", "name": "", "type": "string"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "from", "type": "address"}, {"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "transferFrom", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [], "name":"unpause", "outputs":[], "stateMutability":"nonpayable", "type":"function"}]
+abi = [{"inputs": [], "stateMutability":"nonpayable", "type":"constructor"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "owner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "approved", "type": "address"}, {"indexed": True, "internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "Approval", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "owner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "operator", "type": "address"}, {"indexed": False, "internalType": "bool", "name": "approved", "type": "bool"}], "name": "ApprovalForAll", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "uint256", "name": "_fromTokenId", "type": "uint256"}, {"indexed": False, "internalType": "uint256", "name": "_toTokenId", "type": "uint256"}], "name": "BatchMetadataUpdate", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "uint256", "name": "_tokenId", "type": "uint256"}], "name": "MetadataUpdate", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "previousOwner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "newOwner", "type": "address"}], "name": "OwnershipTransferred", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "address", "name": "account", "type": "address"}], "name": "Paused", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "from", "type": "address"}, {"indexed": True, "internalType": "address", "name": "to", "type": "address"}, {"indexed": True, "internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "Transfer", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "address", "name": "account", "type": "address"}], "name": "Unpaused", "type": "event"}, {"inputs": [], "name":"activate", "outputs":[], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "minter", "type": "address"}], "name": "addAuthorizedMinter", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "approve", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "owner", "type": "address"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "getApproved", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "owner", "type": "address"}, {"internalType": "address", "name": "operator", "type": "address"}], "name": "isApprovedForAll", "outputs": [{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"name", "outputs":[{"internalType": "string", "name": "", "type": "string"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"owner", "outputs":[
+    {"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "ownerOf", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"pause", "outputs":[], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [], "name":"paused", "outputs":[{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"renounceOwnership", "outputs":[], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}, {"internalType": "uint256", "name": "salePrice", "type": "uint256"}], "name": "royaltyInfo", "outputs": [{"internalType": "address", "name": "", "type": "address"}, {"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint96", "name": "RoyaltyRate", "type": "uint96"}, {"internalType": "address", "name": "RoyaltyReceiver", "type": "address"}, {"internalType": "string", "name": "uri", "type": "string"}], "name": "safeMint", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "from", "type": "address"}, {"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "safeTransferFrom", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "from", "type": "address"}, {"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}, {"internalType": "bytes", "name": "data", "type": "bytes"}], "name": "safeTransferFrom", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "operator", "type": "address"}, {"internalType": "bool", "name": "approved", "type": "bool"}], "name": "setApprovalForAll", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "bytes4", "name": "interfaceId", "type": "bytes4"}], "name": "supportsInterface", "outputs": [{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"symbol", "outputs":[{"internalType": "string", "name": "", "type": "string"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "tokenURI", "outputs": [{"internalType": "string", "name": "", "type": "string"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "from", "type": "address"}, {"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "transferFrom", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "newOwner", "type": "address"}], "name": "transferOwnership", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [], "name":"unpause", "outputs":[], "stateMutability":"nonpayable", "type":"function"}]
 
 # Contract information
-contract_address = "0xE886d763A55575c533123c621C29D9E286D60631"
+contract_address = "0x01400F24E7298A9083a82fbDd588c104c4CEb19C"
 # Replace with the ABI of your contract
 
 abi2 = [{"inputs": [], "stateMutability":"nonpayable", "type":"constructor"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "owner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "approved", "type": "address"}, {"indexed": True, "internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "Approval", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "owner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "operator", "type": "address"}, {"indexed": False, "internalType": "bool", "name": "approved", "type": "bool"}], "name": "ApprovalForAll", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "uint256", "name": "_fromTokenId", "type": "uint256"}, {"indexed": False, "internalType": "uint256", "name": "_toTokenId", "type": "uint256"}], "name": "BatchMetadataUpdate", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "uint256", "name": "_tokenId", "type": "uint256"}], "name": "MetadataUpdate", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "previousOwner", "type": "address"}, {"indexed": True, "internalType": "address", "name": "newOwner", "type": "address"}], "name": "OwnershipTransferred", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "address", "name": "account", "type": "address"}], "name": "Paused", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": True, "internalType": "address", "name": "from", "type": "address"}, {"indexed": True, "internalType": "address", "name": "to", "type": "address"}, {"indexed": True, "internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "Transfer", "type": "event"}, {"anonymous": False, "inputs": [{"indexed": False, "internalType": "address", "name": "account", "type": "address"}], "name": "Unpaused", "type": "event"}, {"inputs": [{"internalType": "address", "name": "to", "type": "address"}, {"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "approve", "outputs": [], "stateMutability":"nonpayable", "type":"function"}, {"inputs": [{"internalType": "address", "name": "owner", "type": "address"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}], "name": "getApproved", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "address", "name": "owner", "type": "address"}, {"internalType": "address", "name": "operator", "type": "address"}], "name": "isApprovedForAll", "outputs": [{"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name":"name", "outputs":[{"internalType": "string", "name": "",
@@ -48,18 +48,18 @@ def main(recipient_address, quantity, royaltyrec, tokenuri, user_db):
 
     # Construct the transaction data
     transaction_data = contract_instance.functions.safeMint(recipient_address, quantity, royaltyrec, tokenuri).build_transaction({
-        'from': user_db.public_key,
+        'from': user_db.AuthWallet_public_key,
         'value': 0,
         'gas': 2000000,
         'gasPrice': w3.to_wei(requests.get('https://gasstation-testnet.polygon.technology/v2').json()["fast"]["maxPriorityFee"], 'gwei'),
-        'nonce': w3.eth.get_transaction_count(user_db.public_key),
+        'nonce': w3.eth.get_transaction_count(user_db.AuthWallet_public_key),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     })
     print(transaction_data)
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
-        transaction_data, user_db.private_key)
+        transaction_data, user_db.AuthWallet_private_key)
 
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)
@@ -76,9 +76,11 @@ def upload_to_ipfs(name, description, image_path):
     with open(image_path, 'rb') as image_file:
         image_data = image_file.read()
 
+
     # Upload the image to IPFS
     response = requests.post('https://ipfs.infura.io:5001/api/v0/add',
                              auth=(proj_id, proj_secret), files={'file': image_data})
+
     image_hash = response.json()['Hash']
 
     # Create the metadata dictionary
@@ -95,13 +97,15 @@ def upload_to_ipfs(name, description, image_path):
     # Upload the metadata to IPFS
     response = requests.post('https://ipfs.infura.io:5001/api/v0/add',
                              auth=(proj_id, proj_secret), files=metadata_file)
+    
+    
     metadata_hash = response.json()['Hash']
 
     # Return the URI for the metadata JSON file
     return f'https://ipfs.io/ipfs/{metadata_hash}'
 
 
-def MintQrCode(tokenuri, recipient_address):
+def MintQrCode(tokenuri, recipient_address, user_db):
  # Request test tokens from the Polygon Mumbai Testnet Faucet
     # Load contract instance
     contract_instance = w3.eth.contract(
@@ -112,18 +116,18 @@ def MintQrCode(tokenuri, recipient_address):
 
     # Construct the transaction data
     transaction_data = contract_instance.functions.safeMint(recipient_address, tokenuri).build_transaction({
-        'from': from_address,
+        'from': user_db.AuthWallet_public_key,
         'value': 0,
         'gas': 2000000,
         'gasPrice': w3.to_wei('80', 'gwei'),
-        'nonce': w3.eth.get_transaction_count(from_address),
+        'nonce': w3.eth.get_transaction_count(user_db.AuthWallet_public_key),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     })
     print(transaction_data)
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
-        transaction_data, private_key)
+        transaction_data, user_db.AuthWallet_private_key)
 
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)
@@ -237,3 +241,31 @@ def sendFromMother(recipient_address, amount):
     print('Transaction sent. Hash:', transaction_hash)
     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
     return (tx_receipt)
+
+
+def AddAuthorizer(address, caller_public_key, caller_private_key, UseOwner):
+    contract_instance = w3.eth.contract(address=contract_address, abi=abi)
+
+    # Construct the transaction data
+    if UseOwner:
+        caller_public_key = from_address
+        caller_private_key = private_key
+
+    transaction_data = contract_instance.functions.addAuthorizedMinter(address).build_transaction({
+        'from': caller_public_key,
+        'value': 0,
+        'gas': 2000000,
+        'gasPrice': w3.to_wei(requests.get('https://gasstation-testnet.polygon.technology/v2').json()["fast"]["maxPriorityFee"], 'gwei'),
+        'nonce': w3.eth.get_transaction_count(caller_public_key),
+        'chainId': 80001  # Chain ID of the Polygon Mumbai chain
+    })
+    print(transaction_data)
+
+    # Sign the transaction locally
+    signed_transaction = Account.sign_transaction(
+        transaction_data, caller_private_key)
+
+    # Send the signed transaction
+    transaction_hash = send_signed_transaction(signed_transaction)
+
+    print('Transaction sent. Hash:', transaction_hash)

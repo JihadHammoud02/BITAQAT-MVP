@@ -7,11 +7,12 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from eth_account import Account
 import secrets
-
+from Fan.SmartContract import sendFromMother
 
 from Club.models import myClub as Club
 from .models import myUsers
 from Fan.models import myFan
+from Fan.SmartContract import AddAuthorizer
 
 
 def create_wallet():
@@ -83,11 +84,33 @@ def create_accounts(request):
             user.save()
 
             wallet = create_wallet()
+            authWallet = create_wallet()
             public_address = wallet[1]
             private_address = wallet[0]
+
+            numberOfFans = myFan.objects.all()
+            UseOwner = False
+
+            if len(numberOfFans) == 0:
+                UseOwner = True
+
             account = myFan(user=user, public_key=public_address,
-                            private_key=private_address)
+                            private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
             account.save()
+
+            Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
+            Wallets[len(Wallets)-1].AuthWallet_busy = True
+            Wallets[len(Wallets)-1].save()
+            print(authWallet[1])
+            print(Wallets[len(Wallets)-1].AuthWallet_public_key)
+            print(Wallets[len(Wallets)-1].AuthWallet_private_key)
+            sendFromMother(Wallets[len(Wallets)-1].AuthWallet_public_key, 0.2)
+            AddAuthorizer(
+                authWallet[1], Wallets[len(Wallets)-1].AuthWallet_public_key, Wallets[len(Wallets)-1].AuthWallet_private_key, UseOwner)
+            Wallets[len(Wallets)-1].AuthWallet_busy = False
+            Wallets[len(Wallets)-1].save()
+
+            # Call add authorizer function
 
             return render(request, "authentication/Login.html")
         else:

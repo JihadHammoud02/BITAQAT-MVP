@@ -15,10 +15,10 @@ from django.http import JsonResponse
 from django.core.files.base import ContentFile
 from .SmartContract import main, upload_to_ipfs
 from Club.models import Event, MintedTickets
-from Fan.models import QrCodeChecking, myFan
+from Fan.models import QrCodeChecking, myFan,Feedback
 from authentication.models import myUsers
 from django.utils import timezone
-from Fan.SmartContract import sendFromMother
+from django.core.mail import send_mail, EmailMessage
 
 
 @login_required(login_url='/login/')
@@ -68,17 +68,14 @@ def buyTicket(request, event_id):
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:
                 buyer_crypto_address = user_db.public_key
                 try:
-                    if not user_db.has_received_matic:
-                        sendFromMother(buyer_crypto_address, 0.2)
-                        user_db.has_received_matic = True
-                        user_db.save()
                     tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
                                               str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
-
+                    print("we got here sir")
                     response = requests.get(tokenuri)
+                    print("it's not the enemy sir")
                     if response.status_code == 200:
                         activate_buying = main(buyer_crypto_address, query.royalty_rate*1000,
-                                               "0x074C6794461525243043377094DbA36eed0A951B", tokenuri, user_db)
+                                               query.organizer.RoyaltyReceiverAddresse, tokenuri, user_db)
                         token_id = activate_buying[0]
 
                         query.current_fan_count += 1
@@ -193,38 +190,21 @@ def Fan_to_address_Mapping(address):
         return None
 
 
-@csrf_exempt
-def ReceiverContractEvents(request):
-    print("yes")
-    if request.method == 'POST':
-        # Access the raw body of the request
-        response_data = request.body.decode('utf-8')
-        response_data = json.loads(response_data)
-        print(response_data)
-        # Parse the raw body JSON data into a Python dictionary
-        if response_data['confirmed'] == True:
-            from_address = response_data['txs'][0]['fromAddress']
-            to_address = response_data['nftTransfers'][0]['to']
-            token_id = response_data['nftTransfers'][0]['tokenId']
-            block_number = response_data['block']['number']
+def giveFeedback(request):
+    if request.method == "POST":
+        name=request.POST.get('name')
+        email=request.POST.get('mail')
+        rating=request.POST.get('user-friendliness')
+        q2=request.POST.get('user-friendliness4')
+        q3=request.POST.get('user-friendliness2')
+        q4=request.POST.getlist('user-friendliness3')
+        number=''
+        for i in q4:
+            number=number+i
 
-            if from_address != "0x0000000000000000000000000000000000000000":
-                user_hash = mainQrcode(
-                    to_address, token_id)
-                event_object = QrCodeChecking(name="QrCode", description="This is a Qr code",
-                                              hash=user_hash, BlockNumber=block_number, token_id=token_id)
-                event_object.save()
-                token_id_query_info = MintedTickets.objects.get(
-                    token_id=token_id)
-                token_id_query_info.owner_crypto_address = to_address
-                mappingfan = Fan_to_address_Mapping(to_address)
-                token_id_query_info.owner_account = mappingfan
-                token_id_query_info.save()
+        q5=request.POST.get('user-friendliness6')
+        text=request.POST.get('text')
+        feedback=Feedback.objects.create(name=name,email=email,q1=rating,q2=q2,q3=q3,q4=int(number),q5=q5,q6=text)
+        feedback.save()
+    return render(request,"Feedback.html")
 
-        # Print the extracted data
-
-            print("From Address:", from_address)
-            print("To Address:", to_address)
-            print("Token ID:", token_id)
-            print("Block Number:", block_number)
-        return JsonResponse({"success": False}, status=200)

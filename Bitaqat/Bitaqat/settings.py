@@ -30,7 +30,7 @@ SECRET_KEY = env("DJANGO_SK")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'False'
 
-ALLOWED_HOSTS = ["*", "192.168.0.111"]
+ALLOWED_HOSTS = ["*", "192.168.0.111","django-env.eba-s288fkpm.us-west-2.elasticbeanstalk.com"]
 
 
 # Application definition
@@ -184,8 +184,7 @@ INTERNAL_IPS = [
 # }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.live.com'  # For Hotmail/Outlook
+EMAIL_PORT = 587  # For TLS
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'Bitaqat.io@gmail.com'
-EMAIL_HOST_PASSWORD = 'pjzrrwqxkjadxvvz'
+

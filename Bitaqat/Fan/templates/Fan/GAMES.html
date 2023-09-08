@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-  {% load static compress%}
+  {% load static %}
   <!-- Meta Tags -->
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -4036,7 +4036,6 @@
 
 
   <!-- Script -->
-  {% compress js %}
   <script text="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
   <script text="text/javascript" src="{% static 'jquery.slick.min.js' %}"></script>
 
@@ -4437,7 +4436,6 @@
 
     }
   </script>
-  {% endcompress %}
 
 </body>
 

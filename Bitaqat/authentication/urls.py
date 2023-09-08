@@ -7,7 +7,6 @@ urlpatterns = [
     path('', landing_page, name="landingPage"),
     path('login/', login_my_users, name="loginmyUsers"),
     path('register/', create_accounts, name='createAccounts'),
-    path("debug/", include("debug_toolbar.urls")),
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='authentication/resetpassword.html'), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(

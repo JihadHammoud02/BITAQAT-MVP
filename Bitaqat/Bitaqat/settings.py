@@ -45,17 +45,10 @@ INSTALLED_APPS = [
     "authentication",
     "Club",
     "Fan",
-    'silk',
-    "compressor",
-    "django_extensions",
+    "silk"
 ]
-SILKY_PYTHON_PROFILER = True
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
+
 
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
@@ -70,14 +63,8 @@ MIDDLEWARE = [
 
 ]
 
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True
-COMPRESS_OUTPUT_DIR = 'compressed'
 
-COMPRESS_JS_FILTERS = [
-    'compressor.filters.jsmin.JSMinFilter',
-    'compressor.filters.uglifyjs.UglifyJSFilter',
-]
+
 
 ROOT_URLCONF = "Bitaqat.urls"
 
@@ -177,14 +164,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
-
-
-# DEBUG_TOOLBAR_CONFIG = {
-#     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-# }
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.live.com'  # For Hotmail/Outlook
-EMAIL_PORT = 587  # For TLS
-EMAIL_USE_TLS = True
 

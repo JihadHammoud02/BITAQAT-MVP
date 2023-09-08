@@ -1,4 +1,3 @@
-from silk.profiling.profiler import silk_profile
 from django.utils import timezone
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
@@ -254,7 +253,6 @@ def getTotalTicketsSold(queryEvents):
 
 
 @login_required(login_url='/login/')
-@silk_profile(name='revenue')
 def renderAnalytics(request):
     """
     Render the analytics dashboard page.

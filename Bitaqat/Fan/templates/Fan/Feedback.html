@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Laralink">
-    <title>Create</title>
+    <title>feedback</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
         integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -4156,28 +4156,9 @@
     <div class="big-main d-flex justify-content-center align-items-center">
         <form class="main2 justify-content-center" action="{% url 'Fan:feedback' %}" method="post"
             enctype="multipart/form-data">{% csrf_token %}
-            <div class="input my-5">
-                <div class="container-fluid div-height">
-                    <p class="titles">First and Last name</p>
-                </div>
-                <center>
-                    <div class="container-fluid"><input type="text" name="name" class="title input-form" id="inputCity"
-                            placeholder="Enter your name"></div>
-                </center>
-            </div>
-            <div class="input my-5">
-                <div class="container-fluid div-height">
-                    <p class="titles">Email Address</p>
-                </div>
-                <center>
-                    <div class="container-fluid">
-                        <input type="text" name="mail" class="title input-form" id="inputCity"
-                            placeholder="Enter your mail">
-                        </div>
-                </center>
-            </div>
             <div class="form-group">
-                <label for="user-friendliness">How was the website browsing experience?</label>
+                <br><br><br><br><br>
+                <label for="user-friendliness">How would you describe your overall website browsing experience?</label>
                 <div class="rating">
                     <input type="radio" id="rating1" name="user-friendliness" value="0">
                     <label for="rating1">very bad</label>
@@ -4198,7 +4179,7 @@
             </div>
 
             <div class="form-group">
-                <label for="user-friendliness">Did it take you a long time to create an account?</label>
+                <label for="user-friendliness">Did you find the delay in creating an account to be excessively long?</label>
                 <div class="rating">
                     <input type="radio" id="rating11" name="user-friendliness4" value="0">
                     <label for="rating11">yes</label>
@@ -4210,7 +4191,7 @@
             </div>
 
             <div class="form-group">
-                <label for="user-friendliness">Did it take you a long time to purchase a ticket?</label>
+                <label for="user-friendliness">Was the delay you experienced during the ticket purchasing process considerably inconvenient?</label>
                 <div class="rating">
                     <input type="radio" id="rating113" name="user-friendliness2" value="0">
                     <label for="rating113">yes</label>
@@ -4222,7 +4203,7 @@
             </div>
 
             <div class="form-group">
-                <label for="user-friendliness">"Did you encounter any bugs while browsing? If yes, please specify which part of the website.</label>
+                <label for="user-friendliness">Did you come across any issues while using the website? If so, please choose the specific areas where you encountered problems.</label>
                 <div class="rating">
                     <input type="checkbox" id="rating224" name="user-friendliness3" value="3">
                     <label for="rating224">signing up</label>
@@ -4249,20 +4230,9 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="user-friendliness">Did it take you a long time to purchase a ticket?</label>
-                <div class="rating">
-                    <input type="radio" id="rating1123" name="user-friendliness6" value="0">
-                    <label for="rating1123">yes</label>
-                    
-                    <input type="radio" id="rating2222" name="user-friendliness6" value="1">
-                    <label for="rating2222">no</label>
-                    <!-- Add more ratings up to 10 as needed -->
-                </div>
-            </div>
 
             <div class="form-group">
-                <label for="user-friendliness">Do you find the process of purchasing games simple?</label>
+                <label for="user-friendliness">Did you find the ticket purchasing process straightforward?</label>
                 <div class="rating">
                     <input type="radio" id="rating111" name="user-friendliness5" value="0">
                     <label for="rating111">yes</label>

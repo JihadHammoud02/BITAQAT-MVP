@@ -5,18 +5,14 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import F, Sum
-from django.views.decorators.cache import cache_page
 from .models import myClub, Event, MintedTickets, ClubsData
-from Club.query import queryEvents
 from Fan.utils import getOwners, VolumneTraded
 from Fan.SmartContract import get_balance
 from Fan.models import QrCodeChecking
 
-
 @login_required(login_url='/login/')
 def renderHomepage(request):
     current_user = request.user
-    current_club = myClub.objects.get(pk=current_user)
     """
     Render the homepage view for the authenticated user.
     """
@@ -37,7 +33,7 @@ def renderMarketplace(request):
 @login_required(login_url='/login/')
 def createEvents(request):
     """
-    Create events view for the authenticated user.
+   Create events based on inputs and save it in the database
     """
     current_user = request.user
     current_club = myClub.objects.select_related("club").get(pk=current_user)
@@ -88,7 +84,7 @@ def logoutUser(request):
 @login_required(login_url='/login/')
 def renderAttendedEvents(request, guestID, guestName):
     """
-    Render the attended events view for the specified guest.
+    Return all the events watched by the user for the current club
     """
 
     ticketsQuery = MintedTickets.objects.select_related(
@@ -100,7 +96,7 @@ def renderAttendedEvents(request, guestID, guestName):
 @login_required(login_url='/login/')
 def getTokenOwners(request, tokenId):
     """
-    Retrieve the token owners data for the specified tokenId.
+    Retrieve the owner history of a certain NFT using its token id
     """
     OwnersDataQuery = getOwners(
         TokenID=tokenId, ContractAddress="0x44872B49d25c1A3A22C432b3e42290dE9103e53b"
@@ -128,7 +124,7 @@ def getTokenOwners(request, tokenId):
 @login_required(login_url='/login/')
 def qrCodeScanView(request):
     """
-    Render the QR code scan view.
+    Render the QR code scan page.
     """
     return render(request, "qr_code_scan.html")
 
@@ -165,9 +161,9 @@ def checkQRCode(request):
 """
 
 
-def calculateRevenue(pk, query):
+def calculateRevenue( query):
     """
-    Calculate revenue and delta revenue for the specified queryObject.
+   Calculate current month revenue.
     """
     # Get the current month's revenue
     timezone_now = timezone.now().month
@@ -184,7 +180,7 @@ def calculateRevenue(pk, query):
 
 def calculateRoyalty(request, userId):
     """
-    Calculate the royalty balance for the specified userId.
+    Return money earned from royalties by checking the balance of the club's royalty wallet
     """
     club_query = myClub.objects.select_related().get(pk=userId)
     wallet_address = club_query.RoyaltyReceiverAddresse
@@ -194,7 +190,7 @@ def calculateRoyalty(request, userId):
 
 def calculateVolumeTraded(request, userId):
     """
-    Calculate the volume traded for the specified userId.
+    Calculate the volume traded for all the NFT issued by the club .
     """
     query = MintedTickets.objects.select_related(
         "owner_account").filter(organizer_id=userId)
@@ -206,7 +202,7 @@ def calculateVolumeTraded(request, userId):
 
 def calculateAttendanceRate(queryObject):
     """
-    Calculate the attendance rate for the specified queryObject.
+    Calculate the attendance rate of the club.
     """
     attendanceRate = 0
     counter = 0
@@ -220,7 +216,7 @@ def calculateAttendanceRate(queryObject):
 
 def getMostPopularGames(query):
     """
-    Retrieve the most popular games based on revenue for the specified queryObject.
+    Retrieve the most popular games based on revenue.
     """
     sorted_data = sorted(
         query, key=lambda x: x.current_fan_count * x.ticket_price, reverse=True)
@@ -229,7 +225,7 @@ def getMostPopularGames(query):
 
 def getBestRevenueEvent(queryEvents):
     """
-    Retrieve the best revenue event based on ticket sales for the specified queryEvents.
+    Retrieve the most sold out event.
     """
     result = queryEvents.annotate(
         product=F('ticket_price') * F('current_fan_count')).order_by('-product').first()
@@ -245,7 +241,7 @@ def getBestRevenueEvent(queryEvents):
 
 def getTotalTicketsSold(queryEvents):
     """
-    Calculate the total number of tickets sold for the specified queryEvents.
+    Calculate the total number of tickets sold for the club.
     """
     result = queryEvents.aggregate(total_sum=Sum('current_fan_count'))
     total_sum = result['total_sum']
@@ -255,7 +251,7 @@ def getTotalTicketsSold(queryEvents):
 @login_required(login_url='/login/')
 def renderAnalytics(request):
     """
-    Render the analytics dashboard page.
+    Combine all previous functions and transfer them to the HTML page
     """
     attendanceRate = 0
     counter = 0
@@ -300,20 +296,21 @@ def renderAnalytics(request):
     return render(request, 'Club\Dashboard.html', {
         "rev": rev_from_ticket,
         "att": attendanceRate,
-        "pg": popularGames,  # 6
+        "pg": popularGames,  
         "bestevent": bestEvent,
         "numberoftickets": totalTickets,
-        "games": allGames,  # expensive (3-4 queries per game)
+        "games": allGames, 
         "user_id": user_pk,
         "org": organizer_name,
         "totalrevenue": totalrevenue
     })
 
 
+
 @login_required(login_url='/login/')
 def eventDashboard(request, eventId):
     """
-    Render the event dashboard page for the specified eventId.
+    Return a dashboard with data for a certain event.
     """
     ticketsQuery = MintedTickets.objects.select_related(
         'event__organizer__club', 'owner_account'

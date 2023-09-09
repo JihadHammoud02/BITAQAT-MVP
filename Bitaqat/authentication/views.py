@@ -7,38 +7,33 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from eth_account import Account
 import secrets
-from Fan.SmartContract import sendFromMother
-
+from Fan.SmartContract import sendFromMother, AddAuthorizer
 from Club.models import myClub as Club
 from .models import myUsers
 from Fan.models import myFan
-from Fan.SmartContract import AddAuthorizer
-
 
 def create_wallet():
     """
-    Create a real crypto wallet.
+    Create a cryptocurrency wallet.
 
-    :return: The private key and the address of the account.
+    :return: A private key and its corresponding address.
     """
     priv = secrets.token_hex(32)
     private_key = "0x" + priv
     acct = Account.from_key(private_key)
     return private_key, acct.address
 
-
 def login_my_users(request):
     """
     Log in the user if the request method is POST and the user is authenticated.
 
-    :param request: The request object containing metadata about the current request.
-    :return: The result of the render function.
+    :param request: The HTTP request object.
+    :return: HTTP response.
     """
     if request.method == "POST":
         username_client = request.POST.get('username')
         password_client = request.POST.get('pswrd')
-        user = authenticate(request, username=username_client,
-                            password=password_client)
+        user = authenticate(request, username=username_client, password=password_client)
 
         if user is not None:
             user_pk = user.pk
@@ -56,17 +51,15 @@ def login_my_users(request):
     else:
         return render(request, 'authentication/Login.html')
 
-
 def create_accounts(request):
     """
     Create a user account and save it in the database.
 
-    :param request: The request object containing metadata about the request.
-    :return: The render function.
+    :param request: The HTTP request object.
+    :return: HTTP response.
     """
     try:
         if request.method == "POST":
-
             email_client = request.POST.get('emailadd')
             username_client = request.POST.get('username')
             password_client = request.POST.get('pswrd')
@@ -74,7 +67,6 @@ def create_accounts(request):
 
             try:
                 validate_email(email_client)
-                print(validate_email(email_client))
             except ValidationError:
                 error_msg = "Invalid email address"
                 return render(request, "authentication/Registration.html", {"error_msg_valid": error_msg})
@@ -83,8 +75,10 @@ def create_accounts(request):
                 username=username_client, email=email_client, password=password_client_hashed)
             user.save()
 
-            wallet = create_wallet()
-            authWallet = create_wallet()
+            # Create two wallets for each user: one for NFTs and one for gas fees
+            wallet = create_wallet()  # NFT wallet
+            authWallet = create_wallet()  # Auth Wallet
+
             public_address = wallet[1]
             private_address = wallet[0]
 
@@ -98,19 +92,19 @@ def create_accounts(request):
                             private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
             account.save()
 
+            # Use an available AuthWallet to cover gas fees
             Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
             Wallets[len(Wallets)-1].AuthWallet_busy = True
             Wallets[len(Wallets)-1].save()
-            print(authWallet[1])
-            print(Wallets[len(Wallets)-1].AuthWallet_public_key)
-            print(Wallets[len(Wallets)-1].AuthWallet_private_key)
-            sendFromMother(Wallets[len(Wallets)-1].AuthWallet_public_key, 0.2)
+
+            # Send 0.1 to the new authwallet to cover minting fees and transactions
+            sendFromMother(authWallet[1])
+
+            # Register the new authwallet into the whitelist
             AddAuthorizer(
                 authWallet[1], Wallets[len(Wallets)-1].AuthWallet_public_key, Wallets[len(Wallets)-1].AuthWallet_private_key, UseOwner)
             Wallets[len(Wallets)-1].AuthWallet_busy = False
             Wallets[len(Wallets)-1].save()
-
-            # Call add authorizer function
 
             return render(request, "authentication/Login.html")
         else:
@@ -124,10 +118,20 @@ def create_accounts(request):
             error_msg = "An account with this username already exists"
             return render(request, "authentication/Registration.html", {"error_msg_username": error_msg})
 
-
 def landing_page(request):
+    """
+    Render the landing page.
+
+    :param request: The HTTP request object.
+    :return: HTTP response.
+    """
     return render(request, 'authentication/landingPage.html')
 
-
 def password_reset_complete(request):
+    """
+    Render the password reset completion page.
+
+    :param request: The HTTP request object.
+    :return: HTTP response.
+    """
     return render(request, 'authentication/resetdone.html')

@@ -74,7 +74,7 @@ def buyTicket(request, event_id):
                     response = requests.get(tokenuri)
                     print("it's not the enemy sir")
                     if response.status_code == 200:
-                        activate_buying = main(buyer_crypto_address, query.royalty_rate*1000,
+                        activate_buying = main(buyer_crypto_address, query.royalty_rate*100,
                                                query.organizer.RoyaltyReceiverAddresse, tokenuri, user_db)
                         token_id = activate_buying[0]
 
@@ -192,8 +192,8 @@ def Fan_to_address_Mapping(address):
 
 def giveFeedback(request):
     if request.method == "POST":
-        name=request.POST.get('name')
-        email=request.POST.get('mail')
+        name=request.user.name
+        email=request.user.email
         rating=request.POST.get('user-friendliness')
         q2=request.POST.get('user-friendliness4')
         q3=request.POST.get('user-friendliness2')

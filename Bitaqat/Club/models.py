@@ -15,6 +15,7 @@ class myClub(models.Model):
     club = models.OneToOneField(ClubsData, on_delete=models.CASCADE,
                                 default=None)
     RoyaltyReceiverAddresse = models.CharField(max_length=500, null=True)
+    RoyaltyReceiver_private_key = models.CharField(max_length=500, null=True)
 
 
 class Event(models.Model):

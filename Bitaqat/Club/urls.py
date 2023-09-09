@@ -1,11 +1,13 @@
-from django.urls import path, include
-from django.contrib import admin
+from django.urls import path
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
-from Fan import views as viewsguest
+
+# Define Namespace for the application
 app_name = 'Club'
+
+
 urlpatterns = [
     path('homepage/', views.renderHomepage, name="renderHomepage"),
     path('create/',  views.createEvents, name='createEvents'),

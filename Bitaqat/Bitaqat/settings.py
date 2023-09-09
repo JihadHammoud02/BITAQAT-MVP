@@ -45,10 +45,17 @@ INSTALLED_APPS = [
     "authentication",
     "Club",
     "Fan",
-    "silk"
+    'silk',
+    "compressor",
+    "django_extensions",
 ]
+SILKY_PYTHON_PROFILER = True
 
-
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
 
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
@@ -63,8 +70,14 @@ MIDDLEWARE = [
 
 ]
 
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_OUTPUT_DIR = 'compressed'
 
-
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+    'compressor.filters.uglifyjs.UglifyJSFilter',
+]
 
 ROOT_URLCONF = "Bitaqat.urls"
 
@@ -98,8 +111,20 @@ SESSION_COOKIE_AGE = 60*60
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    DATABASES = {
+      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Bitaqat',
         'USER': 'postgres',
@@ -107,8 +132,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
-}
-
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -164,4 +188,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+
+# DEBUG_TOOLBAR_CONFIG = {
+#     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+# }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.live.com'  # For Hotmail/Outlook
+EMAIL_PORT = 587  # For TLS
+EMAIL_USE_TLS = True
 

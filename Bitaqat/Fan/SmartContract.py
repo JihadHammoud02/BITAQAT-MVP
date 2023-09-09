@@ -229,7 +229,6 @@ def sendFromMother(recipient_address, amount):
         'nonce': w3.eth.get_transaction_count(from_address),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     }
-    print(transaction_data)
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
@@ -238,7 +237,6 @@ def sendFromMother(recipient_address, amount):
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)
 
-    print('Transaction sent. Hash:', transaction_hash)
     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
     return (tx_receipt)
 
@@ -259,7 +257,7 @@ def AddAuthorizer(address, caller_public_key, caller_private_key, UseOwner):
         'nonce': w3.eth.get_transaction_count(caller_public_key),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     })
-    print(transaction_data)
+
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
@@ -268,4 +266,3 @@ def AddAuthorizer(address, caller_public_key, caller_private_key, UseOwner):
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)
 
-    print('Transaction sent. Hash:', transaction_hash)

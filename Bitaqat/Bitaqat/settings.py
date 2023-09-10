@@ -30,7 +30,7 @@ SECRET_KEY = env("DJANGO_SK")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'False'
 
-ALLOWED_HOSTS = ["Bitaqat-1-dev.us-west-2.elasticbeanstalk.com","127.0.0.1"]
+ALLOWED_HOSTS = ["Bitaqat-1-dev.us-west-2.elasticbeanstalk.com"]
 
 
 # Application definition

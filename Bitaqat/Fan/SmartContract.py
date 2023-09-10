@@ -241,13 +241,8 @@ def sendFromMother(recipient_address, amount):
     return (tx_receipt)
 
 
-def AddAuthorizer(address, caller_public_key, caller_private_key, UseOwner):
+def AddAuthorizer(address, caller_public_key, caller_private_key):
     contract_instance = w3.eth.contract(address=contract_address, abi=abi)
-
-    # Construct the transaction data
-    if UseOwner:
-        caller_public_key = from_address
-        caller_private_key = private_key
 
     transaction_data = contract_instance.functions.addAuthorizedMinter(address).build_transaction({
         'from': caller_public_key,

@@ -113,15 +113,14 @@ SESSION_COOKIE_AGE = 60*60
 
 DATABASES = {
         'default': {
-            'ENGINE': 'postgres',
-            'NAME': "Bitaqat",
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "postgres",
             'USER': "Jihad",
             'PASSWORD':"Jihad2002",
             'HOST': "awseb-e-iqkm5t73ap-stack-awsebrdsdatabase-xrhqm9zfs5eh.chxq44fvheqy.us-west-2.rds.amazonaws.com",
             'PORT': "5432",
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

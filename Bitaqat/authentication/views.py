@@ -79,26 +79,35 @@ def create_accounts(request):
             public_address = wallet[1]
             private_address = wallet[0]
 
-            numberOfFans = myFan.objects.all()
+            Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
             UseOwner = False
 
-            if len(numberOfFans) == 0:
-                UseOwner = True
+            # kesy of backup wallet
+            private_key = "ce136daa0b7ffc83cf1ac6aae719e25e31037b117913b751a0726a551a5e9d17"
+            from_address = "0x9cd4D8EcA8954e55ea1B8d194B2A4E5dfb4EE7dc"
 
+            if len(Wallets) == 0:
+                # if there is no fans , use our backup wallet
+                AddAuthorizer(
+                authWallet[1], from_address, private_key)
 
-            # Use an available AuthWallet to cover gas fees
-            Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
-            Wallets[len(Wallets)-1].AuthWallet_busy = True
-            Wallets[len(Wallets)-1].save()
+            else:
+                 # Use an available AuthWallet to cover gas fees
 
-            # Send 0.1 to the new authwallet to cover minting fees and transactions
-            sendFromMother(authWallet[1],0.1)
+                Wallets[len(Wallets)-1].AuthWallet_busy = True
+                Wallets[len(Wallets)-1].save()
 
-            # Register the new authwallet into the whitelist
-            AddAuthorizer(
+                # Send 0.1 to the new authwallet to cover minting fees and transactions
+                sendFromMother(authWallet[1],0.1)
+
+                # Register the new authwallet into the whitelist
+                AddAuthorizer(
                 authWallet[1], Wallets[len(Wallets)-1].AuthWallet_public_key, Wallets[len(Wallets)-1].AuthWallet_private_key, UseOwner)
-            Wallets[len(Wallets)-1].AuthWallet_busy = False
-            Wallets[len(Wallets)-1].save()
+
+                # free the wallet status
+                Wallets[len(Wallets)-1].AuthWallet_busy = False
+                Wallets[len(Wallets)-1].save()
+
 
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)

@@ -113,11 +113,11 @@ SESSION_COOKIE_AGE = 60*60
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'postgres',
         'NAME': 'Bitaqat',
-        'USER': 'postgres',
+        'USER': 'Jihad',
         'PASSWORD': 'Jihad2002',
-        'HOST': '127.0.0.1',
+        'HOST': 'awseb-e-iqkm5t73ap-stack-awsebrdsdatabase-xrhqm9zfs5eh.chxq44fvheqy.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }

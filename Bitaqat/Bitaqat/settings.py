@@ -160,9 +160,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     # Joining the BASE_DIR with the string "SignUpAuth\static"
-    os.path.join(BASE_DIR, "authentication\static"),
-    os.path.join(BASE_DIR, "Club\static"),
-    os.path.join(BASE_DIR, "Fan\static"),
+    os.path.join(BASE_DIR, "authentication/static"),
+    os.path.join(BASE_DIR, "Club/static"),
+    os.path.join(BASE_DIR, "Fan/static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 

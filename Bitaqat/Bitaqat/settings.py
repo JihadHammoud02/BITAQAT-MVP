@@ -30,7 +30,7 @@ SECRET_KEY = env("DJANGO_SK")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'False'
 
-ALLOWED_HOSTS = ["Bitaqat-1-dev.us-west-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["Bitaqat-1-dev.us-west-2.elasticbeanstalk.com","127.0.0.1"]
 
 
 # Application definition
@@ -112,15 +112,16 @@ SESSION_COOKIE_AGE = 60*60
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "postgres",
-            'USER': "Jihad",
-            'PASSWORD':"Jihad2002",
-            'HOST': "awseb-e-iqkm5t73ap-stack-awsebrdsdatabase-xrhqm9zfs5eh.chxq44fvheqy.us-west-2.rds.amazonaws.com",
-            'PORT': "5432",
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Bitaqat',
+        'USER': 'postgres',
+        'PASSWORD': 'Jihad2002',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
+}
+
 
 
 # Password validation
@@ -168,10 +169,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -71,9 +71,6 @@ def create_accounts(request):
                 error_msg = "Invalid email address"
                 return render(request, "authentication/Registration.html", {"error_msg_valid": error_msg})
 
-            user = myUsers.objects.create(
-                username=username_client, email=email_client, password=password_client_hashed)
-            user.save()
 
             # Create two wallets for each user: one for NFTs and one for gas fees
             wallet = create_wallet()  # NFT wallet
@@ -88,9 +85,6 @@ def create_accounts(request):
             if len(numberOfFans) == 0:
                 UseOwner = True
 
-            account = myFan(user=user, public_key=public_address,
-                            private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
-            account.save()
 
             # Use an available AuthWallet to cover gas fees
             Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
@@ -98,7 +92,7 @@ def create_accounts(request):
             Wallets[len(Wallets)-1].save()
 
             # Send 0.1 to the new authwallet to cover minting fees and transactions
-            sendFromMother(authWallet[1])
+            sendFromMother(authWallet[1],0.1)
 
             # Register the new authwallet into the whitelist
             AddAuthorizer(
@@ -106,6 +100,14 @@ def create_accounts(request):
             Wallets[len(Wallets)-1].AuthWallet_busy = False
             Wallets[len(Wallets)-1].save()
 
+            user = myUsers.objects.create(
+                username=username_client, email=email_client, password=password_client_hashed)
+            
+            account = myFan(user=user, public_key=public_address,
+                            private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
+
+            user.save()
+            account.save()
             return render(request, "authentication/Login.html")
         else:
             return render(request, "authentication/Registration.html")

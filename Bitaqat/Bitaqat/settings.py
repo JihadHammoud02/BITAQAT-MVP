@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "Fan",
     'silk',
     "compressor",
-    "django_extensions",
 ]
 SILKY_PYTHON_PROFILER = True
 

@@ -116,7 +116,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': "postgres",
             'USER': "Jihad",
-            'PASSWORD':"J279d687",
+            'PASSWORD':"Jihad2002",
             'HOST': "awseb-e-iqkm5t73ap-stack-awsebrdsdatabase-xrhqm9zfs5eh.chxq44fvheqy.us-west-2.rds.amazonaws.com",
             'PORT': "5432",
         }

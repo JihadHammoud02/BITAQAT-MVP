@@ -157,14 +157,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     # Joining the BASE_DIR with the string "SignUpAuth\static"
     os.path.join(BASE_DIR, "authentication/static"),
     os.path.join(BASE_DIR, "Club/static"),
     os.path.join(BASE_DIR, "Fan/static"),
 ]
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+STATIC_URL = '/static/'
+
 
 
 MEDIA_URL = '/media/'

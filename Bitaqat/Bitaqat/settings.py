@@ -164,7 +164,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "Club/static"),
     os.path.join(BASE_DIR, "Fan/static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = 'static'
 
 
 MEDIA_URL = '/media/'

@@ -111,8 +111,7 @@ SESSION_COOKIE_AGE = 60*60
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': "postgres",
@@ -122,17 +121,7 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': "5432",
         }
     }
-else:
-    DATABASES = {
-      'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Bitaqat',
-        'USER': 'postgres',
-        'PASSWORD': 'Jihad2002',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

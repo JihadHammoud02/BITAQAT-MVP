@@ -12,7 +12,6 @@ from Fan.models import QrCodeChecking
 
 @login_required(login_url='/login/')
 def renderHomepage(request):
-    current_user = request.user
     """
     Render the homepage view for the authenticated user.
     """
@@ -261,11 +260,13 @@ def renderAnalytics(request):
     timezone_now = timezone.now().month
 
     user_pk = request.user.pk
+    
 
     queryEvents = Event.objects.select_related(
         'organizer__club').select_related('opposite_team').filter(organizer=user_pk)
 
-    organizer_name = queryEvents[0].organizer.club.name
+    if queryEvents != []:
+        organizer_name = queryEvents[0].organizer.club.name
 
     queryObjectsTickets = MintedTickets.objects.select_related(
         'event__organizer__club', 'event__opposite_team'

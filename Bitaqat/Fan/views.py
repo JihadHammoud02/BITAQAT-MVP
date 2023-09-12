@@ -26,7 +26,7 @@ def renderHomepage(request):
     """
     Renders the homepage view for an authenticated user.
     """
-    return render(request, 'Fan\HOME.html')
+    return render(request, 'Fan/HOME.html')
 
 
 @login_required(login_url='/login/')
@@ -37,7 +37,7 @@ def renderMarketplace(request):
     current_datetime = timezone.now()
     all_events = Event.objects.select_related('organizer__club').select_related(
         'opposite_team').filter(datetime__gt=current_datetime)
-    return render(request, 'Fan\GAMES.html', {'all_events': all_events})
+    return render(request, 'Fan/GAMES.html', {'all_events': all_events})
 
 
 def match_address_with_account(ownedPublicAddress):
@@ -69,10 +69,8 @@ def buyTicket(request, event_id):
                 buyer_crypto_address = user_db.public_key
                 try:
                     tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
-                                              str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), query.banner.path)
-                    print("we got here sir")
+                                              str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), "http://bitaqat-1-dev.us-west-2.elasticbeanstalk.com/"+str(query.banner.name))
                     response = requests.get(tokenuri)
-                    print("it's not the enemy sir")
                     if response.status_code == 200:
                         activate_buying = main(buyer_crypto_address, query.royalty_rate*100,
                                                query.organizer.RoyaltyReceiverAddresse, tokenuri, user_db)
@@ -86,7 +84,7 @@ def buyTicket(request, event_id):
                         return JsonResponse({"status": "success"})
                 except Exception as error2:
                     print(error2)
-                    return JsonResponse({"status": "error"})
+                    return JsonResponse({"status": "error","log":error2})
             else:
                 return JsonResponse({"status": "failure"})
     return render(request, "Fan/GAMES.html")
@@ -102,7 +100,7 @@ def renderInventory(request):
         'event__organizer__club', 'event__opposite_team'
     ).filter(owner_account=request.user.pk)
 
-    return render(request, 'Fan\MYTICKETS.html', {'collection': minted_tickets_with_related_info})
+    return render(request, 'Fan/MYTICKETS.html', {'collection': minted_tickets_with_related_info})
 
 
 @login_required(login_url='/login/')

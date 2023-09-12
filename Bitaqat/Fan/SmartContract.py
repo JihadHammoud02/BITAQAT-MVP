@@ -73,8 +73,7 @@ def main(recipient_address, quantity, royaltyrec, tokenuri, user_db):
 
 def upload_to_ipfs(name, description, image_path):
     # Read the image file
-    with open(image_path, 'rb') as image_file:
-        image_data = image_file.read()
+    image_data=image_path
 
 
     # Upload the image to IPFS

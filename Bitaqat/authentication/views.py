@@ -11,6 +11,9 @@ from Fan.SmartContract import sendFromMother, AddAuthorizer
 from Club.models import myClub as Club
 from .models import myUsers
 from Fan.models import myFan
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 def create_wallet():
     """
@@ -79,44 +82,49 @@ def create_accounts(request):
             public_address = wallet[1]
             private_address = wallet[0]
 
-            Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
-            UseOwner = False
-
-            # kesy of backup wallet
-            private_key = "ce136daa0b7ffc83cf1ac6aae719e25e31037b117913b751a0726a551a5e9d17"
-            from_address = "0x9cd4D8EcA8954e55ea1B8d194B2A4E5dfb4EE7dc"
-
-            if len(Wallets) == 0:
-                # if there is no fans , use our backup wallet
-                AddAuthorizer(
-                authWallet[1], from_address, private_key)
-
-            else:
-                 # Use an available AuthWallet to cover gas fees
-
-                Wallets[len(Wallets)-1].AuthWallet_busy = True
-                Wallets[len(Wallets)-1].save()
-
-                # Send 0.1 to the new authwallet to cover minting fees and transactions
-                sendFromMother(authWallet[1],0.1)
-
-                # Register the new authwallet into the whitelist
-                AddAuthorizer(
-                authWallet[1], Wallets[len(Wallets)-1].AuthWallet_public_key, Wallets[len(Wallets)-1].AuthWallet_private_key, UseOwner)
-
-                # free the wallet status
-                Wallets[len(Wallets)-1].AuthWallet_busy = False
-                Wallets[len(Wallets)-1].save()
-
-
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)
             
             account = myFan(user=user, public_key=public_address,
                             private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
 
+            Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
+
+            # kesy of backup wallet
+            private_key =env("OWNER_PRIVATE_KEY")
+            from_address = env("OWNER_PUBLIC_KEY")
+
+
+            if len(Wallets) == 0:
+                # if there is no fans , use our backup wallet
+                sendFromMother(authWallet[1],0.005)
+                AddAuthorizer(
+                authWallet[1], from_address, private_key)
+
+
+
+            else:
+                 # Use an available AuthWallet to cover gas fees
+
+                #TODO !!!!!!!!!!!!!!!!!!!!!!!!! Don't send money if account registration failed 
+
+                Wallets[len(Wallets)-1].AuthWallet_busy = True
+                Wallets[len(Wallets)-1].save()
+
+                sendFromMother(authWallet[1],0.0005)
+                AddAuthorizer(
+                authWallet[1], Wallets[len(Wallets)-1].AuthWallet_public_key, Wallets[len(Wallets)-1].AuthWallet_private_key)
+
+                # free the wallet status
+                Wallets[len(Wallets)-1].AuthWallet_busy = False
+                Wallets[len(Wallets)-1].save()
+
             user.save()
             account.save()
+
+
+
+
             return render(request, "authentication/Login.html")
         else:
             return render(request, "authentication/Registration.html")

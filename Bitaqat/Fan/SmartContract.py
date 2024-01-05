@@ -10,8 +10,9 @@ import qrcode
 import tempfile
 import environ
 env = environ.Env()
-
 environ.Env.read_env()
+
+
 # Connect to the blockchain network (e.g., Ganache local network)
 w3 = Web3(Web3.HTTPProvider(
     env("WEB3PROVIDER")))
@@ -31,7 +32,7 @@ contract_QrCode_address = env("QRCODE_CONTRACTADDRESS")
 proj_id = "2Qrs6mmPXUPVgyBsaK4GEO6JDai"
 proj_secret = "6c4a430ca570bfc603e0c2b9cd1699a7"
 
-private_key = "ce136daa0b7ffc83cf1ac6aae719e25e31037b117913b751a0726a551a5e9d17"
+private_key ="ce136daa0b7ffc83cf1ac6aae719e25e31037b117913b751a0726a551a5e9d17"
 from_address = "0x9cd4D8EcA8954e55ea1B8d194B2A4E5dfb4EE7dc"
 
 # Function to send a signed transaction
@@ -43,39 +44,37 @@ def send_signed_transaction(signed_transaction):
 # Example usage
 
 
-def main(recipient_address, quantity, royaltyrec, tokenuri, user_db):
+def main(recipient_address, quantity, royaltyrec, tokenuri):
     contract_instance = w3.eth.contract(address=contract_address, abi=abi)
 
     # Construct the transaction data
     transaction_data = contract_instance.functions.safeMint(recipient_address, quantity, royaltyrec, tokenuri).build_transaction({
-        'from': user_db.AuthWallet_public_key,
+        'from': from_address,
         'value': 0,
         'gas': 2000000,
-        'gasPrice': w3.to_wei(requests.get('https://gasstation-testnet.polygon.technology/v2').json()["fast"]["maxPriorityFee"], 'gwei'),
-        'nonce': w3.eth.get_transaction_count(user_db.AuthWallet_public_key),
+        'gasPrice':w3.to_wei('80', 'gwei'),
+        'nonce': w3.eth.get_transaction_count(from_address),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     })
-    print(transaction_data)
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
-        transaction_data, user_db.AuthWallet_private_key)
+        transaction_data, private_key)
 
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)
-
-    print('Transaction sent. Hash:', transaction_hash)
     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
     token_id = w3.to_int(tx_receipt['logs'][0]['topics'][3])
-
+    print(tx_receipt)
     return (token_id, tx_receipt)
 
 
 def upload_to_ipfs(name, description, image_path):
     # Read the image file
-    image_data=image_path
+    # image_data=image_path
 
-
+    with open(image_path, 'rb') as image_file:
+        image_data = image_file.read()
     # Upload the image to IPFS
     response = requests.post('https://ipfs.infura.io:5001/api/v0/add',
                              auth=(proj_id, proj_secret), files={'file': image_data})
@@ -111,7 +110,6 @@ def MintQrCode(tokenuri, recipient_address, user_db):
         address=contract_QrCode_address, abi=abi2)
 
     recipient_address = Web3.to_checksum_address(recipient_address)
-    print("after checksum:", recipient_address)
 
     # Construct the transaction data
     transaction_data = contract_instance.functions.safeMint(recipient_address, tokenuri).build_transaction({
@@ -122,7 +120,6 @@ def MintQrCode(tokenuri, recipient_address, user_db):
         'nonce': w3.eth.get_transaction_count(user_db.AuthWallet_public_key),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     })
-    print(transaction_data)
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
@@ -130,8 +127,6 @@ def MintQrCode(tokenuri, recipient_address, user_db):
 
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)
-
-    print('Transaction sent. Hash:', transaction_hash)
 
 
 def hashData(receiver_address, token_id):
@@ -160,9 +155,8 @@ def generate_qr_code(hashed_data):
 
     with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
         qr_image.save(temp_file.name)
-    print(temp_file.name)
     ipfs_link = upload_to_ipfs("Qrcode1", "This is a Qrcode", temp_file.name)
-    print(ipfs_link)
+
     # Return the saved model instance if needed
     return ipfs_link
 
@@ -171,7 +165,7 @@ def mainQrcode(receiver_address, token_id):
     hashed_data = hashData(
         receiver_address=receiver_address, token_id=token_id)
     Qrcodelink = generate_qr_code(hashed_data)
-    time.sleep(5)
+    time.sleep(5) # NOT GOOOD TODO 
     mintedQrcode = MintQrCode(
         tokenuri=Qrcodelink, recipient_address=receiver_address)
     return hashed_data
@@ -237,25 +231,27 @@ def sendFromMother(recipient_address, amount):
     transaction_hash = send_signed_transaction(signed_transaction)
 
     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
+    print(tx_receipt)
+    print("DONNNEEEEEEEE")
     return (tx_receipt)
 
-
+# TODO Change from_address and private key
 def AddAuthorizer(address, caller_public_key, caller_private_key):
     contract_instance = w3.eth.contract(address=contract_address, abi=abi)
 
     transaction_data = contract_instance.functions.addAuthorizedMinter(address).build_transaction({
-        'from': caller_public_key,
+        'from': from_address,
         'value': 0,
         'gas': 2000000,
         'gasPrice': w3.to_wei(requests.get('https://gasstation-testnet.polygon.technology/v2').json()["fast"]["maxPriorityFee"], 'gwei'),
-        'nonce': w3.eth.get_transaction_count(caller_public_key),
+        'nonce': w3.eth.get_transaction_count(from_address),
         'chainId': 80001  # Chain ID of the Polygon Mumbai chain
     })
 
 
     # Sign the transaction locally
     signed_transaction = Account.sign_transaction(
-        transaction_data, caller_private_key)
+        transaction_data, private_key)
 
     # Send the signed transaction
     transaction_hash = send_signed_transaction(signed_transaction)

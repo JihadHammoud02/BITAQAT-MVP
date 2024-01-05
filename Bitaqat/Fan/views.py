@@ -67,24 +67,24 @@ def buyTicket(request, event_id):
         if query.current_fan_count < query.maximum_capacity:
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:
                 buyer_crypto_address = user_db.public_key
-                try:
-                    tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
-                                              str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), "http://bitaqat-1-dev.us-west-2.elasticbeanstalk.com/"+str(query.banner.name))
-                    response = requests.get(tokenuri)
-                    if response.status_code == 200:
-                        activate_buying = main(buyer_crypto_address, query.royalty_rate*100,
-                                               query.organizer.RoyaltyReceiverAddresse, tokenuri, user_db)
-                        token_id = activate_buying[0]
+                # try:
+                tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
+                                            str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), r"C:\Users\user\Desktop\BITAQAT\Tech\MVP\SOURCECODE\Bitaqat-MVP\Bitaqat\media\gre.jpg")
+                print("This is it "+tokenuri)
+                # response = requests.get(tokenuri)
+                # if response.status_code == 200:
+                activate_buying = main(buyer_crypto_address, query.royalty_rate*100,
+                                        query.organizer.RoyaltyReceiverAddresse, tokenuri)
+                token_id = activate_buying[0]
 
-                        query.current_fan_count += 1
-                        query.save()
-                        ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(
-                            buyer_crypto_address), owner_account=request.user, token_id=token_id, organizer=query.organizer)
-                        ticket_query_to_db.save()
-                        return JsonResponse({"status": "success"})
-                except Exception as error2:
-                    print(error2)
-                    return JsonResponse({"status": "error","log":error2})
+                query.current_fan_count += 1
+                query.save()
+                ticket_query_to_db = MintedTickets(event_id=query.id, owner_crypto_address=str(
+                    buyer_crypto_address), owner_account=request.user, token_id=token_id, organizer=query.organizer)
+                ticket_query_to_db.save()
+                return JsonResponse({"status": "success"})
+                # except Exception as error2:
+                #     return JsonResponse({"status": "error"})
             else:
                 return JsonResponse({"status": "failure"})
     return render(request, "Fan/GAMES.html")

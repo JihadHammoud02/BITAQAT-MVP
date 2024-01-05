@@ -25,7 +25,6 @@ def getOwners(ContractAddress, TokenID):
 
 def VolumneTraded(TokenID):
     count = 0
-    print(TokenID)
     api_key = "bXnuNSkj87bbXsOr9k0b4TSsPXaerKj42dAfUi8dGyrvbVjRz4MZSjCPmGnUUlbM"
     params = {
         "chain": "mumbai",

@@ -206,7 +206,6 @@ def calculateAttendanceRate(queryObject):
     attendanceRate = 0
     counter = 0
     for event in queryObject:
-        print(event)
         attendanceRate += event.current_fan_count / \
             event.maximum_capacity
         counter += 1
@@ -266,6 +265,7 @@ def renderAnalytics(request):
         'organizer__club').select_related('opposite_team').filter(organizer=user_pk)
 
     if queryEvents != []:
+        print(len(queryEvents))
         organizer_name = queryEvents[0].organizer.club.name
 
     queryObjectsTickets = MintedTickets.objects.select_related(
@@ -294,7 +294,7 @@ def renderAnalytics(request):
     totalTickets = getTotalTicketsSold(queryEvents)
     allGames = queryEvents
 
-    return render(request, 'Club\Dashboard.html', {
+    return render(request, 'Club/Dashboard.html', {
         "rev": rev_from_ticket,
         "att": attendanceRate,
         "pg": popularGames,  
@@ -343,7 +343,7 @@ def eventDashboard(request, eventId):
             "checkin": ticket.checked
         })
 
-    return render(request, "Club\MyGame.html", {
+    return render(request, "Club/MyGame.html", {
         "eventData": eventData,
         "Data": eventQuery,
         "nof": Nof

@@ -30,7 +30,7 @@ SECRET_KEY = env("DJANGO_SK")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'False'
 
-ALLOWED_HOSTS = ["Bitaqat-1-dev.us-west-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["Bitaqat-1-dev.us-west-2.elasticbeanstalk.com","127.0.0.1"]
 
 
 # Application definition
@@ -111,17 +111,17 @@ SESSION_COOKIE_AGE = 60*60
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "postgres",
-            'USER': "Jihad",
-            'PASSWORD':"Jihad2002",
-            'HOST': "awseb-e-iqkm5t73ap-stack-awsebrdsdatabase-xrhqm9zfs5eh.chxq44fvheqy.us-west-2.rds.amazonaws.com",
-            'PORT': "5432",
-        }
-    }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Bitaqat',
+        'USER': 'postgres',
+        'PASSWORD': 'Jihad2002',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

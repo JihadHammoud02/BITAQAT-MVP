@@ -88,42 +88,11 @@ def create_accounts(request):
             account = myFan(user=user, public_key=public_address,
                             private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
 
-            Wallets = myFan.objects.select_related().filter(AuthWallet_busy=False)
+            sendFromMother(authWallet[1],0.005)
 
-            # kesy of backup wallet
-            private_key =env("OWNER_PRIVATE_KEY")
-            from_address = env("OWNER_PUBLIC_KEY")
-
-
-            if len(Wallets) == 0:
-                # if there is no fans , use our backup wallet
-                sendFromMother(authWallet[1],0.005)
-                AddAuthorizer(
-                authWallet[1], from_address, private_key)
-
-
-
-            else:
-                 # Use an available AuthWallet to cover gas fees
-
-                #TODO !!!!!!!!!!!!!!!!!!!!!!!!! Don't send money if account registration failed 
-
-                Wallets[len(Wallets)-1].AuthWallet_busy = True
-                Wallets[len(Wallets)-1].save()
-
-                sendFromMother(authWallet[1],0.0005)
-                AddAuthorizer(
-                authWallet[1], Wallets[len(Wallets)-1].AuthWallet_public_key, Wallets[len(Wallets)-1].AuthWallet_private_key)
-
-                # free the wallet status
-                Wallets[len(Wallets)-1].AuthWallet_busy = False
-                Wallets[len(Wallets)-1].save()
 
             user.save()
             account.save()
-
-
-
 
             return render(request, "authentication/Login.html")
         else:

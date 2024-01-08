@@ -26,6 +26,8 @@ def renderHomepage(request):
     """
     Renders the homepage view for an authenticated user.
     """
+    user_db = myFan.objects.select_related('user').get(pk=request.user.pk)
+    print(user_db.AuthWallet_public_key);
     return render(request, 'Fan/HOME.html')
 
 
@@ -70,11 +72,12 @@ def buyTicket(request, event_id):
                 # try:
                 tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
                                             str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), r"C:\Users\user\Desktop\BITAQAT\Tech\MVP\SOURCECODE\Bitaqat-MVP\Bitaqat\media\gre.jpg")
-                print("This is it "+tokenuri)
                 # response = requests.get(tokenuri)
                 # if response.status_code == 200:
-                activate_buying = main(buyer_crypto_address, query.royalty_rate*100,
-                                        query.organizer.RoyaltyReceiverAddresse, tokenuri)
+                print(user_db.AuthWallet_public_key)
+                activate_buying = main(buyer_crypto_address, query.royalty_rate,
+                                        query.organizer.RoyaltyReceiverAddresse, tokenuri,user_db.AuthWallet_public_key,user_db.AuthWallet_private_key)
+                
                 token_id = activate_buying[0]
 
                 query.current_fan_count += 1

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from .models import myUsers
-from Club.models import myClub, ClubsData
+from Club.models import myClub
 from Fan.models import myFan
 
 
@@ -75,7 +75,7 @@ class authenticationTest(TestCase):
         )
         user.save()
         self.assertEqual(myUsers.objects.count(), 1)
-        club_info = ClubsData.objects.create(
+        club_info = myClub.objects.create(
             name="ittihad",
             logo="/logo.png"
         )

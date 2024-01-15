@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
 from .SmartContract import main, upload_to_ipfs
-from Club.models import Event, MintedTickets
+from Club.models import Events, MintedTickets
 from Fan.models import QrCodeChecking, myFan,Feedback
 from authentication.models import myUsers
 from django.utils import timezone
@@ -37,7 +37,7 @@ def renderMarketplace(request):
     Renders the marketplace view for an authenticated user and retrieves all available events.
     """
     current_datetime = timezone.now()
-    all_events = Event.objects.select_related('organizer__club').select_related(
+    all_events = Events.objects.select_related('organizer__club').select_related(
         'opposite_team').filter(datetime__gt=current_datetime)
     return render(request, 'Fan/GAMES.html', {'all_events': all_events})
 
@@ -64,7 +64,7 @@ def buyTicket(request, event_id):
     """
     if request.method == "POST":
         user_db = myFan.objects.select_related('user').get(pk=request.user.pk)
-        query = Event.objects.select_related(
+        query = Events.objects.select_related(
             'organizer__club').select_related('opposite_team').get(pk=event_id)
         if query.current_fan_count < query.maximum_capacity:
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:

@@ -10,7 +10,7 @@ import secrets
 from Fan.SmartContract import sendFromMother, AddAuthorizer
 from Club.models import myClub as Club
 from .models import myUsers
-from Fan.models import myFan
+from Fan.models import myFan,CryptoWallets
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -39,9 +39,9 @@ def login_my_users(request):
         user = authenticate(request, username=username_client, password=password_client)
 
         if user is not None:
-            user_pk = user.pk
-            club_model_check = Club.objects.filter(pk=user_pk).exists()
-            fan_model_check = myFan.objects.filter(pk=user_pk).exists()
+            user_pk = user.username
+            club_model_check = Club.objects.filter(username=user_pk).exists()
+            fan_model_check = myFan.objects.filter(username=user_pk).exists()
 
             if club_model_check:
                 login(request, user)
@@ -76,23 +76,27 @@ def create_accounts(request):
 
 
             # Create two wallets for each user: one for NFTs and one for gas fees
-            wallet = create_wallet()  # NFT wallet
-            authWallet = create_wallet()  # Auth Wallet
+            walletForNFT = create_wallet()  # NFT wallet
+            walletForGas = create_wallet()  # gas Wallet
 
-            public_address = wallet[1]
-            private_address = wallet[0]
 
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)
             
-            account = myFan(user=user, public_key=public_address,
-                            private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
+            account = myFan(username=user)
 
-            sendFromMother(authWallet[1],0.005)
+            nftWallet = CryptoWallets(walletForNFT[1],walletForNFT[0],username=username_client,type='NFT')
+            gasWallet = CryptoWallets(walletForGas[1],walletForGas[0],username=username_client,type='GAS')
+
+
+
+            sendFromMother(walletForGas[1],0.005)
 
 
             user.save()
             account.save()
+            nftWallet.save()
+            gasWallet.save()
 
             return render(request, "authentication/Login.html")
         else:

@@ -5,6 +5,5 @@ from django.core.validators import EmailValidator
 
 
 class myUsers(AbstractUser):
-    AbstractUser._meta.get_field('email')._unique = True
-    AbstractUser._meta.get_field('email').validators = [EmailValidator()]
-    AbstractUser._meta.get_field('username')._unique = True
+    email = models.EmailField(max_length=254)
+    username = models.CharField(max_length=50,unique=True,primary_key=True)

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from .models import myUsers
-from Club.models import myClub, Event, ClubsData, MintedTickets
+from Club.models import myClub, Event, MintedTickets
 from eth_account import Account
 import secrets
 from Fan.models import myFan
@@ -50,24 +50,24 @@ class FanBrowsingPageTest(TestCase):
         )
         self.user.save()
 
-        self.club_info = ClubsData.objects.create(
+        self.club_info = myClub.objects.create(
             name="ittihad",
             logo="/logo.png"
         )
 
-        self.club_info2 = ClubsData.objects.create(
+        self.club_info2 = myClub.objects.create(
             name="Al Nassr FC",
             logo="/logo.png"
         )
         self.club_info2.save()
 
-        self.club_info3 = ClubsData.objects.create(
+        self.club_info3 = myClub.objects.create(
             name="Al Fateh",
             logo="/logo.png"
         )
         self.club_info3.save()
 
-        self.club_info4 = ClubsData.objects.create(
+        self.club_info4 = myClub.objects.create(
             name="Al Tai",
             logo="/logo.png"
         )

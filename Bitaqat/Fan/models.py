@@ -5,14 +5,12 @@ from authentication.models import myUsers
 class myFan(models.Model):
     user = models.OneToOneField(myUsers, on_delete=models.CASCADE,
                                 primary_key=True, default=None)
-    public_key = models.CharField(max_length=600, default=None)
-    private_key = models.CharField(max_length=600, default=None)
-    has_received_matic = models.BooleanField(default=False)
-    AuthWallet_public_key = models.CharField(
+    NFT_Wallet_public_key = models.CharField(max_length=600, default=None)
+    NFT_Wallet_private_key = models.CharField(max_length=600, default=None)
+    Gas_Wallet_public_key = models.CharField(
         max_length=600, default=None, null=True)
-    AuthWallet_private_key = models.CharField(
+    Gas_Wallet_private_key = models.CharField(
         max_length=600, default=None, null=True)
-    AuthWallet_busy = models.BooleanField(default=False)
 
 
 class QrCodeChecking(models.Model):

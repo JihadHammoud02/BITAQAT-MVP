@@ -7,7 +7,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from eth_account import Account
 import secrets
-from Fan.SmartContract import sendFromMother, AddAuthorizer
+from Fan.SmartContract import sendFromMother
 from Club.models import myClub as Club
 from .models import myUsers
 from Fan.models import myFan
@@ -73,24 +73,17 @@ def create_accounts(request):
             except ValidationError:
                 error_msg = "Invalid email address"
                 return render(request, "authentication/Registration.html", {"error_msg_valid": error_msg})
-
-
             # Create two wallets for each user: one for NFTs and one for gas fees
             wallet = create_wallet()  # NFT wallet
-            authWallet = create_wallet()  # Auth Wallet
-
+            gasWallet = create_wallet()  # Auth Wallet
             public_address = wallet[1]
             private_address = wallet[0]
-
             user = myUsers.objects.create(
                 username=username_client, email=email_client, password=password_client_hashed)
-            
-            account = myFan(user=user, public_key=public_address,
-                            private_key=private_address, AuthWallet_public_key=authWallet[1], AuthWallet_private_key=authWallet[0])
-
-            sendFromMother(authWallet[1],0.005)
-
-
+            account = myFan(user=user, NFT_Wallet_public_key=public_address,
+                            NFT_Wallet_private_key=private_address, Gas_Wallet_public_key=gasWallet[1], Gas_Wallet_private_key=gasWallet[0])
+            # Sending funds for the gas fees
+            sendFromMother(gasWallet[1],0.05)
             user.save()
             account.save()
 

@@ -12,7 +12,8 @@ urlpatterns = [
     path('Myinventory/', views.renderInventory, name='renderInventory'),
     path("Mykeys/", views.renderKeys, name="Mykeys"),
     path("verification/<str:token_id>/", views.generate_qr_code, name="verf"),
-    path("feedback/",views.giveFeedback,name="feedback")
+    path("feedback/",views.giveFeedback,name="feedback"),
+     path("receive/", views.ReceiverContractEvents, name="receive")
 ]
 
 

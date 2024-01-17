@@ -1,10 +1,9 @@
 from Club.models import MintedTickets
 from Fan.SmartContract import mainQrcode
+import io
+import random
 import json
 from django.views.decorators.csrf import csrf_exempt
-import io
-import requests
-import random
 import qrcode
 import hashlib
 import time
@@ -18,7 +17,6 @@ from Club.models import Event, MintedTickets
 from Fan.models import QrCodeChecking, myFan,Feedback
 from authentication.models import myUsers
 from django.utils import timezone
-from django.core.mail import send_mail, EmailMessage
 
 
 @login_required(login_url='/login/')
@@ -27,7 +25,6 @@ def renderHomepage(request):
     Renders the homepage view for an authenticated user.
     """
     user_db = myFan.objects.select_related('user').get(pk=request.user.pk)
-    print(user_db.AuthWallet_public_key);
     return render(request, 'Fan/HOME.html')
 
 
@@ -68,15 +65,13 @@ def buyTicket(request, event_id):
             'organizer__club').select_related('opposite_team').get(pk=event_id)
         if query.current_fan_count < query.maximum_capacity:
             if count_tickets_in_accounts(request.user.pk, event_id) < query.maximum_ticket_per_account:
-                buyer_crypto_address = user_db.public_key
+                buyer_crypto_address = user_db.NFT_Wallet_public_key
                 # try:
                 tokenuri = upload_to_ipfs(str(query.organizer.club.name)+" vs "+str(query.opposite_team.name)+" #"+str(query.current_fan_count), "This is a match between " +
                                             str(query.organizer.club.name) + " and "+str(query.opposite_team.name)+" it will be played at "+str(query.place)+" on "+str(query.datetime.date())+" at "+str(query.datetime.time()), r"C:\Users\user\Desktop\BITAQAT\Tech\MVP\SOURCECODE\Bitaqat-MVP\Bitaqat\media\gre.jpg")
-                # response = requests.get(tokenuri)
-                # if response.status_code == 200:
-                print(user_db.AuthWallet_public_key)
+                
                 activate_buying = main(buyer_crypto_address, query.royalty_rate,
-                                        query.organizer.RoyaltyReceiverAddresse, tokenuri,user_db.AuthWallet_public_key,user_db.AuthWallet_private_key)
+                                        query.organizer.RoyaltyReceiverAddresse, tokenuri,user_db.Gas_Wallet_public_key,user_db.Gas_Wallet_private_key)
                 
                 token_id = activate_buying[0]
 
@@ -113,8 +108,9 @@ def renderKeys(request):
     """
     user = request.user
     query_object = myFan.objects.get(pk=user)
-    public_key = query_object.public_key
-    private_key = query_object.private_key
+    print(query_object.Gas_Wallet_public_key)
+    public_key = query_object.NFT_Wallet_public_key
+    private_key = query_object.NFT_Wallet_private_key
     return render(request, "Fan\KEYS.html", {"pk": private_key, "publickey": public_key})
 
 
@@ -156,7 +152,7 @@ def generate_qr_code(request, token_id):
     """
     user = request.user
     query_object = myFan.objects.get(pk=user)
-    public_key = query_object.public_key
+    public_key = query_object.NFT_Wallet_public_key
     qr_code_hash = hashData(public_key, token_id)
     qr_code_img = generate_qr_code_hash(qr_code_hash)
     qr_code = QrCodeChecking(Qrcode="", hash=qr_code_hash, token_id=token_id)
@@ -209,3 +205,38 @@ def giveFeedback(request):
         feedback.save()
     return render(request,"Feedback.html")
 
+@csrf_exempt
+def ReceiverContractEvents(request):
+    print("yes")
+    if request.method == 'POST':
+        # Access the raw body of the request
+        response_data = request.body.decode('utf-8')
+        response_data = json.loads(response_data)
+        print(response_data)
+        # Parse the raw body JSON data into a Python dictionary
+        if response_data['confirmed'] == True:
+            from_address = response_data['txs'][0]['fromAddress']
+            to_address = response_data['nftTransfers'][0]['to']
+            token_id = response_data['nftTransfers'][0]['tokenId']
+            block_number = response_data['block']['number']
+
+            if from_address != "0x0000000000000000000000000000000000000000":
+                user_hash = mainQrcode(
+                    to_address, token_id)
+                event_object = QrCodeChecking(name="QrCode", description="This is a Qr code",
+                                              hash=user_hash, BlockNumber=block_number, token_id=token_id)
+                event_object.save()
+                token_id_query_info = MintedTickets.objects.get(
+                    token_id=token_id)
+                token_id_query_info.owner_crypto_address = to_address
+                mappingfan = Fan_to_address_Mapping(to_address)
+                token_id_query_info.owner_account = mappingfan
+                token_id_query_info.save()
+
+        # Print the extracted data
+
+            print("From Address:", from_address)
+            print("To Address:", to_address)
+            print("Token ID:", token_id)
+            print("Block Number:", block_number)
+        return JsonResponse({"success": False}, status=200)

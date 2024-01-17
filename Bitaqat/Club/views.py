@@ -303,7 +303,7 @@ def renderAnalytics(request):
         "games": allGames, 
         "user_id": user_pk,
         "org": organizer_name,
-        "totalrevenue": totalrevenue
+        "totalrevenue": totalrevenue,
     })
 
 

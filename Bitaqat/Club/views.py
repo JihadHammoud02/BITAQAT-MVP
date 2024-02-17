@@ -265,7 +265,6 @@ def renderAnalytics(request):
         'organizer__club').select_related('opposite_team').filter(organizer=user_pk)
 
     if queryEvents != []:
-        print(len(queryEvents))
         organizer_name = queryEvents[0].organizer.club.name
 
     queryObjectsTickets = MintedTickets.objects.select_related(

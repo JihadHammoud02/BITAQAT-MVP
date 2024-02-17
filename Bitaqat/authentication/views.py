@@ -83,7 +83,7 @@ def create_accounts(request):
             account = myFan(user=user, NFT_Wallet_public_key=public_address,
                             NFT_Wallet_private_key=private_address, Gas_Wallet_public_key=gasWallet[1], Gas_Wallet_private_key=gasWallet[0])
             # Sending funds for the gas fees
-            sendFromMother(gasWallet[1],0.05)
+            sendFromMother(gasWallet[1],5)
             user.save()
             account.save()
 

@@ -57,6 +57,9 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+
+
+
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     "django.middleware.security.SecurityMiddleware",
@@ -112,16 +115,30 @@ SESSION_COOKIE_AGE = 60*60
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Bitaqat-v1',
-        'USER': 'postgres',
-        'PASSWORD': 'Jihad2002',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+isS3Used=False
+
+if isS3Used:
+    DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME':'bitaqatv1',
+         'USER':'bitaqatv1',
+         'PASSWORD':'QRSt_X$200J',
+         'HOST':'bitaqatv1.cj6aw66eo390.eu-west-3.rds.amazonaws.com',
+         'PORT':'5432',
+         }
+        }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'Bitaqat-v1',
+            'USER': 'postgres',
+            'PASSWORD': 'Jihad2002',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
     }
-}
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -163,19 +180,42 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "Club/static"),
     os.path.join(BASE_DIR, "Fan/static"),
 ]
-# Uncomment for AWS
-# STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'assetsfinal')
-STATIC_URL = '/static/'
-
-STATICFILES_LOCATION = 'static'
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+if isS3Used:
+
+    STATIC_ROOT="/"
+
+    AWS_STORAGE_BUCKET_NAME = env("Bucket_name")
+    AWS_S3_REGION_NAME = 'eu-north-1'  # e.g. us-east-2
+    AWS_ACCESS_KEY_ID = env("AWS_KEY_ACCESS_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
+    STATIC_URL =f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'assetsfinal')
+    STATIC_URL = '/static/'
+
+    STATICFILES_LOCATION = 'static'
+
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
+
+
+
+
 
 
 INTERNAL_IPS = [
@@ -183,25 +223,8 @@ INTERNAL_IPS = [
 ]
 
 
-# DEBUG_TOOLBAR_CONFIG = {
-#     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-# }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.live.com'  # For Hotmail/Outlook
 EMAIL_PORT = 587  # For TLS
 EMAIL_USE_TLS = True
-
-# AWS_STORAGE_BUCKET_NAME = 'bitaqatbucket'
-# AWS_S3_REGION_NAME = 'eu-north-1'  # e.g. us-east-2
-# AWS_ACCESS_KEY_ID = 'AKIAYF3FRH75DISKMNP5'
-# AWS_SECRET_ACCESS_KEY = 'mFVzij1aHxXxPAQnzUxaNT8EtF+JzV0BY4iBL7lj'
-
-# # Tell django-storages the domain to use to refer to static files.
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
-# # Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
-# # you run `collectstatic`).
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# DEFAULT_FILE_STORAGE  = 'storages.backends.s3boto3.S3Boto3Storage'

@@ -16,21 +16,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/@webpixels/css@1.1.5/dist/index.css">
-    <link rel="stylesheet" type="text/css" href="{% static '/vendors/jvectormap/jquery-jvectormap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static '/vendors/owl-carousel-2/owl.carousel.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static '/vendors/owl-carousel-2/owl.theme.default.min.css' %}">
-    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/flag-icon-css/css/flag-icon.min.css' %}">
-    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/css/vendor.bundle.base.css' %}">
-    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/mdi/css/materialdesignicons.min.css' %}">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
+    <link rel=" stylesheet" type="text/css" href="{% static '/vendors/mdi/css/materialdesignicons.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'analytics.css' %}">
     <!-- End layout styles -->
 </head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css">
 </head>
 
 
@@ -197,7 +186,7 @@
                                         {% for games in pg %}
                                         <div class="preview-item border-bottom">
                                             <div class="preview-thumbnail">
-                                                <img src="https://bitaqatbucket.s3.amazonaws.com/{{games.opposite_team.logo}}" alt="Image"
+                                                <img src="https://bitaqat.s3.amazonaws.com/{{games.opposite_team.logo}}" alt="Image"
                                                     style="height: 4rem !important;width: 3.5rem !important; max-height: 55px !important; max-width: 65px !important;">
                                             </div>
                                             <div class="preview-item-content d-sm-flex flex-grow">
@@ -245,8 +234,8 @@
                                 </div>
                                 <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                                     {% if bestevent != None %}
-                                    <img src="https://bitaqatbucket.s3.amazonaws.com/{{bestevent.img}}" alt="Image"
-                                        style="height: 4rem !important;width: 3.5rem !important; max-height: 65px !important; max-width: 65px !important;">
+                                    <img src="https://bitaqat.s3.amazonaws.com/{{bestevent.img}}" alt="Image"
+                                        style="height: 4rem !important; max-height: 65px !important;">
                                     {% endif %}
                                 </div>
                             </div>
@@ -325,6 +314,7 @@
                                                 <div class="form-check form-check-muted m-0">
                                                     <label class="form-check-label">
                                                         <input type="checkbox" class="form-check-input">
+                                                        <img src="https://bitaqat.s3.amazonaws.com/{{game.opposite_team.logo}}">
                                                     </label>
                                                 </div>
                                             </td>

@@ -28,7 +28,7 @@ class Event(models.Model):
     current_fan_count = models.PositiveIntegerField()
     royalty_rate = models.PositiveIntegerField(default=None)
     banner = models.ImageField(
-        upload_to='', default="None", null=True, blank=True)
+        upload_to='EventsBanner', default="None", null=True, blank=True)
     opposite_team = models.ForeignKey(ClubsData, on_delete=models.CASCADE)
 
 

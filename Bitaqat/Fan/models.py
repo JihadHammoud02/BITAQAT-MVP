@@ -18,7 +18,7 @@ class QrCodeChecking(models.Model):
     description = models.CharField(
         max_length=120, default="This is a Qr code used for check in")
     Qrcode = models.ImageField(
-        upload_to='', default=None, null=True, blank=True)
+        upload_to='QrCodes', default=None, null=True, blank=True)
     hash = models.CharField(max_length=300, default=None)
     token_id = models.IntegerField(default=None)
     checked = models.BooleanField(default=False)
